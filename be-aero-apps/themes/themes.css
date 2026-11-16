@@ -1,0 +1,157 @@
+/* BE-Aero themes as CSS custom properties. Generated from the app's own presets.
+   Desktop: put data-theme="<key>" on any element; be-aero.css (../styles) reads these variables.
+   Mobile: data-aero="<key>" gives the six mobile palettes (orbs + glyph colours). */
+
+[data-theme="aero"] { /* Aero (default) */
+  --glass-rgb: 18, 24, 40;
+  --glass-alpha: 0.55;
+  --glass-border: 0.2;
+  --glass-glow: 0.15;
+  --accent: #38bdf8;
+  --accent-rgb: 56, 189, 248;
+  --text: #fafafa;
+  --text-rgb: 250, 250, 250;
+  --radius: 16px;
+}
+[data-theme="midnight"] { /* Midnight */
+  --glass-rgb: 5, 7, 13;
+  --glass-alpha: 0.72;
+  --glass-border: 0.14;
+  --glass-glow: 0.08;
+  --accent: #818cf8;
+  --accent-rgb: 129, 140, 248;
+  --text: #e5e7eb;
+  --text-rgb: 229, 231, 235;
+  --radius: 16px;
+}
+[data-theme="frost"] { /* Frosted glass */
+  --glass-rgb: 219, 228, 240;
+  --glass-alpha: 0.28;
+  --glass-border: 0.45;
+  --glass-glow: 0.35;
+  --accent: #0ea5e9;
+  --accent-rgb: 14, 165, 233;
+  --text: #ffffff;
+  --text-rgb: 255, 255, 255;
+  --radius: 18px;
+}
+[data-theme="emerald"] { /* Emerald */
+  --glass-rgb: 6, 42, 34;
+  --glass-alpha: 0.6;
+  --glass-border: 0.2;
+  --glass-glow: 0.12;
+  --accent: #34d399;
+  --accent-rgb: 52, 211, 153;
+  --text: #ecfdf5;
+  --text-rgb: 236, 253, 245;
+  --radius: 16px;
+}
+[data-theme="sunset"] { /* Sunset */
+  --glass-rgb: 59, 18, 32;
+  --glass-alpha: 0.55;
+  --glass-border: 0.22;
+  --glass-glow: 0.18;
+  --accent: #fb923c;
+  --accent-rgb: 251, 146, 60;
+  --text: #fff7ed;
+  --text-rgb: 255, 247, 237;
+  --radius: 16px;
+}
+[data-theme="rose"] { /* Rose quartz */
+  --glass-rgb: 58, 21, 48;
+  --glass-alpha: 0.5;
+  --glass-border: 0.25;
+  --glass-glow: 0.2;
+  --accent: #f472b6;
+  --accent-rgb: 244, 114, 182;
+  --text: #fdf2f8;
+  --text-rgb: 253, 242, 248;
+  --radius: 20px;
+}
+[data-theme="amber"] { /* Amber terminal */
+  --glass-rgb: 18, 12, 2;
+  --glass-alpha: 0.78;
+  --glass-border: 0.18;
+  --glass-glow: 0.06;
+  --accent: #f59e0b;
+  --accent-rgb: 245, 158, 11;
+  --text: #fde68a;
+  --text-rgb: 253, 230, 138;
+  --radius: 6px;
+}
+[data-theme="mono"] { /* Graphite */
+  --glass-rgb: 28, 28, 30;
+  --glass-alpha: 0.65;
+  --glass-border: 0.16;
+  --glass-glow: 0.1;
+  --accent: #d4d4d8;
+  --accent-rgb: 212, 212, 216;
+  --text: #f4f4f5;
+  --text-rgb: 244, 244, 245;
+  --radius: 12px;
+}
+[data-theme="clear"] { /* Clear */
+  --glass-rgb: 0, 0, 0;
+  --glass-alpha: 0.18;
+  --glass-border: 0.3;
+  --glass-glow: 0.2;
+  --accent: #38bdf8;
+  --accent-rgb: 56, 189, 248;
+  --text: #ffffff;
+  --text-rgb: 255, 255, 255;
+  --radius: 16px;
+}
+
+[data-aero="vista-cyan"] { /* Vista Glacier */
+  --aero-swatch: #38bdf8;
+  --aero-orb-1: #38bdf8;
+  --aero-orb-2: #0284c7;
+  --aero-glyph-primary: #e0f2fe;
+  --aero-glyph-secondary: #7dd3fc;
+  --aero-glyph-accent: #38bdf8;
+}
+[data-aero="aurora-violet"] { /* Aurora Violet */
+  --aero-swatch: #c084fc;
+  --aero-orb-1: #c084fc;
+  --aero-orb-2: #7e22ce;
+  --aero-glyph-primary: #f3e8ff;
+  --aero-glyph-secondary: #d8b4fe;
+  --aero-glyph-accent: #e879f9;
+}
+[data-aero="emerald-mist"] { /* Emerald Mist */
+  --aero-swatch: #34d399;
+  --aero-orb-1: #34d399;
+  --aero-orb-2: #059669;
+  --aero-glyph-primary: #ecfdf5;
+  --aero-glyph-secondary: #6ee7b7;
+  --aero-glyph-accent: #2dd4bf;
+}
+[data-aero="sunset-coral"] { /* Sunset Coral */
+  --aero-swatch: #fb7185;
+  --aero-orb-1: #fb923c;
+  --aero-orb-2: #e11d48;
+  --aero-glyph-primary: #fff1f2;
+  --aero-glyph-secondary: #fda4af;
+  --aero-glyph-accent: #fdba74;
+}
+[data-aero="smoked-graphite"] { /* Smoked Graphite */
+  --aero-swatch: #94a3b8;
+  --aero-orb-1: #64748b;
+  --aero-orb-2: #1e293b;
+  --aero-glyph-primary: #f8fafc;
+  --aero-glyph-secondary: #cbd5e1;
+  --aero-glyph-accent: #38bdf8;
+}
+[data-aero="clear-crystal"] { /* Pure Frost */
+  --aero-swatch: #f8fafc;
+  --aero-orb-1: #f1f5f9;
+  --aero-orb-2: #94a3b8;
+  --aero-glyph-primary: #ffffff;
+  --aero-glyph-secondary: #e2e8f0;
+  --aero-glyph-accent: #7dd3fc;
+}
+
+:root {
+  --aero-backdrop-dark: linear-gradient(135deg, #020617, #0f172a 50%, #020617);
+  --aero-backdrop-light: linear-gradient(135deg, #dce5f0, #cad7e6 50%, #b0c2d6);
+}
