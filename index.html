@@ -217,6 +217,16 @@
       </div>
 
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20 relative">
+        <!-- Announcement: BE-Aero site -->
+        <a href="https://github.com/BE-AI-Research/sites/blob/main/be-aero-apps/index.html" target="_blank" rel="noopener" class="group mb-10 flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-xl bg-card border border-hairline hover:border-strong transition-colors">
+          <div class="flex flex-wrap items-center gap-2.5">
+            <span class="px-2 py-0.5 rounded btn-primary font-mono text-[11px]">NEW</span>
+            <span class="font-mono text-xs text-tertiary">LOG-045 // 2026-11-16</span>
+            <span class="text-sm text-primary">BE-Aero has its own site: a modular glass desktop for Windows, Linux and Android.</span>
+          </div>
+          <span class="font-mono text-xs text-primary whitespace-nowrap group-hover:translate-x-0.5 transition-transform">Visit the BE-Aero site →</span>
+        </a>
+
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
 
           <!-- Left Editorial Mission -->
@@ -351,7 +361,7 @@
                   Read architecture papers, release changelogs, and AGPL-3.0 governance notes.
                 </p>
               </div>
-              <div class="font-mono text-[11px] text-tertiary pt-2 border-t border-hairline">Latest: 2026-11-10</div>
+              <div class="font-mono text-[11px] text-tertiary pt-2 border-t border-hairline">Latest: 2026-11-16</div>
             </button>
 
             <button onclick="navigateTo('repo')" class="text-left p-5 rounded-xl bg-canvas border border-hairline hover:border-strong transition-all group flex flex-col justify-between space-y-4">
@@ -445,6 +455,7 @@
 
             <div class="flex flex-wrap items-center gap-1.5">
               <button onclick="setDispatchTag('ALL')" data-dtag="ALL" class="dtag-btn px-3 py-1.5 rounded-lg text-xs font-mono btn-primary transition-colors">ALL</button>
+              <button onclick="setDispatchTag('ANNOUNCEMENT')" data-dtag="ANNOUNCEMENT" class="dtag-btn px-3 py-1.5 rounded-lg text-xs font-mono btn-secondary transition-colors">ANNOUNCEMENT</button>
               <button onclick="setDispatchTag('RELEASE')" data-dtag="RELEASE" class="dtag-btn px-3 py-1.5 rounded-lg text-xs font-mono btn-secondary transition-colors">RELEASE</button>
               <button onclick="setDispatchTag('ARCHITECTURE')" data-dtag="ARCHITECTURE" class="dtag-btn px-3 py-1.5 rounded-lg text-xs font-mono btn-secondary transition-colors">ARCHITECTURE</button>
               <button onclick="setDispatchTag('WHITE PAPER')" data-dtag="WHITE PAPER" class="dtag-btn px-3 py-1.5 rounded-lg text-xs font-mono btn-secondary transition-colors">WHITE PAPER</button>
@@ -1056,6 +1067,22 @@
 
     const DISPATCHES = [
       {
+        id: 'disp-045',
+        code: 'LOG-045',
+        date: '2026-11-16',
+        tag: 'ANNOUNCEMENT',
+        readTime: '2 min read',
+        title: 'BE-Aero Gets Its Own Site: Modular Desktop, Android Suite & Your Own LAN Anywhere',
+        excerpt: 'A dedicated site for BE-Aero: the modular glass desktop, the Android suite, cross-device media and files, an assistant that controls your PC and phone, and a VPN through your own relay.',
+        link: 'https://github.com/BE-AI-Research/sites/blob/main/be-aero-apps/index.html',
+        linkLabel: 'Visit the BE-Aero site',
+        paragraphs: [
+          'BE-Aero now has a dedicated site. BE-Aero is a modular desktop built from glass widgets for Windows and Linux, with an Android suite of three apps: BE-Aero Launcher, BE-Aero AI and BE-Aero Files.',
+          'Paired devices work as one set, directly and with no cloud account: shared files and the File Pool, media and volume control from any device, clipboard and notifications. The assistant can operate both the PC and the phone, and with realtime conversation sync either device can use the tools of the other. A relay you host doubles as a WireGuard VPN hub that puts your devices and home network on one LAN from anywhere.',
+          'The site also includes a full guide with a setup planner, reference and troubleshooting. Desktop 1.2.9 is available now. The 1.3.0 release with the Android suite is built and not yet published.'
+        ]
+      },
+      {
         id: 'disp-044',
         code: 'LOG-044',
         date: '2026-11-10',
@@ -1508,10 +1535,11 @@
               '</h2>' +
               '<p class="text-sm text-secondary leading-relaxed">' + escapeHtml(d.excerpt) + '</p>' +
             '</div>' +
-            '<div class="shrink-0">' +
+            '<div class="shrink-0 flex flex-wrap items-center gap-2">' +
               '<button onclick="openDispatchModal(\'' + d.id + '\')" class="btn-secondary px-4 py-2 rounded-lg font-mono text-xs transition-colors">' +
                 'Read Dispatch →' +
               '</button>' +
+              (d.link ? '<a href="' + escapeHtml(d.link) + '" target="_blank" rel="noopener" class="btn-primary px-4 py-2 rounded-lg font-mono text-xs transition-colors">' + escapeHtml(d.linkLabel || 'Open link') + ' ↗</a>' : '') +
             '</div>' +
           '</article>'
         );
@@ -1528,7 +1556,9 @@
       document.getElementById('dm-title').textContent = d.title;
       document.getElementById('dm-body').innerHTML = d.paragraphs.map(function(p) {
         return '<p>' + escapeHtml(p) + '</p>';
-      }).join('');
+      }).join('') + (d.link
+        ? '<p class="pt-2"><a href="' + escapeHtml(d.link) + '" target="_blank" rel="noopener" class="btn-primary inline-flex items-center gap-2 px-4 py-2 rounded-lg font-mono text-xs transition-colors">' + escapeHtml(d.linkLabel || 'Open link') + ' ↗</a></p>'
+        : '');
 
       document.getElementById('dispatch-modal').classList.remove('hidden');
     }
@@ -1864,7 +1894,8 @@
         { tag: 'PAGE', title: 'Projects Index', sub: 'Explore open-source systems', run: function() { closeCommandModal(); navigateTo('projects'); } },
         { tag: 'PAGE', title: 'News & Dispatches', sub: 'Architecture papers & release logs', run: function() { closeCommandModal(); navigateTo('dispatches'); } },
         { tag: 'PAGE', title: 'Download Repository', sub: 'repo.beairesearch.ca static binaries', run: function() { closeCommandModal(); navigateTo('repo'); } },
-        { tag: 'PORTAL', title: 'Researcher Portal', sub: 'Sign in, bearer tokens & SSH keys', run: function() { closeCommandModal(); navigateTo('portal'); } }
+        { tag: 'PORTAL', title: 'Researcher Portal', sub: 'Sign in, bearer tokens & SSH keys', run: function() { closeCommandModal(); navigateTo('portal'); } },
+        { tag: 'NEW', title: 'BE-Aero site', sub: 'Modular glass desktop for Windows, Linux and Android', run: function() { closeCommandModal(); window.open('https://github.com/BE-AI-Research/sites/blob/main/be-aero-apps/index.html', '_blank', 'noopener'); } }
       ].concat(PROJECTS.map(function(p) {
         return {
           tag: 'PROJECT',
