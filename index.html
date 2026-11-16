@@ -96,19 +96,7 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    @keyframes spinSlow {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
 
-    .orbit-animate {
-      transform-origin: 60px 60px;
-      animation: spinSlow 24s linear infinite;
-    }
-    .orbit-animate-reverse {
-      transform-origin: 60px 60px;
-      animation: spinSlow 32s linear infinite reverse;
-    }
 
     /* Custom subtle scrollbars */
     ::-webkit-scrollbar { width: 6px; height: 6px; }
@@ -161,12 +149,12 @@
           <span class="nav-bar absolute bottom-0 left-0 right-0 h-[1.5px] bg-current opacity-0"></span>
         </a>
         <a href="#repo" data-nav="repo" onclick="navigateTo('repo', event)" class="nav-tab relative h-full inline-flex items-center text-xs font-normal text-secondary hover:text-primary transition-colors">
-          Download Repo
+          GitHub
           <span class="nav-bar absolute bottom-0 left-0 right-0 h-[1.5px] bg-current opacity-0"></span>
         </a>
       </nav>
 
-      <!-- Right: Quick Search, Theme Toggle & Login / Portal -->
+      <!-- Right: Quick Search, Theme Toggle & BE-Aero -->
       <div class="flex items-center gap-1.5">
         <button onclick="openCommandModal()" class="inline-flex items-center gap-1.5 px-2 py-1 rounded bg-card border border-hairline hover:border-strong text-[11px] text-secondary hover:text-primary transition-colors" title="Quick Jump (Ctrl+K)">
           <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -180,9 +168,9 @@
           <span id="theme-text" class="hidden sm:inline">Daylight</span>
         </button>
 
-        <a href="#portal" data-nav="portal" onclick="navigateTo('portal', event)" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded btn-primary text-[11px] font-mono transition-colors">
-          <span id="auth-status-dot" class="w-1.5 h-1.5 rounded-full bg-zinc-400"></span>
-          <span id="auth-status-label">Login / Portal</span>
+        <a href="https://be-ai-research.github.io/be-aero/" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded btn-primary text-[11px] font-mono transition-colors">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+          <span>BE-Aero ↗</span>
         </a>
       </div>
     </div>
@@ -192,8 +180,7 @@
       <a href="#overview" data-nav="overview" onclick="navigateTo('overview', event)" class="mobile-tab shrink-0 px-2.5 py-1 rounded text-[11px] font-mono btn-primary">Overview</a>
       <a href="#projects" data-nav="projects" onclick="navigateTo('projects', event)" class="mobile-tab shrink-0 px-2.5 py-1 rounded text-[11px] font-mono btn-secondary">Projects</a>
       <a href="#dispatches" data-nav="dispatches" onclick="navigateTo('dispatches', event)" class="mobile-tab shrink-0 px-2.5 py-1 rounded text-[11px] font-mono btn-secondary">Dispatches</a>
-      <a href="#repo" data-nav="repo" onclick="navigateTo('repo', event)" class="mobile-tab shrink-0 px-2.5 py-1 rounded text-[11px] font-mono btn-secondary">Download Repo</a>
-      <a href="#portal" data-nav="portal" onclick="navigateTo('portal', event)" class="mobile-tab shrink-0 px-2.5 py-1 rounded text-[11px] font-mono btn-secondary">Portal</a>
+      <a href="#repo" data-nav="repo" onclick="navigateTo('repo', event)" class="mobile-tab shrink-0 px-2.5 py-1 rounded text-[11px] font-mono btn-secondary">GitHub</a>
     </nav>
   </header>
 
@@ -217,17 +204,7 @@
       </div>
 
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20 relative">
-        <!-- Announcement: BE-Aero site -->
-        <a href="https://be-ai-research.github.io/be-aero/" target="_blank" rel="noopener" class="group mb-10 flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-xl bg-card border border-hairline hover:border-strong transition-colors">
-          <div class="flex flex-wrap items-center gap-2.5">
-            <span class="px-2 py-0.5 rounded btn-primary font-mono text-[11px]">NEW</span>
-            <span class="font-mono text-xs text-tertiary">LOG-045 // 2026-11-16</span>
-            <span class="text-sm text-primary">BE-Aero has its own site: a modular glass desktop for Windows, Linux and Android.</span>
-          </div>
-          <span class="font-mono text-xs text-primary whitespace-nowrap group-hover:translate-x-0.5 transition-transform">Visit the BE-Aero site →</span>
-        </a>
-
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center lg:items-start">
 
           <!-- Left Editorial Mission -->
           <div class="lg:col-span-7 space-y-6">
@@ -253,58 +230,79 @@
                 </svg>
               </button>
 
-              <button onclick="navigateTo('repo')" class="btn-secondary inline-flex items-center gap-2.5 px-5 py-2.5 rounded-lg text-sm font-medium transition-colors">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5m0 0l5-5m-5 5V3" />
-                </svg>
-                <span>Download Repo</span>
-              </button>
-
-              <button onclick="navigateTo('portal')" class="btn-secondary inline-flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-mono transition-colors">
-                <span>Researcher Portal →</span>
-              </button>
+              <a href="https://github.com/BE-AI-Research" target="_blank" rel="noopener" class="btn-secondary inline-flex items-center gap-2.5 px-5 py-2.5 rounded-lg text-sm font-medium transition-colors">
+                <svg class="w-4 h-4" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+                <span>GitHub ↗</span>
+              </a>
             </div>
           </div>
 
-          <!-- Right Interactive Orbital Atom Showcase -->
-          <div class="lg:col-span-5 flex flex-col items-center justify-center">
-            <div class="relative w-full max-w-[350px] aspect-square rounded-2xl bg-card border border-hairline flex flex-col items-center justify-center p-6 select-none">
-              <span class="absolute top-3.5 left-4 font-mono text-[10px] text-tertiary tracking-wider">FIG. 01 // ORBITAL CORE</span>
-              <button onclick="toggleOrbitalMotion()" id="orbit-motion-btn" class="absolute top-3 right-3.5 font-mono text-[10px] px-2 py-0.5 rounded bg-canvas border border-hairline text-secondary hover:text-primary hover:border-strong transition-colors">
-                Motion: Static
-              </button>
-
-              <svg class="w-56 h-56 sm:w-60 sm:h-60 text-primary" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="60" cy="60" r="53" stroke="currentColor" stroke-opacity="0.14" stroke-width="0.6" stroke-dasharray="2 3" />
-
-                <g id="orbit-ring-1">
-                  <ellipse cx="60" cy="60" rx="19" ry="50" stroke="currentColor" stroke-width="1.5" />
-                  <circle class="cursor-pointer" cx="43.5" cy="34" r="2.8" fill="currentColor" onmouseenter="setOrbitalReadout('Node 01: Agentic Runtimes & IPC')" onmouseleave="resetOrbitalReadout()" />
-                </g>
-
-                <g id="orbit-ring-2">
-                  <ellipse cx="60" cy="60" rx="19" ry="50" transform="rotate(60 60 60)" stroke="currentColor" stroke-width="1.5" />
-                  <circle class="cursor-pointer" cx="88" cy="44" r="2.8" fill="currentColor" onmouseenter="setOrbitalReadout('Node 02: C++20 Local Inference')" onmouseleave="resetOrbitalReadout()" />
-                </g>
-
-                <g id="orbit-ring-3">
-                  <ellipse cx="60" cy="60" rx="19" ry="50" transform="rotate(120 60 60)" stroke="currentColor" stroke-width="1.5" />
-                  <circle class="cursor-pointer" cx="88" cy="76" r="2.8" fill="currentColor" onmouseenter="setOrbitalReadout('Node 03: Distributed Meta-OS Shell')" onmouseleave="resetOrbitalReadout()" />
-                </g>
-
-                <g class="cursor-pointer" onmouseenter="setOrbitalReadout('Core: Sovereign Local-First Kernel')" onmouseleave="resetOrbitalReadout()">
-                  <circle cx="60" cy="60" r="12.5" stroke="currentColor" stroke-width="1.5" fill="var(--bg-canvas)" />
-                  <path d="M60 47.5C66.9 47.5 72.5 53.1 72.5 60C72.5 66.9 66.9 72.5 60 72.5C63.45 72.5 66.25 69.7 66.25 66.25C66.25 62.8 63.45 60 60 60C56.55 60 53.75 57.2 53.75 53.75C53.75 50.3 56.55 47.5 60 47.5Z" fill="currentColor" />
-                  <circle cx="60" cy="53.75" r="2" fill="var(--bg-canvas)" />
-                  <circle cx="60" cy="66.25" r="2" fill="currentColor" />
-                </g>
-              </svg>
-
-              <div class="absolute bottom-3.5 inset-x-4 flex items-center justify-between font-mono text-[11px] text-secondary border-t border-hairline pt-2.5">
-                <span id="orbital-readout">Hover orbital nodes to inspect</span>
-                <span class="text-tertiary">3-AXIS</span>
+          <!-- Right: BE-Aero Ecosystem Announcement -->
+          <div class="lg:col-span-5">
+            <article class="relative w-full rounded-2xl bg-card border border-hairline p-6 sm:p-7 space-y-5" aria-labelledby="eco-title">
+              <div class="flex items-center justify-between font-mono text-[10px] tracking-wider">
+                <span class="inline-flex items-center gap-1.5 text-primary">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                  ANNOUNCEMENT // LOG-045
+                </span>
+                <span class="text-tertiary">2026-11-16</span>
               </div>
-            </div>
+
+              <div class="space-y-2">
+                <h2 id="eco-title" class="text-2xl sm:text-[1.7rem] font-light tracking-[-0.025em] text-primary leading-tight">Introducing the BE-Aero Ecosystem</h2>
+                <p class="text-sm text-secondary leading-relaxed">
+                  A modular glass desktop for Windows, Linux and Android. Your devices pair once and work as one set, directly, with no cloud account. Its assistant can operate your PC and your phone, and a relay you host turns the internet into your own LAN.
+                </p>
+              </div>
+
+              <ul class="divide-y divide-hairline border-y border-hairline">
+                <li class="py-2.5 flex items-center justify-between gap-3">
+                  <div class="min-w-0">
+                    <div class="text-sm font-medium text-primary">BE-Aero Desktop</div>
+                    <div class="text-[11px] text-tertiary">Widgets, dock, search and assistant · Windows &amp; Linux</div>
+                  </div>
+                  <span class="shrink-0 font-mono text-[10px] px-2 py-0.5 rounded bg-canvas border border-hairline text-primary">1.2.9 available</span>
+                </li>
+                <li class="py-2.5 flex items-center justify-between gap-3">
+                  <div class="min-w-0">
+                    <div class="text-sm font-medium text-primary">BE-Aero for Android</div>
+                    <div class="text-[11px] text-tertiary">Launcher, AI and Files in one install</div>
+                  </div>
+                  <span class="shrink-0 font-mono text-[10px] px-2 py-0.5 rounded bg-canvas border border-hairline text-secondary">1.3.0 beta · built</span>
+                </li>
+                <li class="py-2.5 flex items-center justify-between gap-3">
+                  <div class="min-w-0">
+                    <div class="text-sm font-medium text-primary">BE-Aero Relay Server</div>
+                    <div class="text-[11px] text-tertiary">Store and forward, storage, VPN hub · self-hosted</div>
+                  </div>
+                  <span class="shrink-0 font-mono text-[10px] px-2 py-0.5 rounded bg-canvas border border-hairline text-primary">1.0.2 available</span>
+                </li>
+                <li class="py-2.5 flex items-center justify-between gap-3">
+                  <div class="min-w-0">
+                    <div class="text-sm font-medium text-primary">BE-Aero Link</div>
+                    <div class="text-[11px] text-tertiary">Puts any machine on your BE-Aero VPN</div>
+                  </div>
+                  <span class="shrink-0 font-mono text-[10px] px-2 py-0.5 rounded bg-canvas border border-hairline text-secondary">1.0.0 · built</span>
+                </li>
+              </ul>
+
+              <div class="flex flex-wrap gap-1.5">
+                <span class="px-2 py-0.5 rounded bg-canvas border border-hairline font-mono text-[10px] text-secondary">Cross-device media</span>
+                <span class="px-2 py-0.5 rounded bg-canvas border border-hairline font-mono text-[10px] text-secondary">File Pool sync</span>
+                <span class="px-2 py-0.5 rounded bg-canvas border border-hairline font-mono text-[10px] text-secondary">PC &amp; phone control</span>
+                <span class="px-2 py-0.5 rounded bg-canvas border border-hairline font-mono text-[10px] text-secondary">Dual home screen</span>
+                <span class="px-2 py-0.5 rounded bg-canvas border border-hairline font-mono text-[10px] text-secondary">WireGuard VPN</span>
+              </div>
+
+              <div class="flex flex-wrap items-center gap-2 pt-1">
+                <a href="https://be-ai-research.github.io/be-aero/" target="_blank" rel="noopener" class="btn-primary inline-flex items-center gap-2 px-4 py-2.5 rounded-lg text-xs font-mono transition-colors">
+                  Visit the BE-Aero site ↗
+                </a>
+                <button onclick="openDispatchModal('disp-045')" class="btn-secondary inline-flex items-center gap-2 px-4 py-2.5 rounded-lg text-xs font-mono transition-colors">
+                  Read the announcement
+                </button>
+              </div>
+            </article>
           </div>
         </div>
 
@@ -347,30 +345,30 @@
             <button onclick="navigateTo('repo')" class="text-left p-5 rounded-xl bg-canvas border border-hairline hover:border-strong transition-all group flex flex-col justify-between space-y-4">
               <div class="space-y-2">
                 <div class="flex items-center justify-between font-mono text-[11px] text-tertiary">
-                  <span>03 // ARTIFACTS</span>
+                  <span>03 // SOURCE</span>
                   <span class="text-primary group-hover:translate-x-0.5 transition-transform">→</span>
                 </div>
-                <div class="text-base font-medium text-primary">Download Repository</div>
+                <div class="text-base font-medium text-primary">GitHub Repositories</div>
                 <p class="text-xs text-secondary leading-relaxed">
-                  Fetch signed static binaries, SHA-256 checksums, and cURL install commands.
+                  Browse every public repository, copy a clone command, or open it on GitHub.
                 </p>
               </div>
-              <div class="font-mono text-[11px] text-tertiary pt-2 border-t border-hairline">repo.beairesearch.ca</div>
+              <div class="font-mono text-[11px] text-tertiary pt-2 border-t border-hairline">github.com/BE-AI-Research</div>
             </button>
 
-            <button onclick="navigateTo('portal')" class="text-left p-5 rounded-xl bg-card border border-hairline hover:border-strong transition-all group flex flex-col justify-between space-y-4">
+            <a href="https://be-ai-research.github.io/be-aero/" target="_blank" rel="noopener" class="text-left p-5 rounded-xl bg-card border border-hairline hover:border-strong transition-all group flex flex-col justify-between space-y-4">
               <div class="space-y-2">
                 <div class="flex items-center justify-between font-mono text-[11px] text-tertiary">
-                  <span>04 // ACCESS</span>
-                  <span class="text-primary group-hover:translate-x-0.5 transition-transform">→</span>
+                  <span>04 // ECOSYSTEM</span>
+                  <span class="text-primary group-hover:translate-x-0.5 transition-transform">↗</span>
                 </div>
-                <div class="text-base font-medium text-primary">Researcher Portal</div>
+                <div class="text-base font-medium text-primary">BE-Aero</div>
                 <p class="text-xs text-secondary leading-relaxed">
-                  Authenticate via credentials or ED25519 key to manage tokens and nightly sync.
+                  The modular glass desktop, the Android suite, the relay and the guide.
                 </p>
               </div>
-              <div id="overview-portal-badge" class="font-mono text-[11px] text-primary pt-2 border-t border-hairline">Session: Guest</div>
-            </button>
+              <div class="font-mono text-[11px] text-primary pt-2 border-t border-hairline">be-ai-research.github.io/be-aero</div>
+            </a>
           </div>
         </div>
       </div>
@@ -391,7 +389,7 @@
             </div>
             <h1 class="text-2xl sm:text-4xl font-light tracking-[-0.025em] text-primary">Core Research Projects</h1>
             <p class="text-sm text-secondary max-w-xl">
-              Modular open-source systems spanning autonomous agent harnesses, C++20 local inference engines, and sovereign operating shells.
+              Modular open-source systems spanning autonomous agent harnesses, local inference engines, sovereign operating shells and the BE-Aero ecosystem. Projects with a public repository link straight to GitHub.
             </p>
           </div>
 
@@ -448,7 +446,7 @@
     </section>
 
     <!-- =================================================================== -->
-    <!-- VIEW 4: DOWNLOAD REPOSITORY (#repo)                                 -->
+    <!-- VIEW 4: GITHUB REPOSITORIES (#repo)                                 -->
     <!-- =================================================================== -->
     <section id="view-repo" class="page-view py-12 sm:py-16">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -458,283 +456,37 @@
             <div class="flex flex-wrap items-center gap-2 font-mono text-xs uppercase tracking-widest text-tertiary">
               <button onclick="navigateTo('overview')" class="hover:text-primary transition-colors">Overview</button>
               <span>/</span>
-              <span class="text-primary">03 // Repository</span>
-              <span class="px-2 py-0.5 rounded bg-card border border-hairline text-primary lowercase">repo.beairesearch.ca</span>
+              <span class="text-primary">03 // Source</span>
+              <span class="px-2 py-0.5 rounded bg-card border border-hairline text-primary lowercase">github.com/BE-AI-Research</span>
             </div>
-            <h1 class="text-2xl sm:text-4xl font-light tracking-[-0.025em] text-primary">Download Repository</h1>
+            <h1 class="text-2xl sm:text-4xl font-light tracking-[-0.025em] text-primary">GitHub Repositories</h1>
             <p class="text-sm text-secondary max-w-2xl">
-              Cryptographically hashed static binaries, cross-compiled ARM64 builds, and signed AGPL-3.0 source tarballs ready for air-gapped or local deployment.
+              Every public BE AI Research repository. Releases, installers and checksums are published on each repository's Releases page.
             </p>
           </div>
 
-          <!-- Channel Selector -->
-          <div class="inline-flex items-center p-1 rounded-lg bg-card border border-hairline self-start">
-            <button onclick="setRepoChannel('stable')" id="chan-stable" class="px-3.5 py-1.5 rounded-md text-xs font-mono font-medium btn-primary transition-colors">
-              Channel: Stable
-            </button>
-            <button onclick="setRepoChannel('nightly')" id="chan-nightly" class="px-3.5 py-1.5 rounded-md text-xs font-mono font-medium text-secondary hover:text-primary transition-colors">
-              Channel: Nightly
-            </button>
-          </div>
+          <a href="https://github.com/BE-AI-Research" target="_blank" rel="noopener" class="btn-primary self-start inline-flex items-center gap-2 px-4 py-2.5 rounded-lg text-xs font-mono transition-colors">
+            Open BE-AI-Research on GitHub ↗
+          </a>
         </div>
 
-        <!-- Platform Filter Bar & Search -->
         <div class="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 p-4 rounded-t-xl bg-card border border-hairline">
-          <div class="flex flex-wrap items-center gap-1.5">
-            <button onclick="setRepoPlatform('all')" data-rplat="all" class="rplat-btn px-3 py-1.5 rounded-md text-xs font-mono btn-primary transition-colors">All Platforms</button>
-            <button onclick="setRepoPlatform('Linux x86_64')" data-rplat="Linux x86_64" class="rplat-btn px-3 py-1.5 rounded-md text-xs font-mono btn-secondary transition-colors">Linux x86_64</button>
-            <button onclick="setRepoPlatform('Linux ARM64')" data-rplat="Linux ARM64" class="rplat-btn px-3 py-1.5 rounded-md text-xs font-mono btn-secondary transition-colors">Linux ARM64</button>
-            <button onclick="setRepoPlatform('Android / Termux')" data-rplat="Android / Termux" class="rplat-btn px-3 py-1.5 rounded-md text-xs font-mono btn-secondary transition-colors">Android / Termux</button>
-            <button onclick="setRepoPlatform('Source Tarball')" data-rplat="Source Tarball" class="rplat-btn px-3 py-1.5 rounded-md text-xs font-mono btn-secondary transition-colors">Source Tarball</button>
-          </div>
-
-          <input id="repo-search" type="text" oninput="renderRepoTable()" placeholder="Filter package or SHA-256..." class="w-full md:w-64 px-3 py-1.5 rounded-lg bg-canvas border border-hairline focus:border-strong focus:outline-none text-xs font-mono text-primary placeholder:text-tertiary" />
+          <div id="repo-status" class="font-mono text-[11px] text-tertiary">Loading repositories…</div>
+          <input id="repo-search" type="text" oninput="renderRepoTable()" placeholder="Filter repositories..." class="w-full md:w-64 px-3 py-1.5 rounded-lg bg-canvas border border-hairline focus:border-strong focus:outline-none text-xs font-mono text-primary placeholder:text-tertiary" />
         </div>
 
-        <!-- Binary Table -->
         <div class="overflow-x-auto border-x border-b border-hairline rounded-b-xl bg-canvas">
           <table class="w-full text-left border-collapse">
             <thead>
               <tr class="border-b border-hairline bg-card/60 font-mono text-[11px] uppercase tracking-wider text-tertiary">
-                <th class="py-3.5 px-4 font-medium">Package</th>
-                <th class="py-3.5 px-4 font-medium">Version</th>
-                <th class="py-3.5 px-4 font-medium">Platform</th>
-                <th class="py-3.5 px-4 font-medium">Size</th>
-                <th class="py-3.5 px-4 font-medium">License</th>
-                <th class="py-3.5 px-4 font-medium">Verification &amp; CLI</th>
-                <th class="py-3.5 px-4 font-medium text-right">Artifact</th>
+                <th class="py-3.5 px-4 font-medium">Repository</th>
+                <th class="py-3.5 px-4 font-medium">Language</th>
+                <th class="py-3.5 px-4 font-medium">Updated</th>
+                <th class="py-3.5 px-4 font-medium text-right">Get it</th>
               </tr>
             </thead>
             <tbody id="repo-tbody" class="divide-y divide-hairline text-sm"></tbody>
           </table>
-        </div>
-
-        <div class="mt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs font-mono text-tertiary px-1">
-          <span>GPG Signing Key: <span class="text-secondary">0xBE41A900C2F718E4 (ED25519)</span></span>
-          <span>All artifacts reproducible from tagged Git commits</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- =================================================================== -->
-    <!-- VIEW 5: USER LOGIN & RESEARCHER PORTAL (#portal)                    -->
-    <!-- =================================================================== -->
-    <section id="view-portal" class="page-view py-12 sm:py-16">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-
-        <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-8 border-b border-hairline">
-          <div class="space-y-2">
-            <div class="flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-tertiary">
-              <button onclick="navigateTo('overview')" class="hover:text-primary transition-colors">Overview</button>
-              <span>/</span>
-              <span class="text-primary">04 // Researcher Portal</span>
-            </div>
-            <h1 class="text-2xl sm:text-4xl font-light tracking-[-0.025em] text-primary">Collective Access &amp; Node Authentication</h1>
-            <p class="text-sm text-secondary max-w-2xl">
-              Sign in to issue scoped API bearer tokens, manage ED25519 SSH keys for Hub-FS parity mirrors, and configure private nightly artifact access.
-            </p>
-          </div>
-          <div class="font-mono text-xs text-tertiary">Zero-Telemetry Auth // Local Session</div>
-        </div>
-
-        <!-- LOGGED OUT: AUTHENTICATION TERMINAL -->
-        <div id="portal-logged-out" class="mt-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-
-          <div class="lg:col-span-7 rounded-2xl bg-canvas border border-hairline overflow-hidden">
-            <!-- Auth Tabs -->
-            <div class="grid grid-cols-2 border-b border-hairline bg-card/60 font-mono text-xs">
-              <button onclick="switchAuthMode('credentials')" id="tab-auth-cred" class="py-3 px-4 text-center font-medium text-primary border-b-2 border-strong bg-canvas transition-colors">
-                Credentials Login
-              </button>
-              <button onclick="switchAuthMode('ssh')" id="tab-auth-ssh" class="py-3 px-4 text-center text-secondary hover:text-primary border-b-2 border-transparent transition-colors">
-                SSH / ED25519 Challenge
-              </button>
-            </div>
-
-            <div class="p-6 sm:p-8">
-              <!-- Form 1: Credentials Login -->
-              <form id="form-auth-cred" onsubmit="submitCredentialsLogin(event)" class="space-y-5">
-                <div class="space-y-1.5">
-                  <label for="input-handle" class="block font-mono text-xs uppercase tracking-wider text-secondary">Researcher Handle or Email</label>
-                  <input id="input-handle" type="text" required placeholder="console@beairesearch.ca" class="w-full px-3.5 py-2.5 rounded-lg bg-card border border-hairline focus:border-strong focus:outline-none font-mono text-xs text-primary placeholder:text-tertiary" />
-                </div>
-
-                <div class="space-y-1.5">
-                  <div class="flex items-center justify-between">
-                    <label for="input-password" class="block font-mono text-xs uppercase tracking-wider text-secondary">Access Passphrase</label>
-                    <span class="font-mono text-[11px] text-tertiary">ARGON2ID-256</span>
-                  </div>
-                  <input id="input-password" type="password" required placeholder="••••••••••••••••" class="w-full px-3.5 py-2.5 rounded-lg bg-card border border-hairline focus:border-strong focus:outline-none font-mono text-xs text-primary placeholder:text-tertiary" />
-                </div>
-
-                <div class="flex flex-wrap items-center justify-between gap-3 pt-2">
-                  <button type="submit" class="btn-primary px-5 py-2.5 rounded-lg text-xs font-mono font-medium transition-colors">
-                    Authenticate Session →
-                  </button>
-                  <button type="button" onclick="signInDemoResearcher()" class="btn-secondary px-4 py-2.5 rounded-lg text-xs font-mono transition-colors">
-                    Sign In as Demo Researcher
-                  </button>
-                </div>
-              </form>
-
-              <!-- Form 2: SSH / ED25519 Challenge -->
-              <form id="form-auth-ssh" onsubmit="submitSshLogin(event)" class="hidden space-y-5">
-                <div class="p-3.5 rounded-lg bg-card border border-hairline font-mono text-xs space-y-1">
-                  <div class="text-tertiary">ACTIVE CHALLENGE NONCE:</div>
-                  <div class="text-primary break-all">beai-challenge-v1:98f4c10e7d3b2a51:beairesearch.ca</div>
-                </div>
-
-                <div class="space-y-1.5">
-                  <label for="input-ssh-key" class="block font-mono text-xs uppercase tracking-wider text-secondary">ED25519 Public Key</label>
-                  <textarea id="input-ssh-key" rows="3" required placeholder="ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl console@beairesearch.ca" class="w-full p-3 rounded-lg bg-card border border-hairline focus:border-strong focus:outline-none font-mono text-xs text-primary placeholder:text-tertiary"></textarea>
-                </div>
-
-                <div class="flex flex-wrap items-center justify-between gap-3 pt-1">
-                  <button type="submit" class="btn-primary px-5 py-2.5 rounded-lg text-xs font-mono font-medium transition-colors">
-                    Verify ED25519 Key →
-                  </button>
-                  <button type="button" onclick="populateSampleSshKey()" class="btn-secondary px-3.5 py-2 rounded-lg text-xs font-mono transition-colors">
-                    Insert Sample ED25519 Key
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-
-          <!-- Right Info Column -->
-          <div class="lg:col-span-5 space-y-4">
-            <div class="p-6 rounded-2xl bg-card border border-hairline space-y-4">
-              <div class="flex items-center justify-between font-mono text-xs">
-                <span class="text-primary font-semibold">THE COLLECTIVE // ACCESS TIER</span>
-                <span class="px-2 py-0.5 rounded bg-canvas border border-hairline text-primary">AGPL-3.0</span>
-              </div>
-              <p class="text-xs text-secondary leading-relaxed">
-                Public static binaries on <span class="font-mono text-primary">repo.beairesearch.ca</span> remain freely accessible without registration. Authenticating unlocks:
-              </p>
-              <ul class="space-y-2.5 text-xs text-secondary font-mono">
-                <li class="flex items-start gap-2">
-                  <span class="text-primary">01.</span>
-                  <span>Scoped bearer tokens for <code class="text-primary">be-code</code> CLI Skill Pack synchronization</span>
-                </li>
-                <li class="flex items-start gap-2">
-                  <span class="text-primary">02.</span>
-                  <span>ED25519 public key registration for Hub-FS mirror replication</span>
-                </li>
-                <li class="flex items-start gap-2">
-                  <span class="text-primary">03.</span>
-                  <span>Private nightly inference kernel &amp; weight build access toggles</span>
-                </li>
-              </ul>
-            </div>
-
-            <div class="p-5 rounded-2xl bg-canvas border border-hairline flex items-center justify-between font-mono text-xs">
-              <div>
-                <div class="text-tertiary">INSTANT PREVIEW</div>
-                <div class="text-primary mt-0.5">Test Researcher Workspace</div>
-              </div>
-              <button onclick="signInDemoResearcher()" class="btn-primary px-3.5 py-2 rounded-lg text-xs">
-                Demo Sign-In
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- LOGGED IN: RESEARCHER WORKSPACE DASHBOARD -->
-        <div id="portal-logged-in" class="hidden mt-10 space-y-8">
-
-          <!-- Active Session Banner -->
-          <div class="p-6 rounded-2xl bg-card border border-hairline flex flex-col md:flex-row md:items-center justify-between gap-6">
-            <div class="flex items-start sm:items-center gap-4">
-              <div class="w-12 h-12 rounded-xl bg-canvas border border-strong flex items-center justify-center font-mono text-sm font-semibold text-primary shrink-0">
-                BE//01
-              </div>
-              <div class="space-y-1">
-                <div class="flex flex-wrap items-center gap-2.5">
-                  <h2 id="ws-handle" class="text-lg font-medium text-primary font-mono">console@beairesearch.ca</h2>
-                  <span class="inline-flex items-center gap-1.5 font-mono text-[11px] px-2.5 py-0.5 rounded-full bg-canvas border border-hairline text-primary">
-                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-                    SESSION ACTIVE
-                  </span>
-                </div>
-                <p id="ws-meta" class="font-mono text-xs text-secondary">Auth Method: Credentials • Fingerprint: SHA256:9f86d081...b0f00a08</p>
-              </div>
-            </div>
-
-            <div class="flex items-center gap-2.5">
-              <button onclick="navigateTo('repo')" class="btn-secondary px-4 py-2 rounded-lg text-xs font-mono">
-                Open Repo →
-              </button>
-              <button onclick="signOutResearcher()" class="btn-primary px-4 py-2 rounded-lg text-xs font-mono">
-                Sign Out
-              </button>
-            </div>
-          </div>
-
-          <!-- Workspace Grid -->
-          <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-
-            <!-- Left 7 Cols: API Bearer Tokens -->
-            <div class="lg:col-span-7 rounded-2xl bg-canvas border border-hairline overflow-hidden flex flex-col">
-              <div class="px-6 py-4 border-b border-hairline bg-card/60 flex flex-wrap items-center justify-between gap-3">
-                <div>
-                  <div class="font-mono text-xs font-semibold text-primary">API BEARER TOKENS</div>
-                  <div class="font-mono text-[11px] text-tertiary">Scoped credentials for be-cli &amp; repo.beairesearch.ca</div>
-                </div>
-                <button onclick="generateBearerToken()" class="btn-primary px-3 py-1.5 rounded-lg font-mono text-xs">
-                  + Generate Token
-                </button>
-              </div>
-              <div id="ws-tokens-list" class="divide-y divide-hairline flex-1"></div>
-            </div>
-
-            <!-- Right 5 Cols: SSH Keys & Private Artifact Access Toggles -->
-            <div class="lg:col-span-5 space-y-6">
-
-              <!-- Registered SSH Keys -->
-              <div class="rounded-2xl bg-canvas border border-hairline overflow-hidden">
-                <div class="px-5 py-3.5 border-b border-hairline bg-card/60 flex items-center justify-between">
-                  <span class="font-mono text-xs font-semibold text-primary">REGISTERED SSH KEYS</span>
-                  <button onclick="toggleAddSshForm()" class="font-mono text-[11px] px-2.5 py-1 rounded bg-canvas border border-hairline hover:border-strong text-primary">
-                    + Add Key
-                  </button>
-                </div>
-
-                <!-- Inline Add SSH Key Form -->
-                <form id="ws-add-ssh-form" onsubmit="submitNewSshKey(event)" class="hidden p-4 bg-card border-b border-hairline space-y-2.5">
-                  <input id="new-ssh-label" type="text" required placeholder="Key label (e.g. workstation-arch)" class="w-full px-3 py-1.5 rounded bg-canvas border border-hairline text-xs font-mono text-primary" />
-                  <input id="new-ssh-pub" type="text" required placeholder="ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAA..." class="w-full px-3 py-1.5 rounded bg-canvas border border-hairline text-xs font-mono text-primary" />
-                  <div class="flex justify-end gap-2">
-                    <button type="button" onclick="toggleAddSshForm()" class="px-2.5 py-1 rounded text-[11px] font-mono text-secondary">Cancel</button>
-                    <button type="submit" class="btn-primary px-3 py-1 rounded text-[11px] font-mono">Save Key</button>
-                  </div>
-                </form>
-
-                <div id="ws-ssh-list" class="divide-y divide-hairline"></div>
-              </div>
-
-              <!-- Private Artifact Access Toggles -->
-              <div class="rounded-2xl bg-card border border-hairline p-5 space-y-4">
-                <div class="font-mono text-xs font-semibold text-primary">PRIVATE ARTIFACT ACCESS</div>
-
-                <label class="flex items-center justify-between gap-4 cursor-pointer">
-                  <div>
-                    <div class="text-xs font-medium text-primary">Nightly C++20 Inference Kernels</div>
-                    <div class="text-[11px] text-secondary">Allow bearer token pulls from /nightly/inference/</div>
-                  </div>
-                  <input type="checkbox" checked onchange="showToast('Nightly kernel access updated')" class="w-4 h-4 accent-zinc-900" />
-                </label>
-
-                <label class="flex items-center justify-between gap-4 cursor-pointer pt-3 border-t border-hairline">
-                  <div>
-                    <div class="text-xs font-medium text-primary">Signed Skill Pack Registry Sync</div>
-                    <div class="text-[11px] text-secondary">Enable automated AGPL-3.0 skill pack replication</div>
-                  </div>
-                  <input type="checkbox" checked onchange="showToast('Skill pack registry sync updated')" class="w-4 h-4 accent-zinc-900" />
-                </label>
-              </div>
-            </div>
-
-          </div>
         </div>
       </div>
     </section>
@@ -772,13 +524,13 @@
           <a href="#overview" onclick="navigateTo('overview', event)" class="hover:text-primary transition-colors">Overview</a>
           <a href="#projects" onclick="navigateTo('projects', event)" class="hover:text-primary transition-colors">Projects</a>
           <a href="#dispatches" onclick="navigateTo('dispatches', event)" class="hover:text-primary transition-colors">Dispatches</a>
-          <a href="#repo" onclick="navigateTo('repo', event)" class="hover:text-primary transition-colors">repo.beairesearch.ca</a>
-          <a href="#portal" onclick="navigateTo('portal', event)" class="hover:text-primary transition-colors">Portal</a>
+          <a href="#repo" onclick="navigateTo('repo', event)" class="hover:text-primary transition-colors">GitHub</a>
+          <a href="https://be-ai-research.github.io/be-aero/" target="_blank" rel="noopener" class="hover:text-primary transition-colors">BE-Aero ↗</a>
         </div>
       </div>
 
       <div class="pt-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs font-mono text-tertiary">
-        <div>All primary software repositories licensed under GNU AGPL-3.0. Zero telemetry.</div>
+        <div>Open source. Each repository states its own licence.</div>
         <div class="inline-flex items-center gap-2 text-secondary">
           <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
           <span>SYSTEMS NOMINAL // VICTORIA, BC</span>
@@ -820,9 +572,9 @@
           <pre id="pd-topology" class="p-4 rounded-xl bg-card border border-hairline font-mono text-xs text-primary overflow-x-auto leading-relaxed"></pre>
         </div>
 
-        <div class="space-y-2">
+        <div id="pd-source" class="space-y-2">
           <div class="flex items-center justify-between">
-            <span class="font-mono text-[11px] uppercase tracking-wider text-tertiary">03 // Quickstart CLI</span>
+            <span class="font-mono text-[11px] uppercase tracking-wider text-tertiary">03 // Get the Source</span>
             <button onclick="copyDrawerCli()" class="font-mono text-[11px] px-2.5 py-1 rounded bg-card border border-hairline hover:border-strong text-primary">
               Copy Command
             </button>
@@ -832,59 +584,14 @@
 
         <div class="p-4 rounded-xl bg-card border border-hairline flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
-            <div class="font-mono text-[11px] uppercase tracking-wider text-tertiary">04 // Repository Endpoint</div>
+            <div class="font-mono text-[11px] uppercase tracking-wider text-tertiary">04 // Repository</div>
             <div id="pd-repo" class="font-mono text-xs text-primary mt-1"></div>
           </div>
-          <button onclick="closeProjectDrawer(); navigateTo('repo');" class="btn-primary px-4 py-2 rounded-lg text-xs font-mono">
-            View Binaries →
-          </button>
+          <a id="pd-repo-link" href="#" target="_blank" rel="noopener" class="btn-primary px-4 py-2 rounded-lg text-xs font-mono">
+            Open on GitHub ↗
+          </a>
         </div>
       </div>
-    </div>
-  </div>
-
-  <!-- ===================================================================== -->
-  <!-- MODAL 2: REGISTER NEW PROJECT MODAL                                   -->
-  <!-- ===================================================================== -->
-  <div id="register-project-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4">
-    <div onclick="closeRegisterProjectModal()" class="fixed inset-0 bg-black/40 backdrop-blur-xs"></div>
-    <div class="relative w-full max-w-lg rounded-2xl bg-canvas border border-hairline p-6 sm:p-7 shadow-2xl space-y-5">
-      <div class="flex items-center justify-between pb-3 border-b border-hairline">
-        <div class="font-mono text-xs font-semibold text-primary">REGISTER NEW RESEARCH MODULE</div>
-        <button onclick="closeRegisterProjectModal()" class="text-tertiary hover:text-primary font-mono text-xs">ESC</button>
-      </div>
-
-      <form onsubmit="submitNewProject(event)" class="space-y-4">
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <div class="space-y-1">
-            <label class="block font-mono text-[11px] text-secondary">Module Name</label>
-            <input id="np-title" type="text" required placeholder="BE-VectorStore" class="w-full px-3 py-2 rounded-lg bg-card border border-hairline text-xs font-mono text-primary" />
-          </div>
-          <div class="space-y-1">
-            <label class="block font-mono text-[11px] text-secondary">Category</label>
-            <select id="np-cat" class="w-full px-3 py-2 rounded-lg bg-card border border-hairline text-xs font-mono text-primary">
-              <option value="agentic">Agentic Runtimes</option>
-              <option value="inference">Inference &amp; Engines</option>
-              <option value="os">OS &amp; Infrastructure</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="space-y-1">
-          <label class="block font-mono text-[11px] text-secondary">Technical Summary</label>
-          <textarea id="np-summary" rows="2" required placeholder="Zero-copy mmap HNSW vector index written in C++20." class="w-full px-3 py-2 rounded-lg bg-card border border-hairline text-xs text-primary"></textarea>
-        </div>
-
-        <div class="space-y-1">
-          <label class="block font-mono text-[11px] text-secondary">Stack Tags (comma-separated)</label>
-          <input id="np-stack" type="text" required placeholder="C++20, SIMD, AGPL-3.0" class="w-full px-3 py-2 rounded-lg bg-card border border-hairline text-xs font-mono text-primary" />
-        </div>
-
-        <div class="flex justify-end gap-2 pt-2">
-          <button type="button" onclick="closeRegisterProjectModal()" class="btn-secondary px-4 py-2 rounded-lg text-xs font-mono">Cancel</button>
-          <button type="submit" class="btn-primary px-4 py-2 rounded-lg text-xs font-mono">Append to Grid</button>
-        </div>
-      </form>
     </div>
   </div>
 
@@ -933,20 +640,8 @@
   </div>
 
   <!-- ===================================================================== -->
-  <!-- SIMULATED DOWNLOAD PROGRESS DRAWER & TOAST                            -->
+  <!-- TOAST                                                                 -->
   <!-- ===================================================================== -->
-  <div id="download-drawer" class="fixed bottom-4 right-4 z-50 hidden w-80 rounded-xl bg-canvas border border-strong p-4 shadow-xl space-y-2.5">
-    <div class="flex items-center justify-between font-mono text-xs">
-      <span class="text-primary font-semibold">VERIFIED REPO FETCH</span>
-      <span id="dl-pct" class="text-primary">0%</span>
-    </div>
-    <div id="dl-filename" class="font-mono text-[11px] text-secondary truncate">artifact.tar.zst</div>
-    <div class="w-full h-1.5 rounded-full bg-card overflow-hidden">
-      <div id="dl-bar" class="h-full bg-primary transition-all duration-150" style="width: 0%; background-color: var(--text-primary);"></div>
-    </div>
-    <div id="dl-status" class="font-mono text-[10px] text-tertiary">Verifying ED25519 signature...</div>
-  </div>
-
   <div id="toast-box" class="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 hidden px-4 py-2 rounded-lg btn-primary font-mono text-xs shadow-lg">
     Notification
   </div>
@@ -958,7 +653,52 @@
     // -----------------------------------------------------------------------
     // 1. RESEARCH DATA STORES
     // -----------------------------------------------------------------------
+    const GH_ORG = 'BE-AI-Research';
+    const GH_URL = 'https://github.com/' + GH_ORG;
+    const BE_AERO_SITE = 'https://be-ai-research.github.io/be-aero/';
+
+    // repo: the GitHub repository name, or null when the source is not public yet
     const PROJECTS = [
+      {
+        id: 'be-aero',
+        title: 'BE-Aero Ecosystem',
+        version: '1.2.9 · 1.3.0 beta',
+        category: 'os',
+        categoryLabel: 'OS & Infrastructure',
+        license: 'See repository',
+        summary: 'A modular glass desktop for Windows, Linux and Android. Devices pair directly with no cloud account, share files, media and conversations, and reach home through a relay you host.',
+        stack: ['Windows', 'Linux', 'Android', 'WireGuard'],
+        overview: 'BE-Aero brings BE-Aero Desktop, BE-Aero for Android (Launcher, AI and Files), the self-hosted BE-Aero Relay Server and BE-Aero Link together. Paired devices connect over TLS 1.3, pinned by device identity. Its assistant can operate both the PC and the phone, and with realtime conversation sync either device can use the tools of the other. The relay doubles as a WireGuard hub that puts your devices and home network on one LAN from anywhere.',
+        topology: '[BE-Aero Desktop] <== paired, TLS 1.3 ==> [BE-Aero for Android]\n         \\                                   /\n          +---> [Your Relay Server] <-------+\n                 mailbox · storage · VPN hub',
+        repo: 'be-aero',
+        site: BE_AERO_SITE
+      },
+      {
+        id: 'be-aero-relay',
+        title: 'BE-Aero Relay Server',
+        version: 'v1.0.2',
+        category: 'os',
+        categoryLabel: 'OS & Infrastructure',
+        license: 'AGPL-3.0',
+        summary: 'Self-hosted relay that keeps BE-Aero devices in touch when they are not online together: sealed store-and-forward, shared storage, a File Pool copy and a WireGuard hub.',
+        stack: ['Node.js', 'AES-256-GCM', 'WireGuard', 'Docker'],
+        overview: 'Run it on any always-on machine: a home server, a NAS, a small board or a cloud VM. Messages are sealed for the one device they are meant for and files are encrypted on your devices before upload, so the relay cannot read what it carries. Devices pair with a 6-digit code, and the relay gets none of their permissions.',
+        topology: '[Device A] --sealed--> [Relay mailbox] --> [Device B]\n                         |\n            [Shared storage · File Pool copy · VPN hub]',
+        repo: 'be-aero-relay-server'
+      },
+      {
+        id: 'be-brain-container',
+        title: 'BE Brain Container',
+        version: '',
+        category: 'agentic',
+        categoryLabel: 'Agentic Runtime',
+        license: 'See repository',
+        summary: 'A next generation, hybrid database AI memory server designed for multi-user and shared inference systems.',
+        stack: ['Memory', 'Hybrid database', 'BE-Aero'],
+        overview: 'BE Brain keeps long-term memory for BE-Aero assistants. Through a BE-Aero relay, every paired device shares one memory, and each memory records which device it came from.',
+        topology: '[BE-Aero devices] ---> [Relay] ---> [BE Brain]\n                                      remember · recall · forget',
+        repo: 'be-brain-container'
+      },
       {
         id: 'be-code-redux',
         title: 'BE-Code Redux',
@@ -966,12 +706,24 @@
         category: 'agentic',
         categoryLabel: 'Agentic Runtime',
         license: 'AGPL-3.0',
-        summary: 'Deterministic terminal coding harness with sandboxed AST patching, local git checkpoints, and signed AGPL-3.0 skill packs.',
-        stack: ['Rust', 'Tree-Sitter', 'MCP', 'AGPL-3.0'],
+        summary: 'A modern AI, agentic terminal TUI harness for autonomous computer operations, with sandboxed patching, local git checkpoints and skill packs.',
+        stack: ['Go', 'TUI', 'Skill Packs'],
         overview: 'BE-Code Redux v1.3 provides a zero-telemetry autonomous engineering harness that executes strictly on local hardware. Every file mutation is verified via Tree-Sitter syntax trees and checkpointed into an ephemeral shadow Git index before disk commit.',
         topology: '[Local LLM / GGUF] <--> [BE-Code Sandbox IPC]\n                           |\n         +-----------------+-----------------+\n         v                                   v\n [Tree-Sitter AST Guard]           [Signed Skill Packs]',
-        cli: 'curl -fsSL https://repo.beairesearch.ca/install/be-code.sh | sh',
-        repoUrl: 'https://repo.beairesearch.ca/src/be-code-redux'
+        repo: 'be-code-redux'
+      },
+      {
+        id: 'be-skill-packs',
+        title: 'BE Skill Packs',
+        version: '',
+        category: 'agentic',
+        categoryLabel: 'Agentic Runtime',
+        license: 'See repository',
+        summary: 'Domain expertise for agentic coding harnesses, as folders of Markdown and JSON: always-on rules, knowledge fetched on demand, verification commands and error playbooks.',
+        stack: ['Markdown', 'JSON', 'BE-Code Redux'],
+        overview: 'Skill packs extend BE-Code Redux with reusable workflows, so teams can audit and share them alongside their code.',
+        topology: '[Skill Pack] ---> [BE-Code Redux] ---> [Local model]',
+        repo: 'be-skill-packs'
       },
       {
         id: 'be-ai-engine',
@@ -980,12 +732,11 @@
         category: 'inference',
         categoryLabel: 'Inference Engine',
         license: 'AGPL-3.0',
-        summary: 'C++20 tensor inference runtime with unified Vulkan/CUDA paged KV-cache and deterministic grammar-constrained sampling.',
-        stack: ['C++20', 'Vulkan', 'CUDA', 'GGUF'],
+        summary: 'A distributed multimodal inference fabric that unifies model routing, dynamic cluster topology and cross-modal processing into a single coherent system.',
+        stack: ['Inference', 'Model routing', 'Multimodal'],
         overview: 'Engineered for predictable latency on consumer workstations and edge ARM64 nodes, BE AI Engine implements zero-copy GGUF memory mapping, speculative draft decoding, and finite-state JSON/grammar masking at the logit layer.',
         topology: '[MMAP GGUF Weights] ---> [C++20 Tensor Scheduler]\n                                |\n                +---------------+---------------+\n                v                               v\n       [Vulkan / CUDA Kernels]        [FSM Grammar Mask]',
-        cli: 'be-engine --model ./qwen-coder-32b.gguf --ctx 32768 --port 8080',
-        repoUrl: 'https://repo.beairesearch.ca/src/be-ai-engine'
+        repo: 'be-ai-engine-v1.0'
       },
       {
         id: 'be-agent-runtime',
@@ -998,22 +749,7 @@
         stack: ['Rust', 'Landlock', 'seccomp', 'JSON-RPC'],
         overview: 'BE-Agent Runtime enforces principle-of-least-privilege isolation for autonomous workflows. Each tool invocation spawns inside a dedicated Linux namespace with explicit filesystem and network capability grants.',
         topology: '[Coordinator Actor] ===(JSON-RPC)===> [Worker Supervisor]\n                                              |\n                                    [Landlock + Seccomp Jail]',
-        cli: 'be-agent run --manifest ./workflow.toml --strict-jail',
-        repoUrl: 'https://repo.beairesearch.ca/src/be-agent-runtime'
-      },
-      {
-        id: 'hub-fs',
-        title: 'Hub-FS',
-        version: 'v2.0.2',
-        category: 'os',
-        categoryLabel: 'OS & Infrastructure',
-        license: 'AGPL-3.0',
-        summary: 'Content-addressed FUSE filesystem with automatic ED25519 commit signing and peer-to-peer LAN repository replication.',
-        stack: ['Go', 'FUSE3', 'BLAKE3', 'ED25519'],
-        overview: 'Hub-FS mounts cryptographic research workspaces directly into the POSIX filesystem. Every write snapshot is hashed with BLAKE3 and optionally replicated across trusted LAN nodes without central servers.',
-        topology: '[POSIX App] ---> [/mnt/hubfs (FUSE3)] ---> [BLAKE3 Chunk Store]\n                                                   |\n                                          [LAN Peer Sync Daemon]',
-        cli: 'hubfs mount --workspace lab-core /mnt/hubfs --verify-keys',
-        repoUrl: 'https://repo.beairesearch.ca/src/hub-fs'
+        repo: 'beagent-runtime'
       },
       {
         id: 'be-continuum',
@@ -1026,8 +762,20 @@
         stack: ['C++20', 'SQLite', 'SIMD', 'ONNX'],
         overview: 'BE-Continuum solves long-horizon context drift for local agents by indexing session artifacts into a hybrid temporal-semantic graph stored inside a single portable SQLite file.',
         topology: '[Session Stream] ---> [Chunk & Quantize] ---> [Temporal SQLite Graph]',
-        cli: 'be-continuum index --db ./memory.db --watch ./workspace',
-        repoUrl: 'https://repo.beairesearch.ca/src/be-continuum'
+        repo: null
+      },
+      {
+        id: 'hub-fs',
+        title: 'Hub-FS',
+        version: 'v2.0.2',
+        category: 'os',
+        categoryLabel: 'OS & Infrastructure',
+        license: 'AGPL-3.0',
+        summary: 'Content-addressed FUSE filesystem with automatic ED25519 commit signing and peer-to-peer LAN repository replication.',
+        stack: ['Go', 'FUSE3', 'BLAKE3', 'ED25519'],
+        overview: 'Hub-FS mounts cryptographic research workspaces directly into the POSIX filesystem. Every write snapshot is hashed with BLAKE3 and optionally replicated across trusted LAN nodes without central servers.',
+        topology: '[POSIX App] ---> [/mnt/hubfs (FUSE3)] ---> [BLAKE3 Chunk Store]\n                                                   |\n                                          [LAN Peer Sync Daemon]',
+        repo: null
       },
       {
         id: 'dshell',
@@ -1040,8 +788,7 @@
         stack: ['C', 'Wayland', 'wlroots', 'AGPL-3.0'],
         overview: 'DShell strips away desktop bloat in favor of crisp 1px hairline tiling, instant IPC command palettes, and native inline rendering for agent execution traces.',
         topology: '[DRM / KMS] <--- [DShell wlroots Core] <--- [IPC Control Socket]',
-        cli: 'dshell --config ~/.config/dshell/init.conf',
-        repoUrl: 'https://repo.beairesearch.ca/src/dshell'
+        repo: null
       }
     ];
 
@@ -1052,12 +799,12 @@
         date: '2026-11-16',
         tag: 'ANNOUNCEMENT',
         readTime: '2 min read',
-        title: 'BE-Aero Gets Its Own Site: Modular Desktop, Android Suite & Your Own LAN Anywhere',
-        excerpt: 'A dedicated site for BE-Aero: the modular glass desktop, the Android suite, cross-device media and files, an assistant that controls your PC and phone, and a VPN through your own relay.',
+        title: 'Introducing the BE-Aero Ecosystem: Modular Desktop, Android Suite & Your Own LAN Anywhere',
+        excerpt: 'BE-Aero Desktop, BE-Aero for Android, the self-hosted Relay Server and BE-Aero Link: one ecosystem with cross-device media and files, an assistant that controls your PC and phone, and a VPN through your own relay. Now with its own site.',
         link: 'https://be-ai-research.github.io/be-aero/',
         linkLabel: 'Visit the BE-Aero site',
         paragraphs: [
-          'BE-Aero now has a dedicated site. BE-Aero is a modular desktop built from glass widgets for Windows and Linux, with an Android suite of three apps: BE-Aero Launcher, BE-Aero AI and BE-Aero Files.',
+          'The BE-Aero Ecosystem brings four parts together: BE-Aero Desktop, a modular desktop built from glass widgets for Windows and Linux; BE-Aero for Android, three apps in one install (Launcher, AI and Files); the BE-Aero Relay Server you host yourself; and BE-Aero Link, which puts machines without BE-Aero on your VPN. It now has a dedicated site.',
           'Paired devices work as one set, directly and with no cloud account: shared files and the File Pool, media and volume control from any device, clipboard and notifications. The assistant can operate both the PC and the phone, and with realtime conversation sync either device can use the tools of the other. A relay you host doubles as a WireGuard VPN hub that puts your devices and home network on one LAN from anywhere.',
           'The site also includes a full guide with a setup planner, reference and troubleshooting. Desktop 1.2.9 is available now. The 1.3.0 release with the Android suite is built and not yet published.'
         ]
@@ -1073,7 +820,7 @@
         paragraphs: [
           'BE-Code Redux v1.3 marks a major milestone in local-first autonomous software engineering. Rather than allowing language models to apply unverified text diffs directly to working trees, v1.3 routes every proposed edit through a deterministic Tree-Sitter AST validation pipeline.',
           'Each accepted patch is automatically recorded in an isolated shadow Git reflog before touching disk, enabling instant single-keystroke rollbacks across multi-file refactors.',
-          'Additionally, v1.3 introduces Signed Skill Packs—reproducible YAML+Lua tool bundles signed with ED25519 keys on repo.beairesearch.ca so teams can audit and share domain workflows with zero external network calls.'
+          'Additionally, v1.3 introduces Signed Skill Packs—reproducible YAML+Lua tool bundles signed with ED25519 keys and published on GitHub so teams can audit and share domain workflows with zero external network calls.'
         ]
       },
       {
@@ -1099,7 +846,7 @@
         excerpt: 'A formal position paper outlining BE AI Research architectural principles: zero telemetry, reproducible builds, and reciprocal open-source licensing.',
         paragraphs: [
           'Modern AI tooling increasingly centralizes developer source code, execution traces, and institutional reasoning inside proprietary cloud endpoints. BE AI Research was established to build an uncompromising alternative.',
-          'Every binary distributed via repo.beairesearch.ca is built reproducibly from tagged AGPL-3.0 source trees, operates without outbound telemetry, and empowers individuals and research collectives to retain full sovereignty over their compute stack.'
+          'Every release published on GitHub is built reproducibly from tagged AGPL-3.0 source trees, operates without outbound telemetry, and empowers individuals and research collectives to retain full sovereignty over their compute stack.'
         ]
       },
       {
@@ -1117,87 +864,33 @@
       }
     ];
 
-    const REPO_ARTIFACTS = [
-      {
-        pkg: 'be-code-redux',
-        filename: 'be-code-redux-1.3.0-x86_64-unknown-linux-musl.tar.zst',
-        version: 'v1.3.0',
-        channel: 'stable',
-        platform: 'Linux x86_64',
-        size: '14.2 MB',
-        license: 'AGPL-3.0',
-        sha256: 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'
-      },
-      {
-        pkg: 'be-code-redux',
-        filename: 'be-code-redux-1.3.0-aarch64-unknown-linux-musl.tar.zst',
-        version: 'v1.3.0',
-        channel: 'stable',
-        platform: 'Linux ARM64',
-        size: '13.6 MB',
-        license: 'AGPL-3.0',
-        sha256: '8f434346648f6b96df89dda901c5176b10a6d83961dd3c1ac88b59b2dc327aa4'
-      },
-      {
-        pkg: 'be-code-redux',
-        filename: 'be-code-redux-1.3.0-aarch64-linux-android.tar.xz',
-        version: 'v1.3.0',
-        channel: 'stable',
-        platform: 'Android / Termux',
-        size: '12.9 MB',
-        license: 'AGPL-3.0',
-        sha256: '2c26b46b68ffc68ff99b453c1d30413413422d706483bfa0f98a5e886266e7ae'
-      },
-      {
-        pkg: 'be-ai-engine',
-        filename: 'be-ai-engine-0.9.4-linux-x86_64-vulkan.tar.zst',
-        version: 'v0.9.4',
-        channel: 'stable',
-        platform: 'Linux x86_64',
-        size: '28.4 MB',
-        license: 'AGPL-3.0',
-        sha256: '4b227777d4dd1fc61c6f884f48641d02b4d121d3fd328cb08b5531fcacdabf8a'
-      },
-      {
-        pkg: 'hub-fs',
-        filename: 'hub-fs-2.0.2-linux-arm64-static.tar.zst',
-        version: 'v2.0.2',
-        channel: 'stable',
-        platform: 'Linux ARM64',
-        size: '9.8 MB',
-        license: 'AGPL-3.0',
-        sha256: 'ef2d127de37b942baad06145e54b0c619a1f22327b2ebbcfbec78f5564afe39d'
-      },
-      {
-        pkg: 'be-code-redux-src',
-        filename: 'be-code-redux-1.3.0-source.tar.gz',
-        version: 'v1.3.0',
-        channel: 'stable',
-        platform: 'Source Tarball',
-        size: '4.1 MB',
-        license: 'AGPL-3.0',
-        sha256: '7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451'
-      },
-      {
-        pkg: 'be-code-redux-nightly',
-        filename: 'be-code-redux-1.4.0-nightly.20261113-x86_64.tar.zst',
-        version: 'v1.4.0-dev',
-        channel: 'nightly',
-        platform: 'Linux x86_64',
-        size: '14.8 MB',
-        license: 'AGPL-3.0',
-        sha256: '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08'
-      },
-      {
-        pkg: 'be-ai-engine-nightly',
-        filename: 'be-ai-engine-0.10.0-nightly.20261113-arm64.tar.zst',
-        version: 'v0.10.0-dev',
-        channel: 'nightly',
-        platform: 'Linux ARM64',
-        size: '27.1 MB',
-        license: 'AGPL-3.0',
-        sha256: '1b4f0e9851971998e732078544c96b36c3d01cedf7caa332359d6f1d83567014'
-      }
+    // Saved list, shown if GitHub cannot be reached. Replaced by the live list on load.
+    const REPO_FALLBACK = [
+      { name: 'be-aero', description: '', language: '', pushed: '2026-11-16' },
+      { name: 'sites', description: '', language: '', pushed: '2026-11-16' },
+      { name: 'be-brain-container', description: '', language: '', pushed: '2026-11-15' },
+      { name: 'be-aero-relay-server', description: '', language: '', pushed: '2026-11-13' },
+      { name: 'be-aero-desktop', description: '', language: '', pushed: '2026-11-13' },
+      { name: 'beagent-runtime', description: '', language: '', pushed: '2026-11-08' },
+      { name: 'be-code-redux', description: '', language: '', pushed: '2026-11-04' },
+      { name: 'ShadowCell', description: '', language: '', pushed: '2026-11-03' },
+      { name: 'BE-BanditPet', description: '', language: '', pushed: '2026-11-03' },
+      { name: 'be-skill-packs', description: '', language: '', pushed: '2026-10-30' },
+      { name: 'research-papers', description: '', language: '', pushed: '2026-10-16' },
+      { name: 'be-mobileagent', description: '', language: '', pushed: '2026-10-14' },
+      { name: 'JimaGotchi', description: '', language: '', pushed: '2026-10-10' },
+      { name: 'BE-TFC', description: '', language: '', pushed: '2026-08-11' },
+      { name: 'Neural-Recall-Multimodal-Public', description: '', language: '', pushed: '2026-05-13' },
+      { name: 'doobian-core-public', description: '', language: '', pushed: '2026-05-01' },
+      { name: 'be-ai-engine-v1.0', description: '', language: '', pushed: '2026-03-29' },
+      { name: 'omnispace-canary-channel', description: '', language: '', pushed: '2026-01-11' },
+      { name: 'continuum-community', description: '', language: '', pushed: '2026-01-05' },
+      { name: 'continuum-main', description: '', language: '', pushed: '2026-01-05' },
+      { name: 'odd-projects', description: '', language: '', pushed: '2025-12-01' },
+      { name: 'Benchmark-Reports', description: '', language: '', pushed: '2025-09-04' },
+      { name: 'AI-Toys', description: '', language: '', pushed: '2025-09-01' },
+      { name: 'memory-manager-prompts', description: '', language: '', pushed: '2025-08-14' },
+      { name: 'tool-prompts', description: '', language: '', pushed: '2025-08-10' }
     ];
 
     // -----------------------------------------------------------------------
@@ -1206,23 +899,11 @@
     let currentView = 'overview';
     let selectedProjectCat = 'all';
     let selectedDispatchTag = 'ALL';
-    let selectedRepoChannel = 'stable';
-    let selectedRepoPlatform = 'all';
-    let isOrbitalMoving = false;
     let activeDrawerCli = '';
-    let downloadInterval = null;
+    let repoData = REPO_FALLBACK.slice();
+    let repoLive = false;
 
-    // Portal Auth State
-    let currentUser = null;
-    let bearerTokens = [
-      { id: 'tok-1', name: 'be-cli-workstation-primary', value: 'beai_live_94f8a210c84d...c21a', scope: 'repo:read, skillpacks:sync' },
-      { id: 'tok-2', name: 'hubfs-lan-mirror-01', value: 'beai_live_31b077e9a12f...88e4', scope: 'repo:read, mirror:verify' }
-    ];
-    let registeredSshKeys = [
-      { id: 'ssh-1', label: 'thinkpad-x1-arch', fingerprint: 'SHA256:k9L2mP8xQ4vR7tW1nZ5yB3cF6hJ0dS' }
-    ];
-
-    const VALID_VIEWS = ['overview', 'projects', 'dispatches', 'repo', 'portal'];
+    const VALID_VIEWS = ['overview', 'projects', 'dispatches', 'repo'];
 
     // -----------------------------------------------------------------------
     // 3. MULTI-PAGE VIEW ROUTER
@@ -1285,7 +966,7 @@
     }
 
     // -----------------------------------------------------------------------
-    // 4. THEME & ORBITAL CORE CONTROLS
+    // 4. THEME
     // -----------------------------------------------------------------------
     function toggleTheme() {
       const htmlEl = document.documentElement;
@@ -1300,34 +981,6 @@
         label.textContent = 'Daylight';
         dot.style.backgroundColor = '#FFFFFF';
       }
-    }
-
-    function toggleOrbitalMotion() {
-      isOrbitalMoving = !isOrbitalMoving;
-      const r1 = document.getElementById('orbit-ring-1');
-      const r2 = document.getElementById('orbit-ring-2');
-      const r3 = document.getElementById('orbit-ring-3');
-      const btn = document.getElementById('orbit-motion-btn');
-
-      if (isOrbitalMoving) {
-        r1.classList.add('orbit-animate');
-        r2.classList.add('orbit-animate-reverse');
-        r3.classList.add('orbit-animate');
-        btn.textContent = 'Motion: Orbital';
-      } else {
-        r1.classList.remove('orbit-animate');
-        r2.classList.remove('orbit-animate-reverse');
-        r3.classList.remove('orbit-animate');
-        btn.textContent = 'Motion: Static';
-      }
-    }
-
-    function setOrbitalReadout(text) {
-      document.getElementById('orbital-readout').textContent = text;
-    }
-
-    function resetOrbitalReadout() {
-      document.getElementById('orbital-readout').textContent = 'Hover orbital nodes to inspect';
     }
 
     // -----------------------------------------------------------------------
@@ -1356,7 +1009,8 @@
         const matchQ = !q ||
           p.title.toLowerCase().includes(q) ||
           p.summary.toLowerCase().includes(q) ||
-          p.stack.join(' ').toLowerCase().includes(q);
+          p.stack.join(' ').toLowerCase().includes(q) ||
+          (p.repo || '').toLowerCase().includes(q);
         return matchCat && matchQ;
       });
 
@@ -1370,7 +1024,7 @@
             '<div class="space-y-4">' +
               '<div class="flex items-center justify-between font-mono text-xs">' +
                 '<span class="text-tertiary">' + escapeHtml(p.categoryLabel) + '</span>' +
-                '<span class="px-2 py-0.5 rounded bg-card border border-hairline text-primary">' + escapeHtml(p.version) + '</span>' +
+                (p.version ? '<span class="px-2 py-0.5 rounded bg-card border border-hairline text-primary">' + escapeHtml(p.version) + '</span>' : '') +
               '</div>' +
               '<div>' +
                 '<h2 class="text-xl font-medium text-primary tracking-tight">' + escapeHtml(p.title) + '</h2>' +
@@ -1379,7 +1033,9 @@
               '<div class="flex flex-wrap gap-1.5 pt-1">' + tagsHtml + '</div>' +
             '</div>' +
             '<div class="pt-5 mt-6 border-t border-hairline flex items-center justify-between">' +
-              '<span class="font-mono text-xs text-tertiary">' + escapeHtml(p.license) + '</span>' +
+              (p.repo
+                ? '<a href="' + GH_URL + '/' + encodeURIComponent(p.repo) + '" target="_blank" rel="noopener" class="font-mono text-xs text-secondary hover:text-primary">GitHub ↗</a>'
+                : '<span class="font-mono text-xs text-tertiary">Source not yet public</span>') +
               '<button onclick="openProjectDrawer(\'' + p.id + '\')" class="inline-flex items-center gap-1.5 font-mono text-xs font-medium text-primary hover:underline">' +
                 '<span>Inspect Architecture</span>' +
                 '<span>→</span>' +
@@ -1389,32 +1045,26 @@
         );
       }).join('');
 
-      // Extensible Slot Card
-      html += (
-        '<button onclick="openRegisterProjectModal()" class="rounded-xl border border-dashed border-hairline hover:border-strong bg-card/40 hover:bg-card p-6 flex flex-col items-center justify-center text-center min-h-[250px] transition-all group">' +
-          '<div class="w-10 h-10 rounded-full bg-canvas border border-hairline group-hover:border-strong flex items-center justify-center font-mono text-lg text-primary mb-3">+</div>' +
-          '<div class="font-mono text-xs font-medium text-primary">Register New Project Slot</div>' +
-          '<p class="text-xs text-tertiary mt-1 max-w-[220px]">Append an open-source research module to this shell workspace</p>' +
-        '</button>'
-      );
-
-      grid.innerHTML = html;
-      const metric = document.getElementById('metric-projects-count');
-      if (metric) metric.textContent = String(PROJECTS.length).padStart(2, '0');
+      grid.innerHTML = html || '<div class="font-mono text-xs text-tertiary py-10">No projects match the active filter.</div>';
     }
 
     function openProjectDrawer(id) {
       const p = PROJECTS.find(function(item) { return item.id === id; });
       if (!p) return;
 
-      document.getElementById('pd-version').textContent = p.version;
+      document.getElementById('pd-version').textContent = p.version || 'source';
       document.getElementById('pd-license').textContent = p.license;
       document.getElementById('pd-title').textContent = p.title;
       document.getElementById('pd-overview').textContent = p.overview;
       document.getElementById('pd-topology').textContent = p.topology;
-      document.getElementById('pd-cli').textContent = p.cli;
-      document.getElementById('pd-repo').textContent = p.repoUrl;
-      activeDrawerCli = p.cli;
+      const repoUrl = p.repo ? GH_URL + '/' + p.repo : '';
+      activeDrawerCli = p.repo ? 'git clone ' + repoUrl + '.git' : '';
+      document.getElementById('pd-source').classList.toggle('hidden', !p.repo);
+      document.getElementById('pd-cli').textContent = activeDrawerCli;
+      document.getElementById('pd-repo').textContent = p.repo ? 'github.com/' + GH_ORG + '/' + p.repo : 'The source for this project is not public yet.';
+      const repoLink = document.getElementById('pd-repo-link');
+      repoLink.classList.toggle('hidden', !p.repo);
+      if (p.repo) repoLink.href = repoUrl;
 
       document.getElementById('project-drawer').classList.remove('hidden');
     }
@@ -1424,45 +1074,7 @@
     }
 
     function copyDrawerCli() {
-      copyToClipboard(activeDrawerCli, 'Quickstart CLI copied');
-    }
-
-    function openRegisterProjectModal() {
-      document.getElementById('register-project-modal').classList.remove('hidden');
-    }
-
-    function closeRegisterProjectModal() {
-      document.getElementById('register-project-modal').classList.add('hidden');
-    }
-
-    function submitNewProject(event) {
-      event.preventDefault();
-      const title = document.getElementById('np-title').value.trim();
-      const cat = document.getElementById('np-cat').value;
-      const summary = document.getElementById('np-summary').value.trim();
-      const stackRaw = document.getElementById('np-stack').value.trim();
-      const catLabels = { agentic: 'Agentic Runtime', inference: 'Inference Engine', os: 'OS & Infrastructure' };
-      const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
-
-      PROJECTS.push({
-        id: slug + '-' + Date.now(),
-        title: title,
-        version: 'v0.1.0-alpha',
-        category: cat,
-        categoryLabel: catLabels[cat] || 'Research Module',
-        license: 'AGPL-3.0',
-        summary: summary,
-        stack: stackRaw.split(',').map(function(s) { return s.trim(); }).filter(Boolean),
-        overview: summary,
-        topology: '[Local Host] <---> [' + title + ' Core]\n                         |\n                [AGPL-3.0 Artifact Store]',
-        cli: 'curl -fsSL https://repo.beairesearch.ca/install/' + slug + '.sh | sh',
-        repoUrl: 'https://repo.beairesearch.ca/src/' + slug
-      });
-
-      event.target.reset();
-      closeRegisterProjectModal();
-      renderProjects();
-      showToast('Registered module: ' + title);
+      if (activeDrawerCli) copyToClipboard(activeDrawerCli, 'Clone command copied');
     }
 
     // -----------------------------------------------------------------------
@@ -1549,302 +1161,69 @@
     }
 
     // -----------------------------------------------------------------------
-    // 7. DOWNLOAD REPOSITORY VIEW
+    // 7. GITHUB REPOSITORIES VIEW (live from the GitHub API, saved list as fallback)
     // -----------------------------------------------------------------------
-    function setRepoChannel(channel) {
-      selectedRepoChannel = channel;
-      const stableBtn = document.getElementById('chan-stable');
-      const nightlyBtn = document.getElementById('chan-nightly');
-
-      if (channel === 'stable') {
-        stableBtn.className = 'px-3.5 py-1.5 rounded-md text-xs font-mono font-medium btn-primary transition-colors';
-        nightlyBtn.className = 'px-3.5 py-1.5 rounded-md text-xs font-mono font-medium text-secondary hover:text-primary transition-colors';
-      } else {
-        nightlyBtn.className = 'px-3.5 py-1.5 rounded-md text-xs font-mono font-medium btn-primary transition-colors';
-        stableBtn.className = 'px-3.5 py-1.5 rounded-md text-xs font-mono font-medium text-secondary hover:text-primary transition-colors';
-      }
-      renderRepoTable();
-    }
-
-    function setRepoPlatform(plat) {
-      selectedRepoPlatform = plat;
-      document.querySelectorAll('.rplat-btn').forEach(function(btn) {
-        if (btn.getAttribute('data-rplat') === plat) {
-          btn.classList.remove('btn-secondary');
-          btn.classList.add('btn-primary');
-        } else {
-          btn.classList.remove('btn-primary');
-          btn.classList.add('btn-secondary');
-        }
-      });
-      renderRepoTable();
+    function loadRepos() {
+      if (!window.fetch) { renderRepoTable(); return; }
+      fetch('https://api.github.com/users/' + GH_ORG + '/repos?per_page=100&sort=pushed', { headers: { 'Accept': 'application/vnd.github+json' } })
+        .then(function(r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+        .then(function(list) {
+          repoData = list.filter(function(r) { return !r.private && !r.archived; }).map(function(r) {
+            return {
+              name: r.name,
+              description: r.description || '',
+              language: r.language || '',
+              pushed: (r.pushed_at || '').slice(0, 10),
+              stars: r.stargazers_count || 0,
+              fork: !!r.fork,
+              homepage: r.homepage || ''
+            };
+          });
+          repoLive = true;
+          renderRepoTable();
+        })
+        .catch(function() { renderRepoTable(); });
     }
 
     function renderRepoTable() {
       const tbody = document.getElementById('repo-tbody');
+      const status = document.getElementById('repo-status');
       const q = (document.getElementById('repo-search').value || '').trim().toLowerCase();
 
-      const filtered = REPO_ARTIFACTS.filter(function(item) {
-        const matchChan = item.channel === selectedRepoChannel;
-        const matchPlat = selectedRepoPlatform === 'all' || item.platform === selectedRepoPlatform;
-        const matchQ = !q ||
-          item.filename.toLowerCase().includes(q) ||
-          item.pkg.toLowerCase().includes(q) ||
-          item.sha256.toLowerCase().includes(q);
-        return matchChan && matchPlat && matchQ;
+      const filtered = repoData.filter(function(r) {
+        return !q || r.name.toLowerCase().includes(q) ||
+          (r.description || '').toLowerCase().includes(q) ||
+          (r.language || '').toLowerCase().includes(q);
       });
 
+      status.textContent = (repoLive ? 'Live from GitHub · ' : 'Saved list · ') + repoData.length + ' public repositories' +
+        (q ? ' · ' + filtered.length + ' shown' : '');
+
       if (filtered.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="7" class="py-10 px-4 text-center font-mono text-xs text-tertiary">No binary artifacts match the selected channel/platform filter.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="4" class="py-10 px-4 text-center font-mono text-xs text-tertiary">No repositories match that filter.</td></tr>';
         return;
       }
 
-      tbody.innerHTML = filtered.map(function(item) {
-        const shortHash = item.sha256.slice(0, 12) + '...' + item.sha256.slice(-6);
-        const curlCmd = 'curl -fLO https://repo.beairesearch.ca/' + item.channel + '/' + item.filename;
-
+      tbody.innerHTML = filtered.map(function(r) {
+        const url = GH_URL + '/' + encodeURIComponent(r.name);
+        const clone = 'git clone ' + GH_URL + '/' + r.name + '.git';
         return (
           '<tr class="hover:bg-card/60 transition-colors">' +
             '<td class="py-3.5 px-4">' +
-              '<div class="font-mono text-xs font-medium text-primary">' + escapeHtml(item.pkg) + '</div>' +
-              '<div class="font-mono text-[11px] text-tertiary truncate max-w-[240px]">' + escapeHtml(item.filename) + '</div>' +
+              '<a href="' + url + '" target="_blank" rel="noopener" class="font-mono text-xs font-medium text-primary hover:underline">' + escapeHtml(r.name) + '</a>' +
+              (r.fork ? ' <span class="font-mono text-[10px] px-1.5 py-0.5 rounded bg-card border border-hairline text-tertiary">fork</span>' : '') +
+              (r.description ? '<div class="text-xs text-secondary mt-0.5 max-w-xl">' + escapeHtml(r.description) + '</div>' : '') +
             '</td>' +
-            '<td class="py-3.5 px-4 font-mono text-xs text-primary">' + escapeHtml(item.version) + '</td>' +
-            '<td class="py-3.5 px-4 font-mono text-xs text-secondary">' + escapeHtml(item.platform) + '</td>' +
-            '<td class="py-3.5 px-4 font-mono text-xs text-secondary">' + escapeHtml(item.size) + '</td>' +
-            '<td class="py-3.5 px-4 font-mono text-xs text-tertiary">' + escapeHtml(item.license) + '</td>' +
+            '<td class="py-3.5 px-4 font-mono text-xs text-secondary">' + escapeHtml(r.language || '–') + '</td>' +
+            '<td class="py-3.5 px-4 font-mono text-xs text-secondary whitespace-nowrap">' + escapeHtml(r.pushed || '–') + '</td>' +
             '<td class="py-3.5 px-4">' +
-              '<div class="flex flex-wrap items-center gap-1.5">' +
-                '<button onclick="copyToClipboard(\'' + item.sha256 + '\', \'SHA-256 copied\')" class="px-2 py-1 rounded bg-card border border-hairline hover:border-strong font-mono text-[11px] text-secondary hover:text-primary" title="' + item.sha256 + '">' +
-                  'SHA256: ' + shortHash +
-                '</button>' +
-                '<button onclick="copyToClipboard(\'' + curlCmd + '\', \'cURL command copied\')" class="px-2 py-1 rounded bg-card border border-hairline hover:border-strong font-mono text-[11px] text-primary">' +
-                  'Copy cURL' +
-                '</button>' +
+              '<div class="flex flex-wrap items-center justify-end gap-1.5">' +
+                '<button data-clone="' + escapeHtml(clone) + '" onclick="copyToClipboard(this.getAttribute(\'data-clone\'), \'Clone command copied\')" class="px-2 py-1 rounded bg-card border border-hairline hover:border-strong font-mono text-[11px] text-secondary hover:text-primary">Copy git clone</button>' +
+                '<a href="' + url + '/releases" target="_blank" rel="noopener" class="px-2 py-1 rounded bg-card border border-hairline hover:border-strong font-mono text-[11px] text-secondary hover:text-primary">Releases</a>' +
+                '<a href="' + url + '" target="_blank" rel="noopener" class="btn-primary px-3 py-1 rounded-lg font-mono text-[11px] transition-colors">Open ↗</a>' +
               '</div>' +
             '</td>' +
-            '<td class="py-3.5 px-4 text-right">' +
-              '<button onclick="startSimulatedDownload(\'' + item.filename + '\')" class="btn-primary px-3 py-1.5 rounded-lg font-mono text-xs transition-colors">' +
-                'Download' +
-              '</button>' +
-            '</td>' +
           '</tr>'
-        );
-      }).join('');
-    }
-
-    function startSimulatedDownload(filename) {
-      if (downloadInterval) clearInterval(downloadInterval);
-      const drawer = document.getElementById('download-drawer');
-      const bar = document.getElementById('dl-bar');
-      const pct = document.getElementById('dl-pct');
-      const status = document.getElementById('dl-status');
-
-      document.getElementById('dl-filename').textContent = filename;
-      bar.style.width = '0%';
-      pct.textContent = '0%';
-      status.textContent = 'Connecting to repo.beairesearch.ca...';
-      drawer.classList.remove('hidden');
-
-      let progress = 0;
-      downloadInterval = setInterval(function() {
-        progress += 20;
-        if (progress > 100) progress = 100;
-        bar.style.width = progress + '%';
-        pct.textContent = progress + '%';
-
-        if (progress === 40) status.textContent = 'Streaming static archive...';
-        if (progress === 80) status.textContent = 'Verifying SHA-256 & ED25519 signature...';
-        if (progress >= 100) {
-          clearInterval(downloadInterval);
-          status.textContent = 'Verified & ready in local cache.';
-          setTimeout(function() {
-            drawer.classList.add('hidden');
-          }, 2200);
-        }
-      }, 240);
-    }
-
-    // -----------------------------------------------------------------------
-    // 8. USER LOGIN & RESEARCHER PORTAL (#portal)
-    // -----------------------------------------------------------------------
-    function switchAuthMode(mode) {
-      const credTab = document.getElementById('tab-auth-cred');
-      const sshTab = document.getElementById('tab-auth-ssh');
-      const credForm = document.getElementById('form-auth-cred');
-      const sshForm = document.getElementById('form-auth-ssh');
-
-      if (mode === 'credentials') {
-        credTab.className = 'py-3 px-4 text-center font-medium text-primary border-b-2 border-strong bg-canvas transition-colors';
-        sshTab.className = 'py-3 px-4 text-center text-secondary hover:text-primary border-b-2 border-transparent transition-colors';
-        credForm.classList.remove('hidden');
-        sshForm.classList.add('hidden');
-      } else {
-        sshTab.className = 'py-3 px-4 text-center font-medium text-primary border-b-2 border-strong bg-canvas transition-colors';
-        credTab.className = 'py-3 px-4 text-center text-secondary hover:text-primary border-b-2 border-transparent transition-colors';
-        sshForm.classList.remove('hidden');
-        credForm.classList.add('hidden');
-      }
-    }
-
-    function submitCredentialsLogin(event) {
-      event.preventDefault();
-      const raw = document.getElementById('input-handle').value.trim();
-      const handle = raw.indexOf('@') !== -1 ? raw : (raw || 'console') + '@beairesearch.ca';
-      completePortalLogin(handle, 'Argon2id Credentials');
-    }
-
-    function submitSshLogin(event) {
-      event.preventDefault();
-      const keyVal = document.getElementById('input-ssh-key').value.trim();
-      const parts = keyVal.split(/\s+/);
-      const handle = (parts[2] && parts[2].indexOf('@') !== -1) ? parts[2] : 'ed25519-node@beairesearch.ca';
-      completePortalLogin(handle, 'ED25519 Key Challenge');
-    }
-
-    function populateSampleSshKey() {
-      document.getElementById('input-ssh-key').value =
-        'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl console@beairesearch.ca';
-    }
-
-    function signInDemoResearcher() {
-      completePortalLogin('console@beairesearch.ca', 'Demo Researcher Session');
-    }
-
-    function completePortalLogin(handle, method) {
-      currentUser = {
-        handle: handle,
-        method: method
-      };
-      updatePortalView();
-      showToast('Signed in as ' + handle);
-    }
-
-    function signOutResearcher() {
-      currentUser = null;
-      updatePortalView();
-      showToast('Signed out of Researcher Portal');
-    }
-
-    function updatePortalView() {
-      const loggedOut = document.getElementById('portal-logged-out');
-      const loggedIn = document.getElementById('portal-logged-in');
-      const navLabel = document.getElementById('auth-status-label');
-      const navDot = document.getElementById('auth-status-dot');
-      const overviewBadge = document.getElementById('overview-portal-badge');
-
-      if (currentUser) {
-        loggedOut.classList.add('hidden');
-        loggedIn.classList.remove('hidden');
-
-        document.getElementById('ws-handle').textContent = currentUser.handle;
-        document.getElementById('ws-meta').textContent =
-          'Auth Method: ' + currentUser.method + ' • Fingerprint: SHA256:9f86d081...b0f00a08';
-
-        const shortName = currentUser.handle.split('@')[0];
-        navLabel.textContent = shortName;
-        navDot.classList.remove('bg-zinc-400');
-        navDot.classList.add('bg-emerald-500');
-        overviewBadge.textContent = 'Active: ' + currentUser.handle;
-
-        renderWorkspaceTokens();
-        renderWorkspaceSshKeys();
-      } else {
-        loggedIn.classList.add('hidden');
-        loggedOut.classList.remove('hidden');
-
-        navLabel.textContent = 'Login / Portal';
-        navDot.classList.remove('bg-emerald-500');
-        navDot.classList.add('bg-zinc-400');
-        overviewBadge.textContent = 'Session: Guest';
-      }
-    }
-
-    function renderWorkspaceTokens() {
-      const container = document.getElementById('ws-tokens-list');
-      if (bearerTokens.length === 0) {
-        container.innerHTML = '<div class="p-6 font-mono text-xs text-tertiary">No active bearer tokens. Generate one above.</div>';
-        return;
-      }
-
-      container.innerHTML = bearerTokens.map(function(tok) {
-        return (
-          '<div class="p-4 px-6 flex flex-col sm:flex-row sm:items-center justify-between gap-3">' +
-            '<div class="space-y-0.5">' +
-              '<div class="font-mono text-xs font-medium text-primary">' + escapeHtml(tok.name) + '</div>' +
-              '<div class="font-mono text-[11px] text-secondary">' + escapeHtml(tok.value) + ' • <span class="text-tertiary">' + escapeHtml(tok.scope) + '</span></div>' +
-            '</div>' +
-            '<div class="flex items-center gap-2">' +
-              '<button onclick="copyToClipboard(\'' + tok.value + '\', \'Bearer token copied\')" class="px-2.5 py-1 rounded bg-card border border-hairline hover:border-strong font-mono text-[11px] text-primary">Copy</button>' +
-              '<button onclick="revokeBearerToken(\'' + tok.id + '\')" class="px-2.5 py-1 rounded bg-card border border-hairline hover:border-strong font-mono text-[11px] text-secondary hover:text-primary">Revoke</button>' +
-            '</div>' +
-          '</div>'
-        );
-      }).join('');
-    }
-
-    function generateBearerToken() {
-      const randHex = Math.random().toString(16).substring(2, 8);
-      bearerTokens.unshift({
-        id: 'tok-' + Date.now(),
-        name: 'be-node-' + randHex.slice(0, 4),
-        value: 'beai_live_' + randHex + '90a1...f4d2',
-        scope: 'repo:read, skillpacks:sync'
-      });
-      renderWorkspaceTokens();
-      showToast('Generated new API bearer token');
-    }
-
-    function revokeBearerToken(id) {
-      bearerTokens = bearerTokens.filter(function(t) { return t.id !== id; });
-      renderWorkspaceTokens();
-      showToast('Bearer token revoked');
-    }
-
-    function toggleAddSshForm() {
-      document.getElementById('ws-add-ssh-form').classList.toggle('hidden');
-    }
-
-    function submitNewSshKey(event) {
-      event.preventDefault();
-      const label = document.getElementById('new-ssh-label').value.trim();
-      const pub = document.getElementById('new-ssh-pub').value.trim();
-      const hashPreview = pub.slice(-16).replace(/[^a-zA-Z0-9]/g, 'X');
-
-      registeredSshKeys.push({
-        id: 'ssh-' + Date.now(),
-        label: label,
-        fingerprint: 'SHA256:' + hashPreview + '9mQ2vR7tW1n'
-      });
-
-      event.target.reset();
-      toggleAddSshForm();
-      renderWorkspaceSshKeys();
-      showToast('Added SSH public key: ' + label);
-    }
-
-    function removeSshKey(id) {
-      registeredSshKeys = registeredSshKeys.filter(function(k) { return k.id !== id; });
-      renderWorkspaceSshKeys();
-      showToast('Removed SSH key');
-    }
-
-    function renderWorkspaceSshKeys() {
-      const container = document.getElementById('ws-ssh-list');
-      if (registeredSshKeys.length === 0) {
-        container.innerHTML = '<div class="p-4 font-mono text-xs text-tertiary">No SSH keys registered.</div>';
-        return;
-      }
-
-      container.innerHTML = registeredSshKeys.map(function(k) {
-        return (
-          '<div class="p-4 px-5 flex items-center justify-between gap-3">' +
-            '<div class="min-w-0">' +
-              '<div class="font-mono text-xs font-medium text-primary truncate">' + escapeHtml(k.label) + '</div>' +
-              '<div class="font-mono text-[11px] text-tertiary truncate">' + escapeHtml(k.fingerprint) + '</div>' +
-            '</div>' +
-            '<button onclick="removeSshKey(\'' + k.id + '\')" class="font-mono text-[11px] px-2 py-0.5 rounded bg-card border border-hairline hover:border-strong text-secondary hover:text-primary shrink-0">Remove</button>' +
-          '</div>'
         );
       }).join('');
     }
@@ -1871,16 +1250,15 @@
       const list = document.getElementById('cmd-list');
 
       const entries = [
-        { tag: 'PAGE', title: 'Overview', sub: 'Lab mission & orbital core', run: function() { closeCommandModal(); navigateTo('overview'); } },
+        { tag: 'PAGE', title: 'Overview', sub: 'Lab mission & the BE-Aero Ecosystem', run: function() { closeCommandModal(); navigateTo('overview'); } },
         { tag: 'PAGE', title: 'Projects Index', sub: 'Explore open-source systems', run: function() { closeCommandModal(); navigateTo('projects'); } },
         { tag: 'PAGE', title: 'News & Dispatches', sub: 'Architecture papers & release logs', run: function() { closeCommandModal(); navigateTo('dispatches'); } },
-        { tag: 'PAGE', title: 'Download Repository', sub: 'repo.beairesearch.ca static binaries', run: function() { closeCommandModal(); navigateTo('repo'); } },
-        { tag: 'PORTAL', title: 'Researcher Portal', sub: 'Sign in, bearer tokens & SSH keys', run: function() { closeCommandModal(); navigateTo('portal'); } },
-        { tag: 'NEW', title: 'BE-Aero site', sub: 'Modular glass desktop for Windows, Linux and Android', run: function() { closeCommandModal(); window.open('https://be-ai-research.github.io/be-aero/', '_blank', 'noopener'); } }
+        { tag: 'PAGE', title: 'GitHub Repositories', sub: 'Every public BE AI Research repository', run: function() { closeCommandModal(); navigateTo('repo'); } },
+        { tag: 'NEW', title: 'BE-Aero Ecosystem', sub: 'Desktop, Android suite, Relay Server and Link', run: function() { closeCommandModal(); window.open('https://be-ai-research.github.io/be-aero/', '_blank', 'noopener'); } }
       ].concat(PROJECTS.map(function(p) {
         return {
           tag: 'PROJECT',
-          title: p.title + ' (' + p.version + ')',
+          title: p.title + (p.version ? ' (' + p.version + ')' : ''),
           sub: p.summary,
           run: function() { closeCommandModal(); navigateTo('projects'); openProjectDrawer(p.id); }
         };
@@ -1950,7 +1328,6 @@
         openCommandModal();
       } else if (e.key === 'Escape') {
         closeProjectDrawer();
-        closeRegisterProjectModal();
         closeDispatchModal();
         closeCommandModal();
       }
@@ -1969,7 +1346,7 @@
       renderProjects();
       renderDispatches();
       renderRepoTable();
-      updatePortalView();
+      loadRepos();
 
       const initialHash = window.location.hash.replace('#', '');
       navigateTo(VALID_VIEWS.includes(initialHash) ? initialHash : 'overview');
