@@ -1,0 +1,1967 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BE AI Research — Sovereign Local-First Systems Lab</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-canvas: #FFFFFF;
+      --bg-card: #FAFAFA;
+      --bg-elevated: #F4F4F5;
+      --text-primary: #0F0F0F;
+      --text-secondary: #52525B;
+      --text-tertiary: #71717A;
+      --border-hairline: #E4E4E7;
+      --border-strong: #18181B;
+      --btn-bg: #0F0F0F;
+      --btn-fg: #FFFFFF;
+      --btn-hover: #27272A;
+    }
+
+    html.obsidian {
+      --bg-canvas: #0A0A0B;
+      --bg-card: #111113;
+      --bg-elevated: #18181B;
+      --text-primary: #FAFAFA;
+      --text-secondary: #A1A1AA;
+      --text-tertiary: #71717A;
+      --border-hairline: #27272A;
+      --border-strong: #E4E4E7;
+      --btn-bg: #FAFAFA;
+      --btn-fg: #0A0A0B;
+      --btn-hover: #D4D4D8;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg-canvas);
+      color: var(--text-primary);
+      transition: background-color 0.2s ease, color 0.2s ease;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .font-mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .bg-canvas { background-color: var(--bg-canvas); }
+    .bg-card { background-color: var(--bg-card); }
+    .bg-elevated { background-color: var(--bg-elevated); }
+    .text-primary { color: var(--text-primary); }
+    .text-secondary { color: var(--text-secondary); }
+    .text-tertiary { color: var(--text-tertiary); }
+    .border-hairline { border-color: var(--border-hairline); }
+    .border-strong { border-color: var(--border-strong); }
+
+    .btn-primary {
+      background-color: var(--btn-bg);
+      color: var(--btn-fg);
+      border: 1px solid var(--btn-bg);
+    }
+    .btn-primary:hover {
+      background-color: var(--btn-hover);
+      border-color: var(--btn-hover);
+    }
+
+    .btn-secondary {
+      background-color: var(--bg-canvas);
+      color: var(--text-primary);
+      border: 1px solid var(--border-hairline);
+    }
+    .btn-secondary:hover {
+      border-color: var(--border-strong);
+      background-color: var(--bg-card);
+    }
+
+    .page-view {
+      display: none;
+    }
+    .page-view.active {
+      display: block;
+      animation: pageFadeIn 0.18s ease-out;
+    }
+
+    @keyframes pageFadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes spinSlow {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .orbit-animate {
+      transform-origin: 60px 60px;
+      animation: spinSlow 24s linear infinite;
+    }
+    .orbit-animate-reverse {
+      transform-origin: 60px 60px;
+      animation: spinSlow 32s linear infinite reverse;
+    }
+
+    /* Custom subtle scrollbars */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg-canvas); }
+    ::-webkit-scrollbar-thumb { background: var(--border-hairline); border-radius: 9999px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--text-tertiary); }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <!-- ===================================================================== -->
+  <!-- 1. COMPACT TOP NAVIGATION BAR (40px / h-10)                           -->
+  <!-- ===================================================================== -->
+  <header class="sticky top-0 z-40 w-full bg-canvas/95 backdrop-blur border-b border-hairline">
+    <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-10 flex items-center justify-between gap-2">
+
+      <!-- Left: Geometric Orbital Atom SVG + Wordmark -->
+      <a href="#overview" onclick="navigateTo('overview', event)" class="flex items-center gap-2 group shrink-0 focus:outline-none">
+        <svg class="w-6 h-6 text-primary transition-transform duration-300 group-hover:scale-105" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="BE AI Research Emblem">
+          <ellipse cx="60" cy="60" rx="19" ry="50" stroke="currentColor" stroke-width="2.8" />
+          <ellipse cx="60" cy="60" rx="19" ry="50" transform="rotate(60 60 60)" stroke="currentColor" stroke-width="2.8" />
+          <ellipse cx="60" cy="60" rx="19" ry="50" transform="rotate(120 60 60)" stroke="currentColor" stroke-width="2.8" />
+          <circle cx="43.5" cy="34" r="3.4" fill="currentColor" />
+          <circle cx="88" cy="44" r="3.4" fill="currentColor" />
+          <circle cx="88" cy="76" r="3.4" fill="currentColor" />
+          <circle cx="60" cy="60" r="12.5" stroke="currentColor" stroke-width="2.4" fill="var(--bg-canvas)" />
+          <path d="M60 47.5C66.9 47.5 72.5 53.1 72.5 60C72.5 66.9 66.9 72.5 60 72.5C63.45 72.5 66.25 69.7 66.25 66.25C66.25 62.8 63.45 60 60 60C56.55 60 53.75 57.2 53.75 53.75C53.75 50.3 56.55 47.5 60 47.5Z" fill="currentColor" />
+          <circle cx="60" cy="53.75" r="2.1" fill="var(--bg-canvas)" />
+          <circle cx="60" cy="66.25" r="2.1" fill="currentColor" />
+        </svg>
+        <span class="text-[13px] font-light tracking-[-0.015em] text-primary">BE AI Research</span>
+        <span class="hidden xl:inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-mono bg-card border border-hairline text-tertiary">
+          <span class="w-1 h-1 rounded-full bg-emerald-500"></span>
+          beairesearch.ca
+        </span>
+      </a>
+
+      <!-- Center: Desktop Page Tabs -->
+      <nav class="hidden md:flex items-center h-full gap-5" aria-label="Primary Navigation">
+        <a href="#overview" data-nav="overview" onclick="navigateTo('overview', event)" class="nav-tab relative h-full inline-flex items-center text-xs font-medium text-primary transition-colors">
+          Overview
+          <span class="nav-bar absolute bottom-0 left-0 right-0 h-[1.5px] bg-current opacity-100"></span>
+        </a>
+        <a href="#projects" data-nav="projects" onclick="navigateTo('projects', event)" class="nav-tab relative h-full inline-flex items-center text-xs font-normal text-secondary hover:text-primary transition-colors">
+          Projects
+          <span class="nav-bar absolute bottom-0 left-0 right-0 h-[1.5px] bg-current opacity-0"></span>
+        </a>
+        <a href="#dispatches" data-nav="dispatches" onclick="navigateTo('dispatches', event)" class="nav-tab relative h-full inline-flex items-center text-xs font-normal text-secondary hover:text-primary transition-colors">
+          News &amp; Dispatches
+          <span class="nav-bar absolute bottom-0 left-0 right-0 h-[1.5px] bg-current opacity-0"></span>
+        </a>
+        <a href="#repo" data-nav="repo" onclick="navigateTo('repo', event)" class="nav-tab relative h-full inline-flex items-center text-xs font-normal text-secondary hover:text-primary transition-colors">
+          Download Repo
+          <span class="nav-bar absolute bottom-0 left-0 right-0 h-[1.5px] bg-current opacity-0"></span>
+        </a>
+      </nav>
+
+      <!-- Right: Quick Search, Theme Toggle & Login / Portal -->
+      <div class="flex items-center gap-1.5">
+        <button onclick="openCommandModal()" class="inline-flex items-center gap-1.5 px-2 py-1 rounded bg-card border border-hairline hover:border-strong text-[11px] text-secondary hover:text-primary transition-colors" title="Quick Jump (Ctrl+K)">
+          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z" />
+          </svg>
+          <span class="hidden lg:inline font-mono">Jump</span>
+        </button>
+
+        <button onclick="toggleTheme()" class="inline-flex items-center gap-1.5 px-2 py-1 rounded bg-card border border-hairline hover:border-strong text-[11px] font-mono text-secondary hover:text-primary transition-colors" title="Toggle Daylight / Obsidian Theme">
+          <span id="theme-dot" class="w-1.5 h-1.5 rounded-full border border-current bg-white"></span>
+          <span id="theme-text" class="hidden sm:inline">Daylight</span>
+        </button>
+
+        <a href="#portal" data-nav="portal" onclick="navigateTo('portal', event)" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded btn-primary text-[11px] font-mono transition-colors">
+          <span id="auth-status-dot" class="w-1.5 h-1.5 rounded-full bg-zinc-400"></span>
+          <span id="auth-status-label">Login / Portal</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Responsive Mobile Navigation Strip (visible < md) -->
+    <nav class="md:hidden border-t border-hairline bg-card/80 px-3 py-1.5 flex items-center gap-2 overflow-x-auto" aria-label="Mobile Navigation">
+      <a href="#overview" data-nav="overview" onclick="navigateTo('overview', event)" class="mobile-tab shrink-0 px-2.5 py-1 rounded text-[11px] font-mono btn-primary">Overview</a>
+      <a href="#projects" data-nav="projects" onclick="navigateTo('projects', event)" class="mobile-tab shrink-0 px-2.5 py-1 rounded text-[11px] font-mono btn-secondary">Projects</a>
+      <a href="#dispatches" data-nav="dispatches" onclick="navigateTo('dispatches', event)" class="mobile-tab shrink-0 px-2.5 py-1 rounded text-[11px] font-mono btn-secondary">Dispatches</a>
+      <a href="#repo" data-nav="repo" onclick="navigateTo('repo', event)" class="mobile-tab shrink-0 px-2.5 py-1 rounded text-[11px] font-mono btn-secondary">Download Repo</a>
+      <a href="#portal" data-nav="portal" onclick="navigateTo('portal', event)" class="mobile-tab shrink-0 px-2.5 py-1 rounded text-[11px] font-mono btn-secondary">Portal</a>
+    </nav>
+  </header>
+
+  <!-- ===================================================================== -->
+  <!-- MAIN VIEWPORT (DEDICATED MULTI-PAGE CONTAINERS)                       -->
+  <!-- ===================================================================== -->
+  <main class="flex-1">
+
+    <!-- =================================================================== -->
+    <!-- VIEW 1: OVERVIEW (#overview)                                        -->
+    <!-- =================================================================== -->
+    <section id="view-overview" class="page-view active relative overflow-hidden">
+      <!-- Subtle Large Watermark Orbital Geometry -->
+      <div class="pointer-events-none absolute -right-28 -top-24 w-[580px] h-[580px] opacity-[0.045] text-primary">
+        <svg viewBox="0 0 120 120" fill="none" class="w-full h-full">
+          <ellipse cx="60" cy="60" rx="19" ry="50" stroke="currentColor" stroke-width="0.9" />
+          <ellipse cx="60" cy="60" rx="19" ry="50" transform="rotate(60 60 60)" stroke="currentColor" stroke-width="0.9" />
+          <ellipse cx="60" cy="60" rx="19" ry="50" transform="rotate(120 60 60)" stroke="currentColor" stroke-width="0.9" />
+          <circle cx="60" cy="60" r="12.5" stroke="currentColor" stroke-width="0.9" />
+        </svg>
+      </div>
+
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20 relative">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+
+          <!-- Left Editorial Mission -->
+          <div class="lg:col-span-7 space-y-6">
+            <div class="inline-flex items-center gap-2.5 px-3 py-1 rounded-full bg-card border border-hairline text-xs font-mono text-secondary">
+              <span class="text-primary font-semibold">LAB // OVERVIEW</span>
+              <span class="text-hairline">|</span>
+              <span>Sovereign Open-Source Systems Research</span>
+            </div>
+
+            <h1 class="text-3xl sm:text-5xl lg:text-[3.2rem] font-light tracking-[-0.03em] text-primary leading-[1.12]">
+              Sovereign, Local-First Systems &amp; Artificial Intelligence Research.
+            </h1>
+
+            <p class="text-base sm:text-lg text-secondary font-normal leading-relaxed max-w-2xl">
+              BE AI Research engineers deterministic inference runtimes, isolated autonomous agent harnesses, and distributed meta-operating shells built to run locally with zero cloud dependency—licensed openly under <span class="font-mono text-sm text-primary font-medium">AGPL-3.0</span>.
+            </p>
+
+            <div class="flex flex-wrap items-center gap-3 pt-2">
+              <button onclick="navigateTo('projects')" class="btn-primary inline-flex items-center gap-2.5 px-5 py-2.5 rounded-lg text-sm font-medium transition-colors">
+                <span>Explore Projects</span>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </button>
+
+              <button onclick="navigateTo('repo')" class="btn-secondary inline-flex items-center gap-2.5 px-5 py-2.5 rounded-lg text-sm font-medium transition-colors">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5m0 0l5-5m-5 5V3" />
+                </svg>
+                <span>Download Repo</span>
+              </button>
+
+              <button onclick="navigateTo('portal')" class="btn-secondary inline-flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-mono transition-colors">
+                <span>Researcher Portal →</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Right Interactive Orbital Atom Showcase -->
+          <div class="lg:col-span-5 flex flex-col items-center justify-center">
+            <div class="relative w-full max-w-[350px] aspect-square rounded-2xl bg-card border border-hairline flex flex-col items-center justify-center p-6 select-none">
+              <span class="absolute top-3.5 left-4 font-mono text-[10px] text-tertiary tracking-wider">FIG. 01 // ORBITAL CORE</span>
+              <button onclick="toggleOrbitalMotion()" id="orbit-motion-btn" class="absolute top-3 right-3.5 font-mono text-[10px] px-2 py-0.5 rounded bg-canvas border border-hairline text-secondary hover:text-primary hover:border-strong transition-colors">
+                Motion: Static
+              </button>
+
+              <svg class="w-56 h-56 sm:w-60 sm:h-60 text-primary" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="60" cy="60" r="53" stroke="currentColor" stroke-opacity="0.14" stroke-width="0.6" stroke-dasharray="2 3" />
+
+                <g id="orbit-ring-1">
+                  <ellipse cx="60" cy="60" rx="19" ry="50" stroke="currentColor" stroke-width="1.5" />
+                  <circle class="cursor-pointer" cx="43.5" cy="34" r="2.8" fill="currentColor" onmouseenter="setOrbitalReadout('Node 01: Agentic Runtimes & IPC')" onmouseleave="resetOrbitalReadout()" />
+                </g>
+
+                <g id="orbit-ring-2">
+                  <ellipse cx="60" cy="60" rx="19" ry="50" transform="rotate(60 60 60)" stroke="currentColor" stroke-width="1.5" />
+                  <circle class="cursor-pointer" cx="88" cy="44" r="2.8" fill="currentColor" onmouseenter="setOrbitalReadout('Node 02: C++20 Local Inference')" onmouseleave="resetOrbitalReadout()" />
+                </g>
+
+                <g id="orbit-ring-3">
+                  <ellipse cx="60" cy="60" rx="19" ry="50" transform="rotate(120 60 60)" stroke="currentColor" stroke-width="1.5" />
+                  <circle class="cursor-pointer" cx="88" cy="76" r="2.8" fill="currentColor" onmouseenter="setOrbitalReadout('Node 03: Distributed Meta-OS Shell')" onmouseleave="resetOrbitalReadout()" />
+                </g>
+
+                <g class="cursor-pointer" onmouseenter="setOrbitalReadout('Core: Sovereign Local-First Kernel')" onmouseleave="resetOrbitalReadout()">
+                  <circle cx="60" cy="60" r="12.5" stroke="currentColor" stroke-width="1.5" fill="var(--bg-canvas)" />
+                  <path d="M60 47.5C66.9 47.5 72.5 53.1 72.5 60C72.5 66.9 66.9 72.5 60 72.5C63.45 72.5 66.25 69.7 66.25 66.25C66.25 62.8 63.45 60 60 60C56.55 60 53.75 57.2 53.75 53.75C53.75 50.3 56.55 47.5 60 47.5Z" fill="currentColor" />
+                  <circle cx="60" cy="53.75" r="2" fill="var(--bg-canvas)" />
+                  <circle cx="60" cy="66.25" r="2" fill="currentColor" />
+                </g>
+              </svg>
+
+              <div class="absolute bottom-3.5 inset-x-4 flex items-center justify-between font-mono text-[11px] text-secondary border-t border-hairline pt-2.5">
+                <span id="orbital-readout">Hover orbital nodes to inspect</span>
+                <span class="text-tertiary">3-AXIS</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4-Metric Architectural Strip -->
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-px bg-hairline border border-hairline rounded-xl overflow-hidden mt-12">
+          <div class="bg-canvas p-5">
+            <div class="font-mono text-[11px] uppercase tracking-wider text-tertiary">License</div>
+            <div class="font-mono text-base sm:text-lg font-medium text-primary mt-1">AGPL-3.0</div>
+          </div>
+          <div class="bg-canvas p-5">
+            <div class="font-mono text-[11px] uppercase tracking-wider text-tertiary">Architecture</div>
+            <div class="font-mono text-base sm:text-lg font-medium text-primary mt-1">Local-First</div>
+          </div>
+          <div class="bg-canvas p-5">
+            <div class="font-mono text-[11px] uppercase tracking-wider text-tertiary">Active Modules</div>
+            <div id="metric-projects-count" class="font-mono text-base sm:text-lg font-medium text-primary mt-1">06</div>
+          </div>
+          <div class="bg-canvas p-5">
+            <div class="font-mono text-[11px] uppercase tracking-wider text-tertiary">Mirror Endpoint</div>
+            <div class="font-mono text-base sm:text-lg font-medium text-primary mt-1">repo.beairesearch.ca</div>
+          </div>
+        </div>
+
+        <!-- Quick-Launch Directory Cards -->
+        <div class="mt-12 space-y-4">
+          <div class="flex items-center justify-between">
+            <span class="font-mono text-xs uppercase tracking-widest text-tertiary">Architecture Directory // Dedicated Views</span>
+            <span class="font-mono text-xs text-tertiary">Select subsystem</span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <button onclick="navigateTo('projects')" class="text-left p-5 rounded-xl bg-canvas border border-hairline hover:border-strong transition-all group flex flex-col justify-between space-y-4">
+              <div class="space-y-2">
+                <div class="flex items-center justify-between font-mono text-[11px] text-tertiary">
+                  <span>01 // SYSTEMS</span>
+                  <span class="text-primary group-hover:translate-x-0.5 transition-transform">→</span>
+                </div>
+                <div class="text-base font-medium text-primary">Projects Index</div>
+                <p class="text-xs text-secondary leading-relaxed">
+                  Inspect BE-Code Redux v1.3, BE AI Engine, Hub-FS v2.0, and system topologies.
+                </p>
+              </div>
+              <div class="font-mono text-[11px] text-tertiary pt-2 border-t border-hairline">6 Active Modules</div>
+            </button>
+
+            <button onclick="navigateTo('dispatches')" class="text-left p-5 rounded-xl bg-canvas border border-hairline hover:border-strong transition-all group flex flex-col justify-between space-y-4">
+              <div class="space-y-2">
+                <div class="flex items-center justify-between font-mono text-[11px] text-tertiary">
+                  <span>02 // LOGS</span>
+                  <span class="text-primary group-hover:translate-x-0.5 transition-transform">→</span>
+                </div>
+                <div class="text-base font-medium text-primary">News &amp; Dispatches</div>
+                <p class="text-xs text-secondary leading-relaxed">
+                  Read architecture papers, release changelogs, and AGPL-3.0 governance notes.
+                </p>
+              </div>
+              <div class="font-mono text-[11px] text-tertiary pt-2 border-t border-hairline">Latest: 2026-11-10</div>
+            </button>
+
+            <button onclick="navigateTo('repo')" class="text-left p-5 rounded-xl bg-canvas border border-hairline hover:border-strong transition-all group flex flex-col justify-between space-y-4">
+              <div class="space-y-2">
+                <div class="flex items-center justify-between font-mono text-[11px] text-tertiary">
+                  <span>03 // ARTIFACTS</span>
+                  <span class="text-primary group-hover:translate-x-0.5 transition-transform">→</span>
+                </div>
+                <div class="text-base font-medium text-primary">Download Repository</div>
+                <p class="text-xs text-secondary leading-relaxed">
+                  Fetch signed static binaries, SHA-256 checksums, and cURL install commands.
+                </p>
+              </div>
+              <div class="font-mono text-[11px] text-tertiary pt-2 border-t border-hairline">repo.beairesearch.ca</div>
+            </button>
+
+            <button onclick="navigateTo('portal')" class="text-left p-5 rounded-xl bg-card border border-hairline hover:border-strong transition-all group flex flex-col justify-between space-y-4">
+              <div class="space-y-2">
+                <div class="flex items-center justify-between font-mono text-[11px] text-tertiary">
+                  <span>04 // ACCESS</span>
+                  <span class="text-primary group-hover:translate-x-0.5 transition-transform">→</span>
+                </div>
+                <div class="text-base font-medium text-primary">Researcher Portal</div>
+                <p class="text-xs text-secondary leading-relaxed">
+                  Authenticate via credentials or ED25519 key to manage tokens and nightly sync.
+                </p>
+              </div>
+              <div id="overview-portal-badge" class="font-mono text-[11px] text-primary pt-2 border-t border-hairline">Session: Guest</div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- VIEW 2: PROJECTS (#projects)                                        -->
+    <!-- =================================================================== -->
+    <section id="view-projects" class="page-view py-12 sm:py-16">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-8 border-b border-hairline">
+          <div class="space-y-2">
+            <div class="flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-tertiary">
+              <button onclick="navigateTo('overview')" class="hover:text-primary transition-colors">Overview</button>
+              <span>/</span>
+              <span class="text-primary">01 // Systems Index</span>
+            </div>
+            <h1 class="text-2xl sm:text-4xl font-light tracking-[-0.025em] text-primary">Core Research Projects</h1>
+            <p class="text-sm text-secondary max-w-xl">
+              Modular open-source systems spanning autonomous agent harnesses, C++20 local inference engines, and sovereign operating shells.
+            </p>
+          </div>
+
+          <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+            <input id="project-search" type="text" oninput="renderProjects()" placeholder="Filter systems..." class="w-full sm:w-48 px-3 py-1.5 rounded-lg bg-canvas border border-hairline focus:border-strong focus:outline-none text-xs font-mono text-primary placeholder:text-tertiary" />
+
+            <div class="flex flex-wrap items-center gap-1.5">
+              <button onclick="setProjectCategory('all')" data-pcat="all" class="pcat-btn px-3 py-1.5 rounded-lg text-xs font-medium btn-primary transition-colors">All</button>
+              <button onclick="setProjectCategory('agentic')" data-pcat="agentic" class="pcat-btn px-3 py-1.5 rounded-lg text-xs font-medium btn-secondary transition-colors">Agentic</button>
+              <button onclick="setProjectCategory('inference')" data-pcat="inference" class="pcat-btn px-3 py-1.5 rounded-lg text-xs font-medium btn-secondary transition-colors">Inference</button>
+              <button onclick="setProjectCategory('os')" data-pcat="os" class="pcat-btn px-3 py-1.5 rounded-lg text-xs font-medium btn-secondary transition-colors">OS &amp; Infra</button>
+            </div>
+          </div>
+        </div>
+
+        <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8"></div>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- VIEW 3: NEWS & RESEARCH DISPATCHES (#dispatches)                    -->
+    <!-- =================================================================== -->
+    <section id="view-dispatches" class="page-view py-12 sm:py-16">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-8 border-b border-hairline">
+          <div class="space-y-2">
+            <div class="flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-tertiary">
+              <button onclick="navigateTo('overview')" class="hover:text-primary transition-colors">Overview</button>
+              <span>/</span>
+              <span class="text-primary">02 // Technical Logs</span>
+            </div>
+            <h1 class="text-2xl sm:text-4xl font-light tracking-[-0.025em] text-primary">News &amp; Research Dispatches</h1>
+            <p class="text-sm text-secondary max-w-xl">
+              Architecture notes, release changelogs, and white papers published directly from BE AI Research engineering workspaces.
+            </p>
+          </div>
+
+          <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+            <input id="dispatch-search" type="text" oninput="renderDispatches()" placeholder="Search dispatches..." class="w-full sm:w-48 px-3 py-1.5 rounded-lg bg-canvas border border-hairline focus:border-strong focus:outline-none text-xs font-mono text-primary placeholder:text-tertiary" />
+
+            <div class="flex flex-wrap items-center gap-1.5">
+              <button onclick="setDispatchTag('ALL')" data-dtag="ALL" class="dtag-btn px-3 py-1.5 rounded-lg text-xs font-mono btn-primary transition-colors">ALL</button>
+              <button onclick="setDispatchTag('RELEASE')" data-dtag="RELEASE" class="dtag-btn px-3 py-1.5 rounded-lg text-xs font-mono btn-secondary transition-colors">RELEASE</button>
+              <button onclick="setDispatchTag('ARCHITECTURE')" data-dtag="ARCHITECTURE" class="dtag-btn px-3 py-1.5 rounded-lg text-xs font-mono btn-secondary transition-colors">ARCHITECTURE</button>
+              <button onclick="setDispatchTag('WHITE PAPER')" data-dtag="WHITE PAPER" class="dtag-btn px-3 py-1.5 rounded-lg text-xs font-mono btn-secondary transition-colors">WHITE PAPER</button>
+            </div>
+          </div>
+        </div>
+
+        <div id="dispatches-list" class="divide-y divide-hairline border-b border-hairline"></div>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- VIEW 4: DOWNLOAD REPOSITORY (#repo)                                 -->
+    <!-- =================================================================== -->
+    <section id="view-repo" class="page-view py-12 sm:py-16">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 pb-8">
+          <div class="space-y-2">
+            <div class="flex flex-wrap items-center gap-2 font-mono text-xs uppercase tracking-widest text-tertiary">
+              <button onclick="navigateTo('overview')" class="hover:text-primary transition-colors">Overview</button>
+              <span>/</span>
+              <span class="text-primary">03 // Repository</span>
+              <span class="px-2 py-0.5 rounded bg-card border border-hairline text-primary lowercase">repo.beairesearch.ca</span>
+            </div>
+            <h1 class="text-2xl sm:text-4xl font-light tracking-[-0.025em] text-primary">Download Repository</h1>
+            <p class="text-sm text-secondary max-w-2xl">
+              Cryptographically hashed static binaries, cross-compiled ARM64 builds, and signed AGPL-3.0 source tarballs ready for air-gapped or local deployment.
+            </p>
+          </div>
+
+          <!-- Channel Selector -->
+          <div class="inline-flex items-center p-1 rounded-lg bg-card border border-hairline self-start">
+            <button onclick="setRepoChannel('stable')" id="chan-stable" class="px-3.5 py-1.5 rounded-md text-xs font-mono font-medium btn-primary transition-colors">
+              Channel: Stable
+            </button>
+            <button onclick="setRepoChannel('nightly')" id="chan-nightly" class="px-3.5 py-1.5 rounded-md text-xs font-mono font-medium text-secondary hover:text-primary transition-colors">
+              Channel: Nightly
+            </button>
+          </div>
+        </div>
+
+        <!-- Platform Filter Bar & Search -->
+        <div class="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 p-4 rounded-t-xl bg-card border border-hairline">
+          <div class="flex flex-wrap items-center gap-1.5">
+            <button onclick="setRepoPlatform('all')" data-rplat="all" class="rplat-btn px-3 py-1.5 rounded-md text-xs font-mono btn-primary transition-colors">All Platforms</button>
+            <button onclick="setRepoPlatform('Linux x86_64')" data-rplat="Linux x86_64" class="rplat-btn px-3 py-1.5 rounded-md text-xs font-mono btn-secondary transition-colors">Linux x86_64</button>
+            <button onclick="setRepoPlatform('Linux ARM64')" data-rplat="Linux ARM64" class="rplat-btn px-3 py-1.5 rounded-md text-xs font-mono btn-secondary transition-colors">Linux ARM64</button>
+            <button onclick="setRepoPlatform('Android / Termux')" data-rplat="Android / Termux" class="rplat-btn px-3 py-1.5 rounded-md text-xs font-mono btn-secondary transition-colors">Android / Termux</button>
+            <button onclick="setRepoPlatform('Source Tarball')" data-rplat="Source Tarball" class="rplat-btn px-3 py-1.5 rounded-md text-xs font-mono btn-secondary transition-colors">Source Tarball</button>
+          </div>
+
+          <input id="repo-search" type="text" oninput="renderRepoTable()" placeholder="Filter package or SHA-256..." class="w-full md:w-64 px-3 py-1.5 rounded-lg bg-canvas border border-hairline focus:border-strong focus:outline-none text-xs font-mono text-primary placeholder:text-tertiary" />
+        </div>
+
+        <!-- Binary Table -->
+        <div class="overflow-x-auto border-x border-b border-hairline rounded-b-xl bg-canvas">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="border-b border-hairline bg-card/60 font-mono text-[11px] uppercase tracking-wider text-tertiary">
+                <th class="py-3.5 px-4 font-medium">Package</th>
+                <th class="py-3.5 px-4 font-medium">Version</th>
+                <th class="py-3.5 px-4 font-medium">Platform</th>
+                <th class="py-3.5 px-4 font-medium">Size</th>
+                <th class="py-3.5 px-4 font-medium">License</th>
+                <th class="py-3.5 px-4 font-medium">Verification &amp; CLI</th>
+                <th class="py-3.5 px-4 font-medium text-right">Artifact</th>
+              </tr>
+            </thead>
+            <tbody id="repo-tbody" class="divide-y divide-hairline text-sm"></tbody>
+          </table>
+        </div>
+
+        <div class="mt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs font-mono text-tertiary px-1">
+          <span>GPG Signing Key: <span class="text-secondary">0xBE41A900C2F718E4 (ED25519)</span></span>
+          <span>All artifacts reproducible from tagged Git commits</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- VIEW 5: USER LOGIN & RESEARCHER PORTAL (#portal)                    -->
+    <!-- =================================================================== -->
+    <section id="view-portal" class="page-view py-12 sm:py-16">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-8 border-b border-hairline">
+          <div class="space-y-2">
+            <div class="flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-tertiary">
+              <button onclick="navigateTo('overview')" class="hover:text-primary transition-colors">Overview</button>
+              <span>/</span>
+              <span class="text-primary">04 // Researcher Portal</span>
+            </div>
+            <h1 class="text-2xl sm:text-4xl font-light tracking-[-0.025em] text-primary">Collective Access &amp; Node Authentication</h1>
+            <p class="text-sm text-secondary max-w-2xl">
+              Sign in to issue scoped API bearer tokens, manage ED25519 SSH keys for Hub-FS parity mirrors, and configure private nightly artifact access.
+            </p>
+          </div>
+          <div class="font-mono text-xs text-tertiary">Zero-Telemetry Auth // Local Session</div>
+        </div>
+
+        <!-- LOGGED OUT: AUTHENTICATION TERMINAL -->
+        <div id="portal-logged-out" class="mt-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+
+          <div class="lg:col-span-7 rounded-2xl bg-canvas border border-hairline overflow-hidden">
+            <!-- Auth Tabs -->
+            <div class="grid grid-cols-2 border-b border-hairline bg-card/60 font-mono text-xs">
+              <button onclick="switchAuthMode('credentials')" id="tab-auth-cred" class="py-3 px-4 text-center font-medium text-primary border-b-2 border-strong bg-canvas transition-colors">
+                Credentials Login
+              </button>
+              <button onclick="switchAuthMode('ssh')" id="tab-auth-ssh" class="py-3 px-4 text-center text-secondary hover:text-primary border-b-2 border-transparent transition-colors">
+                SSH / ED25519 Challenge
+              </button>
+            </div>
+
+            <div class="p-6 sm:p-8">
+              <!-- Form 1: Credentials Login -->
+              <form id="form-auth-cred" onsubmit="submitCredentialsLogin(event)" class="space-y-5">
+                <div class="space-y-1.5">
+                  <label for="input-handle" class="block font-mono text-xs uppercase tracking-wider text-secondary">Researcher Handle or Email</label>
+                  <input id="input-handle" type="text" required placeholder="console@beairesearch.ca" class="w-full px-3.5 py-2.5 rounded-lg bg-card border border-hairline focus:border-strong focus:outline-none font-mono text-xs text-primary placeholder:text-tertiary" />
+                </div>
+
+                <div class="space-y-1.5">
+                  <div class="flex items-center justify-between">
+                    <label for="input-password" class="block font-mono text-xs uppercase tracking-wider text-secondary">Access Passphrase</label>
+                    <span class="font-mono text-[11px] text-tertiary">ARGON2ID-256</span>
+                  </div>
+                  <input id="input-password" type="password" required placeholder="••••••••••••••••" class="w-full px-3.5 py-2.5 rounded-lg bg-card border border-hairline focus:border-strong focus:outline-none font-mono text-xs text-primary placeholder:text-tertiary" />
+                </div>
+
+                <div class="flex flex-wrap items-center justify-between gap-3 pt-2">
+                  <button type="submit" class="btn-primary px-5 py-2.5 rounded-lg text-xs font-mono font-medium transition-colors">
+                    Authenticate Session →
+                  </button>
+                  <button type="button" onclick="signInDemoResearcher()" class="btn-secondary px-4 py-2.5 rounded-lg text-xs font-mono transition-colors">
+                    Sign In as Demo Researcher
+                  </button>
+                </div>
+              </form>
+
+              <!-- Form 2: SSH / ED25519 Challenge -->
+              <form id="form-auth-ssh" onsubmit="submitSshLogin(event)" class="hidden space-y-5">
+                <div class="p-3.5 rounded-lg bg-card border border-hairline font-mono text-xs space-y-1">
+                  <div class="text-tertiary">ACTIVE CHALLENGE NONCE:</div>
+                  <div class="text-primary break-all">beai-challenge-v1:98f4c10e7d3b2a51:beairesearch.ca</div>
+                </div>
+
+                <div class="space-y-1.5">
+                  <label for="input-ssh-key" class="block font-mono text-xs uppercase tracking-wider text-secondary">ED25519 Public Key</label>
+                  <textarea id="input-ssh-key" rows="3" required placeholder="ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl console@beairesearch.ca" class="w-full p-3 rounded-lg bg-card border border-hairline focus:border-strong focus:outline-none font-mono text-xs text-primary placeholder:text-tertiary"></textarea>
+                </div>
+
+                <div class="flex flex-wrap items-center justify-between gap-3 pt-1">
+                  <button type="submit" class="btn-primary px-5 py-2.5 rounded-lg text-xs font-mono font-medium transition-colors">
+                    Verify ED25519 Key →
+                  </button>
+                  <button type="button" onclick="populateSampleSshKey()" class="btn-secondary px-3.5 py-2 rounded-lg text-xs font-mono transition-colors">
+                    Insert Sample ED25519 Key
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <!-- Right Info Column -->
+          <div class="lg:col-span-5 space-y-4">
+            <div class="p-6 rounded-2xl bg-card border border-hairline space-y-4">
+              <div class="flex items-center justify-between font-mono text-xs">
+                <span class="text-primary font-semibold">THE COLLECTIVE // ACCESS TIER</span>
+                <span class="px-2 py-0.5 rounded bg-canvas border border-hairline text-primary">AGPL-3.0</span>
+              </div>
+              <p class="text-xs text-secondary leading-relaxed">
+                Public static binaries on <span class="font-mono text-primary">repo.beairesearch.ca</span> remain freely accessible without registration. Authenticating unlocks:
+              </p>
+              <ul class="space-y-2.5 text-xs text-secondary font-mono">
+                <li class="flex items-start gap-2">
+                  <span class="text-primary">01.</span>
+                  <span>Scoped bearer tokens for <code class="text-primary">be-code</code> CLI Skill Pack synchronization</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-primary">02.</span>
+                  <span>ED25519 public key registration for Hub-FS mirror replication</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-primary">03.</span>
+                  <span>Private nightly inference kernel &amp; weight build access toggles</span>
+                </li>
+              </ul>
+            </div>
+
+            <div class="p-5 rounded-2xl bg-canvas border border-hairline flex items-center justify-between font-mono text-xs">
+              <div>
+                <div class="text-tertiary">INSTANT PREVIEW</div>
+                <div class="text-primary mt-0.5">Test Researcher Workspace</div>
+              </div>
+              <button onclick="signInDemoResearcher()" class="btn-primary px-3.5 py-2 rounded-lg text-xs">
+                Demo Sign-In
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- LOGGED IN: RESEARCHER WORKSPACE DASHBOARD -->
+        <div id="portal-logged-in" class="hidden mt-10 space-y-8">
+
+          <!-- Active Session Banner -->
+          <div class="p-6 rounded-2xl bg-card border border-hairline flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <div class="flex items-start sm:items-center gap-4">
+              <div class="w-12 h-12 rounded-xl bg-canvas border border-strong flex items-center justify-center font-mono text-sm font-semibold text-primary shrink-0">
+                BE//01
+              </div>
+              <div class="space-y-1">
+                <div class="flex flex-wrap items-center gap-2.5">
+                  <h2 id="ws-handle" class="text-lg font-medium text-primary font-mono">console@beairesearch.ca</h2>
+                  <span class="inline-flex items-center gap-1.5 font-mono text-[11px] px-2.5 py-0.5 rounded-full bg-canvas border border-hairline text-primary">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                    SESSION ACTIVE
+                  </span>
+                </div>
+                <p id="ws-meta" class="font-mono text-xs text-secondary">Auth Method: Credentials • Fingerprint: SHA256:9f86d081...b0f00a08</p>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-2.5">
+              <button onclick="navigateTo('repo')" class="btn-secondary px-4 py-2 rounded-lg text-xs font-mono">
+                Open Repo →
+              </button>
+              <button onclick="signOutResearcher()" class="btn-primary px-4 py-2 rounded-lg text-xs font-mono">
+                Sign Out
+              </button>
+            </div>
+          </div>
+
+          <!-- Workspace Grid -->
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+
+            <!-- Left 7 Cols: API Bearer Tokens -->
+            <div class="lg:col-span-7 rounded-2xl bg-canvas border border-hairline overflow-hidden flex flex-col">
+              <div class="px-6 py-4 border-b border-hairline bg-card/60 flex flex-wrap items-center justify-between gap-3">
+                <div>
+                  <div class="font-mono text-xs font-semibold text-primary">API BEARER TOKENS</div>
+                  <div class="font-mono text-[11px] text-tertiary">Scoped credentials for be-cli &amp; repo.beairesearch.ca</div>
+                </div>
+                <button onclick="generateBearerToken()" class="btn-primary px-3 py-1.5 rounded-lg font-mono text-xs">
+                  + Generate Token
+                </button>
+              </div>
+              <div id="ws-tokens-list" class="divide-y divide-hairline flex-1"></div>
+            </div>
+
+            <!-- Right 5 Cols: SSH Keys & Private Artifact Access Toggles -->
+            <div class="lg:col-span-5 space-y-6">
+
+              <!-- Registered SSH Keys -->
+              <div class="rounded-2xl bg-canvas border border-hairline overflow-hidden">
+                <div class="px-5 py-3.5 border-b border-hairline bg-card/60 flex items-center justify-between">
+                  <span class="font-mono text-xs font-semibold text-primary">REGISTERED SSH KEYS</span>
+                  <button onclick="toggleAddSshForm()" class="font-mono text-[11px] px-2.5 py-1 rounded bg-canvas border border-hairline hover:border-strong text-primary">
+                    + Add Key
+                  </button>
+                </div>
+
+                <!-- Inline Add SSH Key Form -->
+                <form id="ws-add-ssh-form" onsubmit="submitNewSshKey(event)" class="hidden p-4 bg-card border-b border-hairline space-y-2.5">
+                  <input id="new-ssh-label" type="text" required placeholder="Key label (e.g. workstation-arch)" class="w-full px-3 py-1.5 rounded bg-canvas border border-hairline text-xs font-mono text-primary" />
+                  <input id="new-ssh-pub" type="text" required placeholder="ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAA..." class="w-full px-3 py-1.5 rounded bg-canvas border border-hairline text-xs font-mono text-primary" />
+                  <div class="flex justify-end gap-2">
+                    <button type="button" onclick="toggleAddSshForm()" class="px-2.5 py-1 rounded text-[11px] font-mono text-secondary">Cancel</button>
+                    <button type="submit" class="btn-primary px-3 py-1 rounded text-[11px] font-mono">Save Key</button>
+                  </div>
+                </form>
+
+                <div id="ws-ssh-list" class="divide-y divide-hairline"></div>
+              </div>
+
+              <!-- Private Artifact Access Toggles -->
+              <div class="rounded-2xl bg-card border border-hairline p-5 space-y-4">
+                <div class="font-mono text-xs font-semibold text-primary">PRIVATE ARTIFACT ACCESS</div>
+
+                <label class="flex items-center justify-between gap-4 cursor-pointer">
+                  <div>
+                    <div class="text-xs font-medium text-primary">Nightly C++20 Inference Kernels</div>
+                    <div class="text-[11px] text-secondary">Allow bearer token pulls from /nightly/inference/</div>
+                  </div>
+                  <input type="checkbox" checked onchange="showToast('Nightly kernel access updated')" class="w-4 h-4 accent-zinc-900" />
+                </label>
+
+                <label class="flex items-center justify-between gap-4 cursor-pointer pt-3 border-t border-hairline">
+                  <div>
+                    <div class="text-xs font-medium text-primary">Signed Skill Pack Registry Sync</div>
+                    <div class="text-[11px] text-secondary">Enable automated AGPL-3.0 skill pack replication</div>
+                  </div>
+                  <input type="checkbox" checked onchange="showToast('Skill pack registry sync updated')" class="w-4 h-4 accent-zinc-900" />
+                </label>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===================================================================== -->
+  <!-- MINIMALIST ARCHITECTURAL FOOTER                                       -->
+  <!-- ===================================================================== -->
+  <footer class="border-t border-hairline bg-card/50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 pb-6 border-b border-hairline">
+        <div class="space-y-1.5">
+          <div class="flex items-center gap-2">
+            <svg class="w-5 h-5 text-primary" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <ellipse cx="60" cy="60" rx="19" ry="50" stroke="currentColor" stroke-width="2.8" />
+              <ellipse cx="60" cy="60" rx="19" ry="50" transform="rotate(60 60 60)" stroke="currentColor" stroke-width="2.8" />
+              <ellipse cx="60" cy="60" rx="19" ry="50" transform="rotate(120 60 60)" stroke="currentColor" stroke-width="2.8" />
+              <circle cx="43.5" cy="34" r="3.4" fill="currentColor" />
+              <circle cx="88" cy="44" r="3.4" fill="currentColor" />
+              <circle cx="88" cy="76" r="3.4" fill="currentColor" />
+              <circle cx="60" cy="60" r="12.5" stroke="currentColor" stroke-width="2.4" fill="var(--bg-canvas)" />
+              <path d="M60 47.5C66.9 47.5 72.5 53.1 72.5 60C72.5 66.9 66.9 72.5 60 72.5C63.45 72.5 66.25 69.7 66.25 66.25C66.25 62.8 63.45 60 60 60C56.55 60 53.75 57.2 53.75 53.75C53.75 50.3 56.55 47.5 60 47.5Z" fill="currentColor" />
+              <circle cx="60" cy="53.75" r="2.1" fill="var(--bg-canvas)" />
+              <circle cx="60" cy="66.25" r="2.1" fill="currentColor" />
+            </svg>
+            <span class="text-sm font-light tracking-[-0.02em] text-primary">BE AI Research</span>
+            <span class="font-mono text-xs text-tertiary">// beairesearch.ca</span>
+          </div>
+          <p class="text-xs text-secondary max-w-md">
+            Independent open-source systems research laboratory building sovereign, local-first AI runtimes and operating shells.
+          </p>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-5 text-xs font-mono text-secondary">
+          <a href="#overview" onclick="navigateTo('overview', event)" class="hover:text-primary transition-colors">Overview</a>
+          <a href="#projects" onclick="navigateTo('projects', event)" class="hover:text-primary transition-colors">Projects</a>
+          <a href="#dispatches" onclick="navigateTo('dispatches', event)" class="hover:text-primary transition-colors">Dispatches</a>
+          <a href="#repo" onclick="navigateTo('repo', event)" class="hover:text-primary transition-colors">repo.beairesearch.ca</a>
+          <a href="#portal" onclick="navigateTo('portal', event)" class="hover:text-primary transition-colors">Portal</a>
+        </div>
+      </div>
+
+      <div class="pt-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs font-mono text-tertiary">
+        <div>All primary software repositories licensed under GNU AGPL-3.0. Zero telemetry.</div>
+        <div class="inline-flex items-center gap-2 text-secondary">
+          <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+          <span>SYSTEMS NOMINAL // VICTORIA, BC</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===================================================================== -->
+  <!-- MODAL 1: PROJECT ARCHITECTURE SLIDE-OVER DRAWER                       -->
+  <!-- ===================================================================== -->
+  <div id="project-drawer" class="fixed inset-0 z-50 hidden">
+    <div onclick="closeProjectDrawer()" class="fixed inset-0 bg-black/40 backdrop-blur-xs"></div>
+    <div class="fixed inset-y-0 right-0 w-full max-w-2xl bg-canvas border-l border-hairline shadow-2xl overflow-y-auto p-6 sm:p-8 flex flex-col justify-between">
+      <div class="space-y-6">
+        <div class="flex items-start justify-between gap-4 pb-4 border-b border-hairline">
+          <div>
+            <div class="flex items-center gap-2 font-mono text-xs text-tertiary">
+              <span id="pd-version">v1.3.0</span>
+              <span>•</span>
+              <span id="pd-license">AGPL-3.0</span>
+            </div>
+            <h2 id="pd-title" class="text-2xl font-light text-primary mt-1">Project Title</h2>
+          </div>
+          <button onclick="closeProjectDrawer()" class="p-2 rounded-lg bg-card border border-hairline hover:border-strong text-primary" aria-label="Close Drawer">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+
+        <div class="space-y-2">
+          <div class="font-mono text-[11px] uppercase tracking-wider text-tertiary">01 // Architectural Overview</div>
+          <p id="pd-overview" class="text-sm text-secondary leading-relaxed"></p>
+        </div>
+
+        <div class="space-y-2">
+          <div class="font-mono text-[11px] uppercase tracking-wider text-tertiary">02 // System Topology</div>
+          <pre id="pd-topology" class="p-4 rounded-xl bg-card border border-hairline font-mono text-xs text-primary overflow-x-auto leading-relaxed"></pre>
+        </div>
+
+        <div class="space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="font-mono text-[11px] uppercase tracking-wider text-tertiary">03 // Quickstart CLI</span>
+            <button onclick="copyDrawerCli()" class="font-mono text-[11px] px-2.5 py-1 rounded bg-card border border-hairline hover:border-strong text-primary">
+              Copy Command
+            </button>
+          </div>
+          <pre id="pd-cli" class="p-4 rounded-xl bg-card border border-hairline font-mono text-xs text-primary overflow-x-auto"></pre>
+        </div>
+
+        <div class="p-4 rounded-xl bg-card border border-hairline flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <div class="font-mono text-[11px] uppercase tracking-wider text-tertiary">04 // Repository Endpoint</div>
+            <div id="pd-repo" class="font-mono text-xs text-primary mt-1"></div>
+          </div>
+          <button onclick="closeProjectDrawer(); navigateTo('repo');" class="btn-primary px-4 py-2 rounded-lg text-xs font-mono">
+            View Binaries →
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- MODAL 2: REGISTER NEW PROJECT MODAL                                   -->
+  <!-- ===================================================================== -->
+  <div id="register-project-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4">
+    <div onclick="closeRegisterProjectModal()" class="fixed inset-0 bg-black/40 backdrop-blur-xs"></div>
+    <div class="relative w-full max-w-lg rounded-2xl bg-canvas border border-hairline p-6 sm:p-7 shadow-2xl space-y-5">
+      <div class="flex items-center justify-between pb-3 border-b border-hairline">
+        <div class="font-mono text-xs font-semibold text-primary">REGISTER NEW RESEARCH MODULE</div>
+        <button onclick="closeRegisterProjectModal()" class="text-tertiary hover:text-primary font-mono text-xs">ESC</button>
+      </div>
+
+      <form onsubmit="submitNewProject(event)" class="space-y-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div class="space-y-1">
+            <label class="block font-mono text-[11px] text-secondary">Module Name</label>
+            <input id="np-title" type="text" required placeholder="BE-VectorStore" class="w-full px-3 py-2 rounded-lg bg-card border border-hairline text-xs font-mono text-primary" />
+          </div>
+          <div class="space-y-1">
+            <label class="block font-mono text-[11px] text-secondary">Category</label>
+            <select id="np-cat" class="w-full px-3 py-2 rounded-lg bg-card border border-hairline text-xs font-mono text-primary">
+              <option value="agentic">Agentic Runtimes</option>
+              <option value="inference">Inference &amp; Engines</option>
+              <option value="os">OS &amp; Infrastructure</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="space-y-1">
+          <label class="block font-mono text-[11px] text-secondary">Technical Summary</label>
+          <textarea id="np-summary" rows="2" required placeholder="Zero-copy mmap HNSW vector index written in C++20." class="w-full px-3 py-2 rounded-lg bg-card border border-hairline text-xs text-primary"></textarea>
+        </div>
+
+        <div class="space-y-1">
+          <label class="block font-mono text-[11px] text-secondary">Stack Tags (comma-separated)</label>
+          <input id="np-stack" type="text" required placeholder="C++20, SIMD, AGPL-3.0" class="w-full px-3 py-2 rounded-lg bg-card border border-hairline text-xs font-mono text-primary" />
+        </div>
+
+        <div class="flex justify-end gap-2 pt-2">
+          <button type="button" onclick="closeRegisterProjectModal()" class="btn-secondary px-4 py-2 rounded-lg text-xs font-mono">Cancel</button>
+          <button type="submit" class="btn-primary px-4 py-2 rounded-lg text-xs font-mono">Append to Grid</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- MODAL 3: DISPATCH ARTICLE READER MODAL                                -->
+  <!-- ===================================================================== -->
+  <div id="dispatch-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4">
+    <div onclick="closeDispatchModal()" class="fixed inset-0 bg-black/40 backdrop-blur-xs"></div>
+    <div class="relative w-full max-w-2xl max-h-[85vh] overflow-y-auto rounded-2xl bg-canvas border border-hairline p-6 sm:p-8 shadow-2xl space-y-5">
+      <div class="flex items-start justify-between gap-4 pb-4 border-b border-hairline">
+        <div class="space-y-1">
+          <div class="flex items-center gap-2 font-mono text-xs text-tertiary">
+            <span id="dm-code">LOG-042</span>
+            <span>•</span>
+            <span id="dm-date">2026-11-10</span>
+            <span>•</span>
+            <span id="dm-tag" class="text-primary">RELEASE</span>
+          </div>
+          <h2 id="dm-title" class="text-xl sm:text-2xl font-light text-primary">Dispatch Title</h2>
+        </div>
+        <button onclick="closeDispatchModal()" class="p-2 rounded-lg bg-card border border-hairline hover:border-strong text-primary">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      <div id="dm-body" class="space-y-4 text-sm text-secondary leading-relaxed"></div>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- MODAL 4: QUICK JUMP PALETTE (Ctrl+K)                                  -->
+  <!-- ===================================================================== -->
+  <div id="command-modal" class="fixed inset-0 z-50 hidden flex items-start justify-center pt-20 p-4">
+    <div onclick="closeCommandModal()" class="fixed inset-0 bg-black/40 backdrop-blur-xs"></div>
+    <div class="relative w-full max-w-lg rounded-2xl bg-canvas border border-hairline shadow-2xl overflow-hidden">
+      <div class="p-3 border-b border-hairline flex items-center gap-2">
+        <svg class="w-4 h-4 text-tertiary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z" />
+        </svg>
+        <input id="cmd-search" type="text" oninput="renderCommandItems()" placeholder="Jump to page, project, or binary..." class="w-full bg-transparent text-xs font-mono text-primary focus:outline-none" />
+        <button onclick="closeCommandModal()" class="font-mono text-[10px] px-1.5 py-0.5 rounded bg-card border border-hairline text-tertiary">ESC</button>
+      </div>
+      <div id="cmd-list" class="max-h-72 overflow-y-auto divide-y divide-hairline"></div>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- SIMULATED DOWNLOAD PROGRESS DRAWER & TOAST                            -->
+  <!-- ===================================================================== -->
+  <div id="download-drawer" class="fixed bottom-4 right-4 z-50 hidden w-80 rounded-xl bg-canvas border border-strong p-4 shadow-xl space-y-2.5">
+    <div class="flex items-center justify-between font-mono text-xs">
+      <span class="text-primary font-semibold">VERIFIED REPO FETCH</span>
+      <span id="dl-pct" class="text-primary">0%</span>
+    </div>
+    <div id="dl-filename" class="font-mono text-[11px] text-secondary truncate">artifact.tar.zst</div>
+    <div class="w-full h-1.5 rounded-full bg-card overflow-hidden">
+      <div id="dl-bar" class="h-full bg-primary transition-all duration-150" style="width: 0%; background-color: var(--text-primary);"></div>
+    </div>
+    <div id="dl-status" class="font-mono text-[10px] text-tertiary">Verifying ED25519 signature...</div>
+  </div>
+
+  <div id="toast-box" class="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 hidden px-4 py-2 rounded-lg btn-primary font-mono text-xs shadow-lg">
+    Notification
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- APPLICATION LOGIC (CLEAN VANILLA JS, ZERO TEMPLATE COLLISIONS)        -->
+  <!-- ===================================================================== -->
+  <script>
+    // -----------------------------------------------------------------------
+    // 1. RESEARCH DATA STORES
+    // -----------------------------------------------------------------------
+    const PROJECTS = [
+      {
+        id: 'be-code-redux',
+        title: 'BE-Code Redux',
+        version: 'v1.3.0',
+        category: 'agentic',
+        categoryLabel: 'Agentic Runtime',
+        license: 'AGPL-3.0',
+        summary: 'Deterministic terminal coding harness with sandboxed AST patching, local git checkpoints, and signed AGPL-3.0 skill packs.',
+        stack: ['Rust', 'Tree-Sitter', 'MCP', 'AGPL-3.0'],
+        overview: 'BE-Code Redux v1.3 provides a zero-telemetry autonomous engineering harness that executes strictly on local hardware. Every file mutation is verified via Tree-Sitter syntax trees and checkpointed into an ephemeral shadow Git index before disk commit.',
+        topology: '[Local LLM / GGUF] <--> [BE-Code Sandbox IPC]\n                           |\n         +-----------------+-----------------+\n         v                                   v\n [Tree-Sitter AST Guard]           [Signed Skill Packs]',
+        cli: 'curl -fsSL https://repo.beairesearch.ca/install/be-code.sh | sh',
+        repoUrl: 'https://repo.beairesearch.ca/src/be-code-redux'
+      },
+      {
+        id: 'be-ai-engine',
+        title: 'BE AI Engine',
+        version: 'v0.9.4',
+        category: 'inference',
+        categoryLabel: 'Inference Engine',
+        license: 'AGPL-3.0',
+        summary: 'C++20 tensor inference runtime with unified Vulkan/CUDA paged KV-cache and deterministic grammar-constrained sampling.',
+        stack: ['C++20', 'Vulkan', 'CUDA', 'GGUF'],
+        overview: 'Engineered for predictable latency on consumer workstations and edge ARM64 nodes, BE AI Engine implements zero-copy GGUF memory mapping, speculative draft decoding, and finite-state JSON/grammar masking at the logit layer.',
+        topology: '[MMAP GGUF Weights] ---> [C++20 Tensor Scheduler]\n                                |\n                +---------------+---------------+\n                v                               v\n       [Vulkan / CUDA Kernels]        [FSM Grammar Mask]',
+        cli: 'be-engine --model ./qwen-coder-32b.gguf --ctx 32768 --port 8080',
+        repoUrl: 'https://repo.beairesearch.ca/src/be-ai-engine'
+      },
+      {
+        id: 'be-agent-runtime',
+        title: 'BE-Agent Runtime',
+        version: 'v2.1.0',
+        category: 'agentic',
+        categoryLabel: 'Agentic Runtime',
+        license: 'AGPL-3.0',
+        summary: 'Capability-based micro-actor scheduler isolating multi-agent tool execution inside Linux Landlock and seccomp-bpf jails.',
+        stack: ['Rust', 'Landlock', 'seccomp', 'JSON-RPC'],
+        overview: 'BE-Agent Runtime enforces principle-of-least-privilege isolation for autonomous workflows. Each tool invocation spawns inside a dedicated Linux namespace with explicit filesystem and network capability grants.',
+        topology: '[Coordinator Actor] ===(JSON-RPC)===> [Worker Supervisor]\n                                              |\n                                    [Landlock + Seccomp Jail]',
+        cli: 'be-agent run --manifest ./workflow.toml --strict-jail',
+        repoUrl: 'https://repo.beairesearch.ca/src/be-agent-runtime'
+      },
+      {
+        id: 'hub-fs',
+        title: 'Hub-FS',
+        version: 'v2.0.2',
+        category: 'os',
+        categoryLabel: 'OS & Infrastructure',
+        license: 'AGPL-3.0',
+        summary: 'Content-addressed FUSE filesystem with automatic ED25519 commit signing and peer-to-peer LAN repository replication.',
+        stack: ['Go', 'FUSE3', 'BLAKE3', 'ED25519'],
+        overview: 'Hub-FS mounts cryptographic research workspaces directly into the POSIX filesystem. Every write snapshot is hashed with BLAKE3 and optionally replicated across trusted LAN nodes without central servers.',
+        topology: '[POSIX App] ---> [/mnt/hubfs (FUSE3)] ---> [BLAKE3 Chunk Store]\n                                                   |\n                                          [LAN Peer Sync Daemon]',
+        cli: 'hubfs mount --workspace lab-core /mnt/hubfs --verify-keys',
+        repoUrl: 'https://repo.beairesearch.ca/src/hub-fs'
+      },
+      {
+        id: 'be-continuum',
+        title: 'BE-Continuum',
+        version: 'v0.6.1',
+        category: 'inference',
+        categoryLabel: 'Inference Engine',
+        license: 'AGPL-3.0',
+        summary: 'Hierarchical episodic memory engine combining temporal SQLite graphs with quantized local dense embeddings.',
+        stack: ['C++20', 'SQLite', 'SIMD', 'ONNX'],
+        overview: 'BE-Continuum solves long-horizon context drift for local agents by indexing session artifacts into a hybrid temporal-semantic graph stored inside a single portable SQLite file.',
+        topology: '[Session Stream] ---> [Chunk & Quantize] ---> [Temporal SQLite Graph]',
+        cli: 'be-continuum index --db ./memory.db --watch ./workspace',
+        repoUrl: 'https://repo.beairesearch.ca/src/be-continuum'
+      },
+      {
+        id: 'dshell',
+        title: 'DShell',
+        version: 'v1.1.0',
+        category: 'os',
+        categoryLabel: 'OS & Infrastructure',
+        license: 'AGPL-3.0',
+        summary: 'Keyboard-driven monochrome Wayland compositor and semantic terminal multiplexer designed for local-first AI workflows.',
+        stack: ['C', 'Wayland', 'wlroots', 'AGPL-3.0'],
+        overview: 'DShell strips away desktop bloat in favor of crisp 1px hairline tiling, instant IPC command palettes, and native inline rendering for agent execution traces.',
+        topology: '[DRM / KMS] <--- [DShell wlroots Core] <--- [IPC Control Socket]',
+        cli: 'dshell --config ~/.config/dshell/init.conf',
+        repoUrl: 'https://repo.beairesearch.ca/src/dshell'
+      }
+    ];
+
+    const DISPATCHES = [
+      {
+        id: 'disp-044',
+        code: 'LOG-044',
+        date: '2026-11-10',
+        tag: 'RELEASE',
+        readTime: '4 min read',
+        title: 'BE-Code Redux v1.3: Deterministic AST Checkpoints & Signed Skill Packs',
+        excerpt: 'Introducing structural Tree-Sitter verification gates and cryptographically signed AGPL-3.0 skill packs for air-gapped developer workstations.',
+        paragraphs: [
+          'BE-Code Redux v1.3 marks a major milestone in local-first autonomous software engineering. Rather than allowing language models to apply unverified text diffs directly to working trees, v1.3 routes every proposed edit through a deterministic Tree-Sitter AST validation pipeline.',
+          'Each accepted patch is automatically recorded in an isolated shadow Git reflog before touching disk, enabling instant single-keystroke rollbacks across multi-file refactors.',
+          'Additionally, v1.3 introduces Signed Skill Packs—reproducible YAML+Lua tool bundles signed with ED25519 keys on repo.beairesearch.ca so teams can audit and share domain workflows with zero external network calls.'
+        ]
+      },
+      {
+        id: 'disp-043',
+        code: 'LOG-043',
+        date: '2026-10-28',
+        tag: 'ARCHITECTURE',
+        readTime: '7 min read',
+        title: 'Zero-Copy GGUF Memory Mapping & Paged KV-Cache in BE AI Engine v0.9',
+        excerpt: 'How we reduced cold-start model load times by 78% and eliminated VRAM fragmentation on heterogeneous Linux workstations.',
+        paragraphs: [
+          'Running 32B-parameter quantized models alongside local compilation toolchains demands strict memory discipline. In BE AI Engine v0.9, we replaced contiguous KV-cache allocations with a 4KB block-paged allocator inspired by virtual memory subsystems.',
+          'Combined with direct mmap weight streaming and custom Vulkan subgroup matrix shaders, cold-start initialization on NVMe storage now completes in under 420 milliseconds.'
+        ]
+      },
+      {
+        id: 'disp-042',
+        code: 'LOG-042',
+        date: '2026-10-09',
+        tag: 'WHITE PAPER',
+        readTime: '11 min read',
+        title: 'Sovereign Compute: Why Local-First Execution & AGPL-3.0 Governance Matter',
+        excerpt: 'A formal position paper outlining BE AI Research architectural principles: zero telemetry, reproducible builds, and reciprocal open-source licensing.',
+        paragraphs: [
+          'Modern AI tooling increasingly centralizes developer source code, execution traces, and institutional reasoning inside proprietary cloud endpoints. BE AI Research was established to build an uncompromising alternative.',
+          'Every binary distributed via repo.beairesearch.ca is built reproducibly from tagged AGPL-3.0 source trees, operates without outbound telemetry, and empowers individuals and research collectives to retain full sovereignty over their compute stack.'
+        ]
+      },
+      {
+        id: 'disp-041',
+        code: 'LOG-041',
+        date: '2026-09-21',
+        tag: 'RELEASE',
+        readTime: '3 min read',
+        title: 'Hub-FS v2.0: Peer-to-Peer LAN Repository Sync Over Mutual TLS',
+        excerpt: 'Content-addressed FUSE3 workspaces now support zero-configuration mDNS discovery and BLAKE3 delta replication across local clusters.',
+        paragraphs: [
+          'Hub-FS v2.0 enables multi-machine research labs to synchronize model weights, datasets, and Git repositories across local 10GbE networks without external cloud storage.',
+          'Using BLAKE3 Merkle trees and ED25519 peer allowlists, nodes exchange only missing 64KB content chunks with end-to-end cryptographic verification.'
+        ]
+      }
+    ];
+
+    const REPO_ARTIFACTS = [
+      {
+        pkg: 'be-code-redux',
+        filename: 'be-code-redux-1.3.0-x86_64-unknown-linux-musl.tar.zst',
+        version: 'v1.3.0',
+        channel: 'stable',
+        platform: 'Linux x86_64',
+        size: '14.2 MB',
+        license: 'AGPL-3.0',
+        sha256: 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'
+      },
+      {
+        pkg: 'be-code-redux',
+        filename: 'be-code-redux-1.3.0-aarch64-unknown-linux-musl.tar.zst',
+        version: 'v1.3.0',
+        channel: 'stable',
+        platform: 'Linux ARM64',
+        size: '13.6 MB',
+        license: 'AGPL-3.0',
+        sha256: '8f434346648f6b96df89dda901c5176b10a6d83961dd3c1ac88b59b2dc327aa4'
+      },
+      {
+        pkg: 'be-code-redux',
+        filename: 'be-code-redux-1.3.0-aarch64-linux-android.tar.xz',
+        version: 'v1.3.0',
+        channel: 'stable',
+        platform: 'Android / Termux',
+        size: '12.9 MB',
+        license: 'AGPL-3.0',
+        sha256: '2c26b46b68ffc68ff99b453c1d30413413422d706483bfa0f98a5e886266e7ae'
+      },
+      {
+        pkg: 'be-ai-engine',
+        filename: 'be-ai-engine-0.9.4-linux-x86_64-vulkan.tar.zst',
+        version: 'v0.9.4',
+        channel: 'stable',
+        platform: 'Linux x86_64',
+        size: '28.4 MB',
+        license: 'AGPL-3.0',
+        sha256: '4b227777d4dd1fc61c6f884f48641d02b4d121d3fd328cb08b5531fcacdabf8a'
+      },
+      {
+        pkg: 'hub-fs',
+        filename: 'hub-fs-2.0.2-linux-arm64-static.tar.zst',
+        version: 'v2.0.2',
+        channel: 'stable',
+        platform: 'Linux ARM64',
+        size: '9.8 MB',
+        license: 'AGPL-3.0',
+        sha256: 'ef2d127de37b942baad06145e54b0c619a1f22327b2ebbcfbec78f5564afe39d'
+      },
+      {
+        pkg: 'be-code-redux-src',
+        filename: 'be-code-redux-1.3.0-source.tar.gz',
+        version: 'v1.3.0',
+        channel: 'stable',
+        platform: 'Source Tarball',
+        size: '4.1 MB',
+        license: 'AGPL-3.0',
+        sha256: '7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451'
+      },
+      {
+        pkg: 'be-code-redux-nightly',
+        filename: 'be-code-redux-1.4.0-nightly.20261113-x86_64.tar.zst',
+        version: 'v1.4.0-dev',
+        channel: 'nightly',
+        platform: 'Linux x86_64',
+        size: '14.8 MB',
+        license: 'AGPL-3.0',
+        sha256: '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08'
+      },
+      {
+        pkg: 'be-ai-engine-nightly',
+        filename: 'be-ai-engine-0.10.0-nightly.20261113-arm64.tar.zst',
+        version: 'v0.10.0-dev',
+        channel: 'nightly',
+        platform: 'Linux ARM64',
+        size: '27.1 MB',
+        license: 'AGPL-3.0',
+        sha256: '1b4f0e9851971998e732078544c96b36c3d01cedf7caa332359d6f1d83567014'
+      }
+    ];
+
+    // -----------------------------------------------------------------------
+    // 2. APPLICATION STATE
+    // -----------------------------------------------------------------------
+    let currentView = 'overview';
+    let selectedProjectCat = 'all';
+    let selectedDispatchTag = 'ALL';
+    let selectedRepoChannel = 'stable';
+    let selectedRepoPlatform = 'all';
+    let isOrbitalMoving = false;
+    let activeDrawerCli = '';
+    let downloadInterval = null;
+
+    // Portal Auth State
+    let currentUser = null;
+    let bearerTokens = [
+      { id: 'tok-1', name: 'be-cli-workstation-primary', value: 'beai_live_94f8a210c84d...c21a', scope: 'repo:read, skillpacks:sync' },
+      { id: 'tok-2', name: 'hubfs-lan-mirror-01', value: 'beai_live_31b077e9a12f...88e4', scope: 'repo:read, mirror:verify' }
+    ];
+    let registeredSshKeys = [
+      { id: 'ssh-1', label: 'thinkpad-x1-arch', fingerprint: 'SHA256:k9L2mP8xQ4vR7tW1nZ5yB3cF6hJ0dS' }
+    ];
+
+    const VALID_VIEWS = ['overview', 'projects', 'dispatches', 'repo', 'portal'];
+
+    // -----------------------------------------------------------------------
+    // 3. MULTI-PAGE VIEW ROUTER
+    // -----------------------------------------------------------------------
+    function navigateTo(viewName, event) {
+      if (event) event.preventDefault();
+      const target = VALID_VIEWS.includes(viewName) ? viewName : 'overview';
+      currentView = target;
+
+      // Switch visible section
+      document.querySelectorAll('.page-view').forEach(function(sec) {
+        if (sec.id === 'view-' + target) {
+          sec.classList.add('active');
+        } else {
+          sec.classList.remove('active');
+        }
+      });
+
+      // Update Desktop Nav Tabs
+      document.querySelectorAll('.nav-tab').forEach(function(tab) {
+        const bar = tab.querySelector('.nav-bar');
+        if (tab.getAttribute('data-nav') === target) {
+          tab.classList.remove('text-secondary', 'font-normal');
+          tab.classList.add('text-primary', 'font-medium');
+          if (bar) {
+            bar.classList.remove('opacity-0');
+            bar.classList.add('opacity-100');
+          }
+        } else {
+          tab.classList.remove('text-primary', 'font-medium');
+          tab.classList.add('text-secondary', 'font-normal');
+          if (bar) {
+            bar.classList.remove('opacity-100');
+            bar.classList.add('opacity-0');
+          }
+        }
+      });
+
+      // Update Mobile Nav Strip
+      document.querySelectorAll('.mobile-tab').forEach(function(tab) {
+        if (tab.getAttribute('data-nav') === target) {
+          tab.classList.remove('btn-secondary');
+          tab.classList.add('btn-primary');
+        } else {
+          tab.classList.remove('btn-primary');
+          tab.classList.add('btn-secondary');
+        }
+      });
+
+      // Sync hash safely
+      if (window.location.hash !== '#' + target) {
+        try {
+          history.replaceState(null, '', '#' + target);
+        } catch (e) {
+          window.location.hash = target;
+        }
+      }
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // -----------------------------------------------------------------------
+    // 4. THEME & ORBITAL CORE CONTROLS
+    // -----------------------------------------------------------------------
+    function toggleTheme() {
+      const htmlEl = document.documentElement;
+      const isDark = htmlEl.classList.toggle('obsidian');
+      const label = document.getElementById('theme-text');
+      const dot = document.getElementById('theme-dot');
+
+      if (isDark) {
+        label.textContent = 'Obsidian';
+        dot.style.backgroundColor = '#0A0A0B';
+      } else {
+        label.textContent = 'Daylight';
+        dot.style.backgroundColor = '#FFFFFF';
+      }
+    }
+
+    function toggleOrbitalMotion() {
+      isOrbitalMoving = !isOrbitalMoving;
+      const r1 = document.getElementById('orbit-ring-1');
+      const r2 = document.getElementById('orbit-ring-2');
+      const r3 = document.getElementById('orbit-ring-3');
+      const btn = document.getElementById('orbit-motion-btn');
+
+      if (isOrbitalMoving) {
+        r1.classList.add('orbit-animate');
+        r2.classList.add('orbit-animate-reverse');
+        r3.classList.add('orbit-animate');
+        btn.textContent = 'Motion: Orbital';
+      } else {
+        r1.classList.remove('orbit-animate');
+        r2.classList.remove('orbit-animate-reverse');
+        r3.classList.remove('orbit-animate');
+        btn.textContent = 'Motion: Static';
+      }
+    }
+
+    function setOrbitalReadout(text) {
+      document.getElementById('orbital-readout').textContent = text;
+    }
+
+    function resetOrbitalReadout() {
+      document.getElementById('orbital-readout').textContent = 'Hover orbital nodes to inspect';
+    }
+
+    // -----------------------------------------------------------------------
+    // 5. PROJECTS VIEW RENDER & DRAWER
+    // -----------------------------------------------------------------------
+    function setProjectCategory(cat) {
+      selectedProjectCat = cat;
+      document.querySelectorAll('.pcat-btn').forEach(function(btn) {
+        if (btn.getAttribute('data-pcat') === cat) {
+          btn.classList.remove('btn-secondary');
+          btn.classList.add('btn-primary');
+        } else {
+          btn.classList.remove('btn-primary');
+          btn.classList.add('btn-secondary');
+        }
+      });
+      renderProjects();
+    }
+
+    function renderProjects() {
+      const grid = document.getElementById('projects-grid');
+      const q = (document.getElementById('project-search').value || '').trim().toLowerCase();
+
+      const filtered = PROJECTS.filter(function(p) {
+        const matchCat = selectedProjectCat === 'all' || p.category === selectedProjectCat;
+        const matchQ = !q ||
+          p.title.toLowerCase().includes(q) ||
+          p.summary.toLowerCase().includes(q) ||
+          p.stack.join(' ').toLowerCase().includes(q);
+        return matchCat && matchQ;
+      });
+
+      let html = filtered.map(function(p) {
+        const tagsHtml = p.stack.map(function(t) {
+          return '<span class="px-2 py-0.5 rounded bg-card border border-hairline font-mono text-[11px] text-secondary">' + escapeHtml(t) + '</span>';
+        }).join('');
+
+        return (
+          '<article class="rounded-xl bg-canvas border border-hairline hover:border-strong p-6 flex flex-col justify-between transition-all">' +
+            '<div class="space-y-4">' +
+              '<div class="flex items-center justify-between font-mono text-xs">' +
+                '<span class="text-tertiary">' + escapeHtml(p.categoryLabel) + '</span>' +
+                '<span class="px-2 py-0.5 rounded bg-card border border-hairline text-primary">' + escapeHtml(p.version) + '</span>' +
+              '</div>' +
+              '<div>' +
+                '<h2 class="text-xl font-medium text-primary tracking-tight">' + escapeHtml(p.title) + '</h2>' +
+                '<p class="text-sm text-secondary mt-2 leading-relaxed">' + escapeHtml(p.summary) + '</p>' +
+              '</div>' +
+              '<div class="flex flex-wrap gap-1.5 pt-1">' + tagsHtml + '</div>' +
+            '</div>' +
+            '<div class="pt-5 mt-6 border-t border-hairline flex items-center justify-between">' +
+              '<span class="font-mono text-xs text-tertiary">' + escapeHtml(p.license) + '</span>' +
+              '<button onclick="openProjectDrawer(\'' + p.id + '\')" class="inline-flex items-center gap-1.5 font-mono text-xs font-medium text-primary hover:underline">' +
+                '<span>Inspect Architecture</span>' +
+                '<span>→</span>' +
+              '</button>' +
+            '</div>' +
+          '</article>'
+        );
+      }).join('');
+
+      // Extensible Slot Card
+      html += (
+        '<button onclick="openRegisterProjectModal()" class="rounded-xl border border-dashed border-hairline hover:border-strong bg-card/40 hover:bg-card p-6 flex flex-col items-center justify-center text-center min-h-[250px] transition-all group">' +
+          '<div class="w-10 h-10 rounded-full bg-canvas border border-hairline group-hover:border-strong flex items-center justify-center font-mono text-lg text-primary mb-3">+</div>' +
+          '<div class="font-mono text-xs font-medium text-primary">Register New Project Slot</div>' +
+          '<p class="text-xs text-tertiary mt-1 max-w-[220px]">Append an open-source research module to this shell workspace</p>' +
+        '</button>'
+      );
+
+      grid.innerHTML = html;
+      document.getElementById('metric-projects-count').textContent = String(PROJECTS.length).padStart(2, '0');
+    }
+
+    function openProjectDrawer(id) {
+      const p = PROJECTS.find(function(item) { return item.id === id; });
+      if (!p) return;
+
+      document.getElementById('pd-version').textContent = p.version;
+      document.getElementById('pd-license').textContent = p.license;
+      document.getElementById('pd-title').textContent = p.title;
+      document.getElementById('pd-overview').textContent = p.overview;
+      document.getElementById('pd-topology').textContent = p.topology;
+      document.getElementById('pd-cli').textContent = p.cli;
+      document.getElementById('pd-repo').textContent = p.repoUrl;
+      activeDrawerCli = p.cli;
+
+      document.getElementById('project-drawer').classList.remove('hidden');
+    }
+
+    function closeProjectDrawer() {
+      document.getElementById('project-drawer').classList.add('hidden');
+    }
+
+    function copyDrawerCli() {
+      copyToClipboard(activeDrawerCli, 'Quickstart CLI copied');
+    }
+
+    function openRegisterProjectModal() {
+      document.getElementById('register-project-modal').classList.remove('hidden');
+    }
+
+    function closeRegisterProjectModal() {
+      document.getElementById('register-project-modal').classList.add('hidden');
+    }
+
+    function submitNewProject(event) {
+      event.preventDefault();
+      const title = document.getElementById('np-title').value.trim();
+      const cat = document.getElementById('np-cat').value;
+      const summary = document.getElementById('np-summary').value.trim();
+      const stackRaw = document.getElementById('np-stack').value.trim();
+      const catLabels = { agentic: 'Agentic Runtime', inference: 'Inference Engine', os: 'OS & Infrastructure' };
+      const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+
+      PROJECTS.push({
+        id: slug + '-' + Date.now(),
+        title: title,
+        version: 'v0.1.0-alpha',
+        category: cat,
+        categoryLabel: catLabels[cat] || 'Research Module',
+        license: 'AGPL-3.0',
+        summary: summary,
+        stack: stackRaw.split(',').map(function(s) { return s.trim(); }).filter(Boolean),
+        overview: summary,
+        topology: '[Local Host] <---> [' + title + ' Core]\n                         |\n                [AGPL-3.0 Artifact Store]',
+        cli: 'curl -fsSL https://repo.beairesearch.ca/install/' + slug + '.sh | sh',
+        repoUrl: 'https://repo.beairesearch.ca/src/' + slug
+      });
+
+      event.target.reset();
+      closeRegisterProjectModal();
+      renderProjects();
+      showToast('Registered module: ' + title);
+    }
+
+    // -----------------------------------------------------------------------
+    // 6. NEWS & DISPATCHES VIEW
+    // -----------------------------------------------------------------------
+    function setDispatchTag(tag) {
+      selectedDispatchTag = tag;
+      document.querySelectorAll('.dtag-btn').forEach(function(btn) {
+        if (btn.getAttribute('data-dtag') === tag) {
+          btn.classList.remove('btn-secondary');
+          btn.classList.add('btn-primary');
+        } else {
+          btn.classList.remove('btn-primary');
+          btn.classList.add('btn-secondary');
+        }
+      });
+      renderDispatches();
+    }
+
+    function renderDispatches() {
+      const list = document.getElementById('dispatches-list');
+      const q = (document.getElementById('dispatch-search').value || '').trim().toLowerCase();
+
+      const filtered = DISPATCHES.filter(function(d) {
+        const matchTag = selectedDispatchTag === 'ALL' || d.tag === selectedDispatchTag;
+        const matchQ = !q ||
+          d.title.toLowerCase().includes(q) ||
+          d.excerpt.toLowerCase().includes(q) ||
+          d.code.toLowerCase().includes(q);
+        return matchTag && matchQ;
+      });
+
+      if (filtered.length === 0) {
+        list.innerHTML = '<div class="py-12 text-center font-mono text-xs text-tertiary">No technical dispatches match the active filter.</div>';
+        return;
+      }
+
+      list.innerHTML = filtered.map(function(d) {
+        return (
+          '<article class="py-7 flex flex-col lg:flex-row lg:items-center justify-between gap-6 group">' +
+            '<div class="space-y-2 max-w-3xl">' +
+              '<div class="flex flex-wrap items-center gap-2.5 font-mono text-xs">' +
+                '<span class="text-tertiary">' + escapeHtml(d.code) + '</span>' +
+                '<span class="text-hairline">|</span>' +
+                '<span class="text-secondary">' + escapeHtml(d.date) + '</span>' +
+                '<span class="px-2 py-0.5 rounded bg-card border border-hairline text-primary text-[11px]">' + escapeHtml(d.tag) + '</span>' +
+                '<span class="text-tertiary">' + escapeHtml(d.readTime) + '</span>' +
+              '</div>' +
+              '<h2 onclick="openDispatchModal(\'' + d.id + '\')" class="text-lg sm:text-xl font-medium text-primary cursor-pointer group-hover:underline">' +
+                escapeHtml(d.title) +
+              '</h2>' +
+              '<p class="text-sm text-secondary leading-relaxed">' + escapeHtml(d.excerpt) + '</p>' +
+            '</div>' +
+            '<div class="shrink-0">' +
+              '<button onclick="openDispatchModal(\'' + d.id + '\')" class="btn-secondary px-4 py-2 rounded-lg font-mono text-xs transition-colors">' +
+                'Read Dispatch →' +
+              '</button>' +
+            '</div>' +
+          '</article>'
+        );
+      }).join('');
+    }
+
+    function openDispatchModal(id) {
+      const d = DISPATCHES.find(function(item) { return item.id === id; });
+      if (!d) return;
+
+      document.getElementById('dm-code').textContent = d.code;
+      document.getElementById('dm-date').textContent = d.date;
+      document.getElementById('dm-tag').textContent = d.tag;
+      document.getElementById('dm-title').textContent = d.title;
+      document.getElementById('dm-body').innerHTML = d.paragraphs.map(function(p) {
+        return '<p>' + escapeHtml(p) + '</p>';
+      }).join('');
+
+      document.getElementById('dispatch-modal').classList.remove('hidden');
+    }
+
+    function closeDispatchModal() {
+      document.getElementById('dispatch-modal').classList.add('hidden');
+    }
+
+    // -----------------------------------------------------------------------
+    // 7. DOWNLOAD REPOSITORY VIEW
+    // -----------------------------------------------------------------------
+    function setRepoChannel(channel) {
+      selectedRepoChannel = channel;
+      const stableBtn = document.getElementById('chan-stable');
+      const nightlyBtn = document.getElementById('chan-nightly');
+
+      if (channel === 'stable') {
+        stableBtn.className = 'px-3.5 py-1.5 rounded-md text-xs font-mono font-medium btn-primary transition-colors';
+        nightlyBtn.className = 'px-3.5 py-1.5 rounded-md text-xs font-mono font-medium text-secondary hover:text-primary transition-colors';
+      } else {
+        nightlyBtn.className = 'px-3.5 py-1.5 rounded-md text-xs font-mono font-medium btn-primary transition-colors';
+        stableBtn.className = 'px-3.5 py-1.5 rounded-md text-xs font-mono font-medium text-secondary hover:text-primary transition-colors';
+      }
+      renderRepoTable();
+    }
+
+    function setRepoPlatform(plat) {
+      selectedRepoPlatform = plat;
+      document.querySelectorAll('.rplat-btn').forEach(function(btn) {
+        if (btn.getAttribute('data-rplat') === plat) {
+          btn.classList.remove('btn-secondary');
+          btn.classList.add('btn-primary');
+        } else {
+          btn.classList.remove('btn-primary');
+          btn.classList.add('btn-secondary');
+        }
+      });
+      renderRepoTable();
+    }
+
+    function renderRepoTable() {
+      const tbody = document.getElementById('repo-tbody');
+      const q = (document.getElementById('repo-search').value || '').trim().toLowerCase();
+
+      const filtered = REPO_ARTIFACTS.filter(function(item) {
+        const matchChan = item.channel === selectedRepoChannel;
+        const matchPlat = selectedRepoPlatform === 'all' || item.platform === selectedRepoPlatform;
+        const matchQ = !q ||
+          item.filename.toLowerCase().includes(q) ||
+          item.pkg.toLowerCase().includes(q) ||
+          item.sha256.toLowerCase().includes(q);
+        return matchChan && matchPlat && matchQ;
+      });
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="7" class="py-10 px-4 text-center font-mono text-xs text-tertiary">No binary artifacts match the selected channel/platform filter.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = filtered.map(function(item) {
+        const shortHash = item.sha256.slice(0, 12) + '...' + item.sha256.slice(-6);
+        const curlCmd = 'curl -fLO https://repo.beairesearch.ca/' + item.channel + '/' + item.filename;
+
+        return (
+          '<tr class="hover:bg-card/60 transition-colors">' +
+            '<td class="py-3.5 px-4">' +
+              '<div class="font-mono text-xs font-medium text-primary">' + escapeHtml(item.pkg) + '</div>' +
+              '<div class="font-mono text-[11px] text-tertiary truncate max-w-[240px]">' + escapeHtml(item.filename) + '</div>' +
+            '</td>' +
+            '<td class="py-3.5 px-4 font-mono text-xs text-primary">' + escapeHtml(item.version) + '</td>' +
+            '<td class="py-3.5 px-4 font-mono text-xs text-secondary">' + escapeHtml(item.platform) + '</td>' +
+            '<td class="py-3.5 px-4 font-mono text-xs text-secondary">' + escapeHtml(item.size) + '</td>' +
+            '<td class="py-3.5 px-4 font-mono text-xs text-tertiary">' + escapeHtml(item.license) + '</td>' +
+            '<td class="py-3.5 px-4">' +
+              '<div class="flex flex-wrap items-center gap-1.5">' +
+                '<button onclick="copyToClipboard(\'' + item.sha256 + '\', \'SHA-256 copied\')" class="px-2 py-1 rounded bg-card border border-hairline hover:border-strong font-mono text-[11px] text-secondary hover:text-primary" title="' + item.sha256 + '">' +
+                  'SHA256: ' + shortHash +
+                '</button>' +
+                '<button onclick="copyToClipboard(\'' + curlCmd + '\', \'cURL command copied\')" class="px-2 py-1 rounded bg-card border border-hairline hover:border-strong font-mono text-[11px] text-primary">' +
+                  'Copy cURL' +
+                '</button>' +
+              '</div>' +
+            '</td>' +
+            '<td class="py-3.5 px-4 text-right">' +
+              '<button onclick="startSimulatedDownload(\'' + item.filename + '\')" class="btn-primary px-3 py-1.5 rounded-lg font-mono text-xs transition-colors">' +
+                'Download' +
+              '</button>' +
+            '</td>' +
+          '</tr>'
+        );
+      }).join('');
+    }
+
+    function startSimulatedDownload(filename) {
+      if (downloadInterval) clearInterval(downloadInterval);
+      const drawer = document.getElementById('download-drawer');
+      const bar = document.getElementById('dl-bar');
+      const pct = document.getElementById('dl-pct');
+      const status = document.getElementById('dl-status');
+
+      document.getElementById('dl-filename').textContent = filename;
+      bar.style.width = '0%';
+      pct.textContent = '0%';
+      status.textContent = 'Connecting to repo.beairesearch.ca...';
+      drawer.classList.remove('hidden');
+
+      let progress = 0;
+      downloadInterval = setInterval(function() {
+        progress += 20;
+        if (progress > 100) progress = 100;
+        bar.style.width = progress + '%';
+        pct.textContent = progress + '%';
+
+        if (progress === 40) status.textContent = 'Streaming static archive...';
+        if (progress === 80) status.textContent = 'Verifying SHA-256 & ED25519 signature...';
+        if (progress >= 100) {
+          clearInterval(downloadInterval);
+          status.textContent = 'Verified & ready in local cache.';
+          setTimeout(function() {
+            drawer.classList.add('hidden');
+          }, 2200);
+        }
+      }, 240);
+    }
+
+    // -----------------------------------------------------------------------
+    // 8. USER LOGIN & RESEARCHER PORTAL (#portal)
+    // -----------------------------------------------------------------------
+    function switchAuthMode(mode) {
+      const credTab = document.getElementById('tab-auth-cred');
+      const sshTab = document.getElementById('tab-auth-ssh');
+      const credForm = document.getElementById('form-auth-cred');
+      const sshForm = document.getElementById('form-auth-ssh');
+
+      if (mode === 'credentials') {
+        credTab.className = 'py-3 px-4 text-center font-medium text-primary border-b-2 border-strong bg-canvas transition-colors';
+        sshTab.className = 'py-3 px-4 text-center text-secondary hover:text-primary border-b-2 border-transparent transition-colors';
+        credForm.classList.remove('hidden');
+        sshForm.classList.add('hidden');
+      } else {
+        sshTab.className = 'py-3 px-4 text-center font-medium text-primary border-b-2 border-strong bg-canvas transition-colors';
+        credTab.className = 'py-3 px-4 text-center text-secondary hover:text-primary border-b-2 border-transparent transition-colors';
+        sshForm.classList.remove('hidden');
+        credForm.classList.add('hidden');
+      }
+    }
+
+    function submitCredentialsLogin(event) {
+      event.preventDefault();
+      const raw = document.getElementById('input-handle').value.trim();
+      const handle = raw.indexOf('@') !== -1 ? raw : (raw || 'console') + '@beairesearch.ca';
+      completePortalLogin(handle, 'Argon2id Credentials');
+    }
+
+    function submitSshLogin(event) {
+      event.preventDefault();
+      const keyVal = document.getElementById('input-ssh-key').value.trim();
+      const parts = keyVal.split(/\s+/);
+      const handle = (parts[2] && parts[2].indexOf('@') !== -1) ? parts[2] : 'ed25519-node@beairesearch.ca';
+      completePortalLogin(handle, 'ED25519 Key Challenge');
+    }
+
+    function populateSampleSshKey() {
+      document.getElementById('input-ssh-key').value =
+        'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl console@beairesearch.ca';
+    }
+
+    function signInDemoResearcher() {
+      completePortalLogin('console@beairesearch.ca', 'Demo Researcher Session');
+    }
+
+    function completePortalLogin(handle, method) {
+      currentUser = {
+        handle: handle,
+        method: method
+      };
+      updatePortalView();
+      showToast('Signed in as ' + handle);
+    }
+
+    function signOutResearcher() {
+      currentUser = null;
+      updatePortalView();
+      showToast('Signed out of Researcher Portal');
+    }
+
+    function updatePortalView() {
+      const loggedOut = document.getElementById('portal-logged-out');
+      const loggedIn = document.getElementById('portal-logged-in');
+      const navLabel = document.getElementById('auth-status-label');
+      const navDot = document.getElementById('auth-status-dot');
+      const overviewBadge = document.getElementById('overview-portal-badge');
+
+      if (currentUser) {
+        loggedOut.classList.add('hidden');
+        loggedIn.classList.remove('hidden');
+
+        document.getElementById('ws-handle').textContent = currentUser.handle;
+        document.getElementById('ws-meta').textContent =
+          'Auth Method: ' + currentUser.method + ' • Fingerprint: SHA256:9f86d081...b0f00a08';
+
+        const shortName = currentUser.handle.split('@')[0];
+        navLabel.textContent = shortName;
+        navDot.classList.remove('bg-zinc-400');
+        navDot.classList.add('bg-emerald-500');
+        overviewBadge.textContent = 'Active: ' + currentUser.handle;
+
+        renderWorkspaceTokens();
+        renderWorkspaceSshKeys();
+      } else {
+        loggedIn.classList.add('hidden');
+        loggedOut.classList.remove('hidden');
+
+        navLabel.textContent = 'Login / Portal';
+        navDot.classList.remove('bg-emerald-500');
+        navDot.classList.add('bg-zinc-400');
+        overviewBadge.textContent = 'Session: Guest';
+      }
+    }
+
+    function renderWorkspaceTokens() {
+      const container = document.getElementById('ws-tokens-list');
+      if (bearerTokens.length === 0) {
+        container.innerHTML = '<div class="p-6 font-mono text-xs text-tertiary">No active bearer tokens. Generate one above.</div>';
+        return;
+      }
+
+      container.innerHTML = bearerTokens.map(function(tok) {
+        return (
+          '<div class="p-4 px-6 flex flex-col sm:flex-row sm:items-center justify-between gap-3">' +
+            '<div class="space-y-0.5">' +
+              '<div class="font-mono text-xs font-medium text-primary">' + escapeHtml(tok.name) + '</div>' +
+              '<div class="font-mono text-[11px] text-secondary">' + escapeHtml(tok.value) + ' • <span class="text-tertiary">' + escapeHtml(tok.scope) + '</span></div>' +
+            '</div>' +
+            '<div class="flex items-center gap-2">' +
+              '<button onclick="copyToClipboard(\'' + tok.value + '\', \'Bearer token copied\')" class="px-2.5 py-1 rounded bg-card border border-hairline hover:border-strong font-mono text-[11px] text-primary">Copy</button>' +
+              '<button onclick="revokeBearerToken(\'' + tok.id + '\')" class="px-2.5 py-1 rounded bg-card border border-hairline hover:border-strong font-mono text-[11px] text-secondary hover:text-primary">Revoke</button>' +
+            '</div>' +
+          '</div>'
+        );
+      }).join('');
+    }
+
+    function generateBearerToken() {
+      const randHex = Math.random().toString(16).substring(2, 8);
+      bearerTokens.unshift({
+        id: 'tok-' + Date.now(),
+        name: 'be-node-' + randHex.slice(0, 4),
+        value: 'beai_live_' + randHex + '90a1...f4d2',
+        scope: 'repo:read, skillpacks:sync'
+      });
+      renderWorkspaceTokens();
+      showToast('Generated new API bearer token');
+    }
+
+    function revokeBearerToken(id) {
+      bearerTokens = bearerTokens.filter(function(t) { return t.id !== id; });
+      renderWorkspaceTokens();
+      showToast('Bearer token revoked');
+    }
+
+    function toggleAddSshForm() {
+      document.getElementById('ws-add-ssh-form').classList.toggle('hidden');
+    }
+
+    function submitNewSshKey(event) {
+      event.preventDefault();
+      const label = document.getElementById('new-ssh-label').value.trim();
+      const pub = document.getElementById('new-ssh-pub').value.trim();
+      const hashPreview = pub.slice(-16).replace(/[^a-zA-Z0-9]/g, 'X');
+
+      registeredSshKeys.push({
+        id: 'ssh-' + Date.now(),
+        label: label,
+        fingerprint: 'SHA256:' + hashPreview + '9mQ2vR7tW1n'
+      });
+
+      event.target.reset();
+      toggleAddSshForm();
+      renderWorkspaceSshKeys();
+      showToast('Added SSH public key: ' + label);
+    }
+
+    function removeSshKey(id) {
+      registeredSshKeys = registeredSshKeys.filter(function(k) { return k.id !== id; });
+      renderWorkspaceSshKeys();
+      showToast('Removed SSH key');
+    }
+
+    function renderWorkspaceSshKeys() {
+      const container = document.getElementById('ws-ssh-list');
+      if (registeredSshKeys.length === 0) {
+        container.innerHTML = '<div class="p-4 font-mono text-xs text-tertiary">No SSH keys registered.</div>';
+        return;
+      }
+
+      container.innerHTML = registeredSshKeys.map(function(k) {
+        return (
+          '<div class="p-4 px-5 flex items-center justify-between gap-3">' +
+            '<div class="min-w-0">' +
+              '<div class="font-mono text-xs font-medium text-primary truncate">' + escapeHtml(k.label) + '</div>' +
+              '<div class="font-mono text-[11px] text-tertiary truncate">' + escapeHtml(k.fingerprint) + '</div>' +
+            '</div>' +
+            '<button onclick="removeSshKey(\'' + k.id + '\')" class="font-mono text-[11px] px-2 py-0.5 rounded bg-card border border-hairline hover:border-strong text-secondary hover:text-primary shrink-0">Remove</button>' +
+          '</div>'
+        );
+      }).join('');
+    }
+
+    // -----------------------------------------------------------------------
+    // 9. QUICK JUMP PALETTE (Ctrl+K) & UTILITIES
+    // -----------------------------------------------------------------------
+    let cmdActions = [];
+
+    function openCommandModal() {
+      document.getElementById('command-modal').classList.remove('hidden');
+      const input = document.getElementById('cmd-search');
+      input.value = '';
+      renderCommandItems();
+      setTimeout(function() { input.focus(); }, 20);
+    }
+
+    function closeCommandModal() {
+      document.getElementById('command-modal').classList.add('hidden');
+    }
+
+    function renderCommandItems() {
+      const q = (document.getElementById('cmd-search').value || '').trim().toLowerCase();
+      const list = document.getElementById('cmd-list');
+
+      const entries = [
+        { tag: 'PAGE', title: 'Overview', sub: 'Lab mission & orbital core', run: function() { closeCommandModal(); navigateTo('overview'); } },
+        { tag: 'PAGE', title: 'Projects Index', sub: 'Explore open-source systems', run: function() { closeCommandModal(); navigateTo('projects'); } },
+        { tag: 'PAGE', title: 'News & Dispatches', sub: 'Architecture papers & release logs', run: function() { closeCommandModal(); navigateTo('dispatches'); } },
+        { tag: 'PAGE', title: 'Download Repository', sub: 'repo.beairesearch.ca static binaries', run: function() { closeCommandModal(); navigateTo('repo'); } },
+        { tag: 'PORTAL', title: 'Researcher Portal', sub: 'Sign in, bearer tokens & SSH keys', run: function() { closeCommandModal(); navigateTo('portal'); } }
+      ].concat(PROJECTS.map(function(p) {
+        return {
+          tag: 'PROJECT',
+          title: p.title + ' (' + p.version + ')',
+          sub: p.summary,
+          run: function() { closeCommandModal(); navigateTo('projects'); openProjectDrawer(p.id); }
+        };
+      })).filter(function(item) {
+        return !q || item.title.toLowerCase().includes(q) || item.sub.toLowerCase().includes(q);
+      });
+
+      cmdActions = entries.map(function(e) { return e.run; });
+
+      list.innerHTML = entries.map(function(item, idx) {
+        return (
+          '<button onclick="runCmdAction(' + idx + ')" class="w-full text-left px-4 py-3 hover:bg-card flex items-center justify-between gap-3 transition-colors">' +
+            '<div class="min-w-0">' +
+              '<div class="text-xs font-medium text-primary truncate">' + escapeHtml(item.title) + '</div>' +
+              '<div class="text-[11px] text-tertiary truncate">' + escapeHtml(item.sub) + '</div>' +
+            '</div>' +
+            '<span class="font-mono text-[10px] px-2 py-0.5 rounded bg-card border border-hairline text-secondary shrink-0">' + item.tag + '</span>' +
+          '</button>'
+        );
+      }).join('');
+    }
+
+    function runCmdAction(index) {
+      if (cmdActions[index]) cmdActions[index]();
+    }
+
+    function copyToClipboard(text, message) {
+      const textarea = document.createElement('textarea');
+      textarea.value = text;
+      textarea.style.position = 'fixed';
+      textarea.style.opacity = '0';
+      document.body.appendChild(textarea);
+      textarea.select();
+      try {
+        document.execCommand('copy');
+        showToast(message || 'Copied to clipboard');
+      } catch (err) {
+        showToast('Copy failed');
+      }
+      document.body.removeChild(textarea);
+    }
+
+    let toastTimer = null;
+    function showToast(msg) {
+      const box = document.getElementById('toast-box');
+      box.textContent = msg;
+      box.classList.remove('hidden');
+      if (toastTimer) clearTimeout(toastTimer);
+      toastTimer = setTimeout(function() {
+        box.classList.add('hidden');
+      }, 2400);
+    }
+
+    function escapeHtml(str) {
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    // Keyboard Shortcuts (Ctrl/Cmd+K & Escape)
+    document.addEventListener('keydown', function(e) {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        openCommandModal();
+      } else if (e.key === 'Escape') {
+        closeProjectDrawer();
+        closeRegisterProjectModal();
+        closeDispatchModal();
+        closeCommandModal();
+      }
+    });
+
+    // Hash Navigation Sync
+    window.addEventListener('hashchange', function() {
+      const hash = window.location.hash.replace('#', '');
+      if (VALID_VIEWS.includes(hash) && hash !== currentView) {
+        navigateTo(hash);
+      }
+    });
+
+    // Initial Boot
+    window.addEventListener('DOMContentLoaded', function() {
+      renderProjects();
+      renderDispatches();
+      renderRepoTable();
+      updatePortalView();
+
+      const initialHash = window.location.hash.replace('#', '');
+      navigateTo(VALID_VIEWS.includes(initialHash) ? initialHash : 'overview');
+    });
+  </script>
+</body>
+</html>
