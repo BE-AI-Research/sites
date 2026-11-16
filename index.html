@@ -308,26 +308,6 @@
           </div>
         </div>
 
-        <!-- 4-Metric Architectural Strip -->
-        <div class="grid grid-cols-2 lg:grid-cols-4 gap-px bg-hairline border border-hairline rounded-xl overflow-hidden mt-12">
-          <div class="bg-canvas p-5">
-            <div class="font-mono text-[11px] uppercase tracking-wider text-tertiary">License</div>
-            <div class="font-mono text-base sm:text-lg font-medium text-primary mt-1">AGPL-3.0</div>
-          </div>
-          <div class="bg-canvas p-5">
-            <div class="font-mono text-[11px] uppercase tracking-wider text-tertiary">Architecture</div>
-            <div class="font-mono text-base sm:text-lg font-medium text-primary mt-1">Local-First</div>
-          </div>
-          <div class="bg-canvas p-5">
-            <div class="font-mono text-[11px] uppercase tracking-wider text-tertiary">Active Modules</div>
-            <div id="metric-projects-count" class="font-mono text-base sm:text-lg font-medium text-primary mt-1">06</div>
-          </div>
-          <div class="bg-canvas p-5">
-            <div class="font-mono text-[11px] uppercase tracking-wider text-tertiary">Mirror Endpoint</div>
-            <div class="font-mono text-base sm:text-lg font-medium text-primary mt-1">repo.beairesearch.ca</div>
-          </div>
-        </div>
-
         <!-- Quick-Launch Directory Cards -->
         <div class="mt-12 space-y-4">
           <div class="flex items-center justify-between">
@@ -1419,7 +1399,8 @@
       );
 
       grid.innerHTML = html;
-      document.getElementById('metric-projects-count').textContent = String(PROJECTS.length).padStart(2, '0');
+      const metric = document.getElementById('metric-projects-count');
+      if (metric) metric.textContent = String(PROJECTS.length).padStart(2, '0');
     }
 
     function openProjectDrawer(id) {
