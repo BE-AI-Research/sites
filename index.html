@@ -7,6 +7,16 @@
   <link rel="icon" href="favicon.ico" sizes="any" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <script>
+    // Theme: 'auto' follows the browser's light or dark setting; 'light' or 'dark' is the visitor's own choice
+    (function () {
+      var pref = 'auto';
+      try { pref = localStorage.getItem('beai-theme') || 'auto'; } catch (e) {}
+      var dark = pref === 'dark' || (pref === 'auto' && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+      if (dark) document.documentElement.classList.add('obsidian');
+      document.documentElement.style.colorScheme = dark ? 'dark' : 'light';
+    })();
+  </script>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -65,6 +75,7 @@
     .text-tertiary { color: var(--text-tertiary); }
     .border-hairline { border-color: var(--border-hairline); }
     .border-strong { border-color: var(--border-strong); }
+    .divide-hairline > :not([hidden]) ~ :not([hidden]) { border-color: var(--border-hairline); }
 
     .btn-primary {
       background-color: var(--btn-bg);
@@ -166,9 +177,9 @@
           <span class="hidden lg:inline font-mono">Jump</span>
         </button>
 
-        <button onclick="toggleTheme()" class="inline-flex items-center gap-1.5 px-2 py-1 rounded bg-card border border-hairline hover:border-strong text-[11px] font-mono text-secondary hover:text-primary transition-colors" title="Toggle Daylight / Obsidian Theme">
+        <button onclick="toggleTheme()" id="theme-btn" class="inline-flex items-center gap-1.5 px-2 py-1 rounded bg-card border border-hairline hover:border-strong text-[11px] font-mono text-secondary hover:text-primary transition-colors" title="Theme: Auto follows your browser. Click to switch.">
           <span id="theme-dot" class="w-1.5 h-1.5 rounded-full border border-current bg-white"></span>
-          <span id="theme-text" class="hidden sm:inline">Daylight</span>
+          <span id="theme-text" class="hidden sm:inline">Auto</span>
         </button>
 
         <a href="https://be-ai-research.github.io/be-aero/" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded btn-primary text-[11px] font-mono transition-colors">
@@ -325,10 +336,10 @@
                 </div>
                 <div class="text-base font-medium text-primary">Projects Index</div>
                 <p class="text-xs text-secondary leading-relaxed">
-                  Inspect BE-Code Redux v1.3, BE AI Engine, Hub-FS v2.0, and system topologies.
+                  Inspect BE-Aero, the BE-Aero Relay Server and BE-Code Redux.
                 </p>
               </div>
-              <div class="font-mono text-[11px] text-tertiary pt-2 border-t border-hairline">6 Active Modules</div>
+              <div class="font-mono text-[11px] text-tertiary pt-2 border-t border-hairline">3 Released Projects</div>
             </button>
 
             <button onclick="navigateTo('dispatches')" class="text-left p-5 rounded-xl bg-canvas border border-hairline hover:border-strong transition-all group flex flex-col justify-between space-y-4">
@@ -353,7 +364,7 @@
                 </div>
                 <div class="text-base font-medium text-primary">GitHub Repositories</div>
                 <p class="text-xs text-secondary leading-relaxed">
-                  Browse every public repository, copy a clone command, or open it on GitHub.
+                  Browse the released repositories, copy a clone command, or open their releases.
                 </p>
               </div>
               <div class="font-mono text-[11px] text-tertiary pt-2 border-t border-hairline">github.com/BE-AI-Research</div>
@@ -392,7 +403,7 @@
             </div>
             <h1 class="text-2xl sm:text-4xl font-light tracking-[-0.025em] text-primary">Core Research Projects</h1>
             <p class="text-sm text-secondary max-w-xl">
-              Modular open-source systems spanning autonomous agent harnesses, local inference engines, sovereign operating shells and the BE-Aero ecosystem. Projects with a public repository link straight to GitHub.
+              Released open-source systems: the BE-Aero ecosystem and the BE-Code Redux agentic harness. Each has a public repository with published releases. BE-Aero projects link to the BE-Aero site.
             </p>
           </div>
 
@@ -402,7 +413,6 @@
             <div class="flex flex-wrap items-center gap-1.5">
               <button onclick="setProjectCategory('all')" data-pcat="all" class="pcat-btn px-3 py-1.5 rounded-lg text-xs font-medium btn-primary transition-colors">All</button>
               <button onclick="setProjectCategory('agentic')" data-pcat="agentic" class="pcat-btn px-3 py-1.5 rounded-lg text-xs font-medium btn-secondary transition-colors">Agentic</button>
-              <button onclick="setProjectCategory('inference')" data-pcat="inference" class="pcat-btn px-3 py-1.5 rounded-lg text-xs font-medium btn-secondary transition-colors">Inference</button>
               <button onclick="setProjectCategory('os')" data-pcat="os" class="pcat-btn px-3 py-1.5 rounded-lg text-xs font-medium btn-secondary transition-colors">OS &amp; Infra</button>
             </div>
           </div>
@@ -464,7 +474,7 @@
             </div>
             <h1 class="text-2xl sm:text-4xl font-light tracking-[-0.025em] text-primary">GitHub Repositories</h1>
             <p class="text-sm text-secondary max-w-2xl">
-              Every public BE AI Research repository. Releases, installers and checksums are published on each repository's Releases page.
+              Released BE AI Research repositories: each one has published releases. Installers and checksums are on each repository's Releases page.
             </p>
           </div>
 
@@ -590,9 +600,14 @@
             <div class="font-mono text-[11px] uppercase tracking-wider text-tertiary">04 // Repository</div>
             <div id="pd-repo" class="font-mono text-xs text-primary mt-1"></div>
           </div>
-          <a id="pd-repo-link" href="#" target="_blank" rel="noopener" class="btn-primary px-4 py-2 rounded-lg text-xs font-mono">
-            Open on GitHub ↗
-          </a>
+          <div class="flex flex-wrap gap-2">
+            <a id="pd-site-link" href="#" target="_blank" rel="noopener" class="hidden btn-primary px-4 py-2 rounded-lg text-xs font-mono">
+              Visit the BE-Aero site ↗
+            </a>
+            <a id="pd-repo-link" href="#" target="_blank" rel="noopener" class="btn-primary px-4 py-2 rounded-lg text-xs font-mono">
+              Open on GitHub ↗
+            </a>
+          </div>
         </div>
       </div>
     </div>
@@ -660,12 +675,12 @@
     const GH_URL = 'https://github.com/' + GH_ORG;
     const BE_AERO_SITE = 'https://be-ai-research.github.io/be-aero/';
 
-    // repo: the GitHub repository name, or null when the source is not public yet
+    // Released projects only: each has a public repository with published releases
     const PROJECTS = [
       {
         id: 'be-aero',
         title: 'BE-Aero Ecosystem',
-        version: '1.2.9 · 1.3.0 beta',
+        version: 'v1.2.9',
         category: 'os',
         categoryLabel: 'OS & Infrastructure',
         license: 'See repository',
@@ -673,7 +688,7 @@
         stack: ['Windows', 'Linux', 'Android', 'WireGuard'],
         overview: 'BE-Aero brings BE-Aero Desktop, BE-Aero for Android (Launcher, AI and Files), the self-hosted BE-Aero Relay Server and BE-Aero Link together. Paired devices connect over TLS 1.3, pinned by device identity. Its assistant can operate both the PC and the phone, and with realtime conversation sync either device can use the tools of the other. The relay doubles as a WireGuard hub that puts your devices and home network on one LAN from anywhere.',
         topology: '[BE-Aero Desktop] <== paired, TLS 1.3 ==> [BE-Aero for Android]\n         \\                                   /\n          +---> [Your Relay Server] <-------+\n                 mailbox · storage · VPN hub',
-        repo: 'be-aero',
+        repo: 'be-aero-desktop',
         site: BE_AERO_SITE
       },
       {
@@ -687,25 +702,13 @@
         stack: ['Node.js', 'AES-256-GCM', 'WireGuard', 'Docker'],
         overview: 'Run it on any always-on machine: a home server, a NAS, a small board or a cloud VM. Messages are sealed for the one device they are meant for and files are encrypted on your devices before upload, so the relay cannot read what it carries. Devices pair with a 6-digit code, and the relay gets none of their permissions.',
         topology: '[Device A] --sealed--> [Relay mailbox] --> [Device B]\n                         |\n            [Shared storage · File Pool copy · VPN hub]',
-        repo: 'be-aero-relay-server'
-      },
-      {
-        id: 'be-brain-container',
-        title: 'BE Brain Container',
-        version: '',
-        category: 'agentic',
-        categoryLabel: 'Agentic Runtime',
-        license: 'See repository',
-        summary: 'A next generation, hybrid database AI memory server designed for multi-user and shared inference systems.',
-        stack: ['Memory', 'Hybrid database', 'BE-Aero'],
-        overview: 'BE Brain keeps long-term memory for BE-Aero assistants. Through a BE-Aero relay, every paired device shares one memory, and each memory records which device it came from.',
-        topology: '[BE-Aero devices] ---> [Relay] ---> [BE Brain]\n                                      remember · recall · forget',
-        repo: 'be-brain-container'
+        repo: 'be-aero-relay-server',
+        site: BE_AERO_SITE
       },
       {
         id: 'be-code-redux',
         title: 'BE-Code Redux',
-        version: 'v1.3.0',
+        version: 'v1.4.2',
         category: 'agentic',
         categoryLabel: 'Agentic Runtime',
         license: 'AGPL-3.0',
@@ -714,84 +717,6 @@
         overview: 'BE-Code Redux v1.3 provides a zero-telemetry autonomous engineering harness that executes strictly on local hardware. Every file mutation is verified via Tree-Sitter syntax trees and checkpointed into an ephemeral shadow Git index before disk commit.',
         topology: '[Local LLM / GGUF] <--> [BE-Code Sandbox IPC]\n                           |\n         +-----------------+-----------------+\n         v                                   v\n [Tree-Sitter AST Guard]           [Signed Skill Packs]',
         repo: 'be-code-redux'
-      },
-      {
-        id: 'be-skill-packs',
-        title: 'BE Skill Packs',
-        version: '',
-        category: 'agentic',
-        categoryLabel: 'Agentic Runtime',
-        license: 'See repository',
-        summary: 'Domain expertise for agentic coding harnesses, as folders of Markdown and JSON: always-on rules, knowledge fetched on demand, verification commands and error playbooks.',
-        stack: ['Markdown', 'JSON', 'BE-Code Redux'],
-        overview: 'Skill packs extend BE-Code Redux with reusable workflows, so teams can audit and share them alongside their code.',
-        topology: '[Skill Pack] ---> [BE-Code Redux] ---> [Local model]',
-        repo: 'be-skill-packs'
-      },
-      {
-        id: 'be-ai-engine',
-        title: 'BE AI Engine',
-        version: 'v0.9.4',
-        category: 'inference',
-        categoryLabel: 'Inference Engine',
-        license: 'AGPL-3.0',
-        summary: 'A distributed multimodal inference fabric that unifies model routing, dynamic cluster topology and cross-modal processing into a single coherent system.',
-        stack: ['Inference', 'Model routing', 'Multimodal'],
-        overview: 'Engineered for predictable latency on consumer workstations and edge ARM64 nodes, BE AI Engine implements zero-copy GGUF memory mapping, speculative draft decoding, and finite-state JSON/grammar masking at the logit layer.',
-        topology: '[MMAP GGUF Weights] ---> [C++20 Tensor Scheduler]\n                                |\n                +---------------+---------------+\n                v                               v\n       [Vulkan / CUDA Kernels]        [FSM Grammar Mask]',
-        repo: 'be-ai-engine-v1.0'
-      },
-      {
-        id: 'be-agent-runtime',
-        title: 'BE-Agent Runtime',
-        version: 'v2.1.0',
-        category: 'agentic',
-        categoryLabel: 'Agentic Runtime',
-        license: 'AGPL-3.0',
-        summary: 'Capability-based micro-actor scheduler isolating multi-agent tool execution inside Linux Landlock and seccomp-bpf jails.',
-        stack: ['Rust', 'Landlock', 'seccomp', 'JSON-RPC'],
-        overview: 'BE-Agent Runtime enforces principle-of-least-privilege isolation for autonomous workflows. Each tool invocation spawns inside a dedicated Linux namespace with explicit filesystem and network capability grants.',
-        topology: '[Coordinator Actor] ===(JSON-RPC)===> [Worker Supervisor]\n                                              |\n                                    [Landlock + Seccomp Jail]',
-        repo: 'beagent-runtime'
-      },
-      {
-        id: 'be-continuum',
-        title: 'BE-Continuum',
-        version: 'v0.6.1',
-        category: 'inference',
-        categoryLabel: 'Inference Engine',
-        license: 'AGPL-3.0',
-        summary: 'Hierarchical episodic memory engine combining temporal SQLite graphs with quantized local dense embeddings.',
-        stack: ['C++20', 'SQLite', 'SIMD', 'ONNX'],
-        overview: 'BE-Continuum solves long-horizon context drift for local agents by indexing session artifacts into a hybrid temporal-semantic graph stored inside a single portable SQLite file.',
-        topology: '[Session Stream] ---> [Chunk & Quantize] ---> [Temporal SQLite Graph]',
-        repo: null
-      },
-      {
-        id: 'hub-fs',
-        title: 'Hub-FS',
-        version: 'v2.0.2',
-        category: 'os',
-        categoryLabel: 'OS & Infrastructure',
-        license: 'AGPL-3.0',
-        summary: 'Content-addressed FUSE filesystem with automatic ED25519 commit signing and peer-to-peer LAN repository replication.',
-        stack: ['Go', 'FUSE3', 'BLAKE3', 'ED25519'],
-        overview: 'Hub-FS mounts cryptographic research workspaces directly into the POSIX filesystem. Every write snapshot is hashed with BLAKE3 and optionally replicated across trusted LAN nodes without central servers.',
-        topology: '[POSIX App] ---> [/mnt/hubfs (FUSE3)] ---> [BLAKE3 Chunk Store]\n                                                   |\n                                          [LAN Peer Sync Daemon]',
-        repo: null
-      },
-      {
-        id: 'dshell',
-        title: 'DShell',
-        version: 'v1.1.0',
-        category: 'os',
-        categoryLabel: 'OS & Infrastructure',
-        license: 'AGPL-3.0',
-        summary: 'Keyboard-driven monochrome Wayland compositor and semantic terminal multiplexer designed for local-first AI workflows.',
-        stack: ['C', 'Wayland', 'wlroots', 'AGPL-3.0'],
-        overview: 'DShell strips away desktop bloat in favor of crisp 1px hairline tiling, instant IPC command palettes, and native inline rendering for agent execution traces.',
-        topology: '[DRM / KMS] <--- [DShell wlroots Core] <--- [IPC Control Socket]',
-        repo: null
       }
     ];
 
@@ -867,33 +792,16 @@
       }
     ];
 
-    // Saved list, shown if GitHub cannot be reached. Replaced by the live list on load.
+    // Repositories with published releases. Only these are listed; the live GitHub data
+    // adds descriptions and dates. Add a name here when a repository gets its first release.
+    const RELEASED_REPOS = ['be-aero-desktop', 'be-aero-relay-server', 'be-code-redux', 'JimaGotchi'];
+
+    // Saved list, shown if GitHub cannot be reached.
     const REPO_FALLBACK = [
-      { name: 'be-aero', description: '', language: '', pushed: '2026-11-16' },
-      { name: 'sites', description: '', language: '', pushed: '2026-11-16' },
-      { name: 'be-brain-container', description: '', language: '', pushed: '2026-11-15' },
-      { name: 'be-aero-relay-server', description: '', language: '', pushed: '2026-11-13' },
-      { name: 'be-aero-desktop', description: '', language: '', pushed: '2026-11-13' },
-      { name: 'beagent-runtime', description: '', language: '', pushed: '2026-11-08' },
-      { name: 'be-code-redux', description: '', language: '', pushed: '2026-11-04' },
-      { name: 'ShadowCell', description: '', language: '', pushed: '2026-11-03' },
-      { name: 'BE-BanditPet', description: '', language: '', pushed: '2026-11-03' },
-      { name: 'be-skill-packs', description: '', language: '', pushed: '2026-10-30' },
-      { name: 'research-papers', description: '', language: '', pushed: '2026-10-16' },
-      { name: 'be-mobileagent', description: '', language: '', pushed: '2026-10-14' },
-      { name: 'JimaGotchi', description: '', language: '', pushed: '2026-10-10' },
-      { name: 'BE-TFC', description: '', language: '', pushed: '2026-08-11' },
-      { name: 'Neural-Recall-Multimodal-Public', description: '', language: '', pushed: '2026-05-13' },
-      { name: 'doobian-core-public', description: '', language: '', pushed: '2026-05-01' },
-      { name: 'be-ai-engine-v1.0', description: '', language: '', pushed: '2026-03-29' },
-      { name: 'omnispace-canary-channel', description: '', language: '', pushed: '2026-01-11' },
-      { name: 'continuum-community', description: '', language: '', pushed: '2026-01-05' },
-      { name: 'continuum-main', description: '', language: '', pushed: '2026-01-05' },
-      { name: 'odd-projects', description: '', language: '', pushed: '2025-12-01' },
-      { name: 'Benchmark-Reports', description: '', language: '', pushed: '2025-09-04' },
-      { name: 'AI-Toys', description: '', language: '', pushed: '2025-09-01' },
-      { name: 'memory-manager-prompts', description: '', language: '', pushed: '2025-08-14' },
-      { name: 'tool-prompts', description: '', language: '', pushed: '2025-08-10' }
+      { name: 'be-aero-desktop', description: '', language: 'JavaScript', pushed: '2026-11-13', latest: 'v1.2.9' },
+      { name: 'be-aero-relay-server', description: '', language: 'JavaScript', pushed: '2026-11-13', latest: 'v1.0.2' },
+      { name: 'be-code-redux', description: '', language: 'Go', pushed: '2026-11-04', latest: 'v1.4.2' },
+      { name: 'JimaGotchi', description: '', language: '', pushed: '2026-10-10', latest: 'Release' }
     ];
 
     // -----------------------------------------------------------------------
@@ -971,19 +879,47 @@
     // -----------------------------------------------------------------------
     // 4. THEME
     // -----------------------------------------------------------------------
-    function toggleTheme() {
+    // Auto -> Daylight -> Obsidian -> Auto. Auto follows the browser's light or dark setting.
+    const THEME_ORDER = ['auto', 'light', 'dark'];
+    const systemDark = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
+
+    function getThemePref() {
+      try { return localStorage.getItem('beai-theme') || 'auto'; } catch (e) { return 'auto'; }
+    }
+
+    function applyTheme() {
+      const pref = getThemePref();
+      const isDark = pref === 'dark' || (pref === 'auto' && !!(systemDark && systemDark.matches));
       const htmlEl = document.documentElement;
-      const isDark = htmlEl.classList.toggle('obsidian');
+      htmlEl.classList.toggle('obsidian', isDark);
+      htmlEl.style.colorScheme = isDark ? 'dark' : 'light';
+
       const label = document.getElementById('theme-text');
       const dot = document.getElementById('theme-dot');
+      const btn = document.getElementById('theme-btn');
+      const mode = isDark ? 'Obsidian' : 'Daylight';
+      if (label) label.textContent = pref === 'auto' ? 'Auto · ' + mode : mode;
+      if (dot) dot.style.backgroundColor = isDark ? '#0A0A0B' : '#FFFFFF';
+      if (btn) btn.title = pref === 'auto'
+        ? 'Theme: Auto, following your browser (' + mode + '). Click for Daylight.'
+        : 'Theme: ' + mode + '. Click for ' + (pref === 'light' ? 'Obsidian' : 'Auto') + '.';
+    }
 
-      if (isDark) {
-        label.textContent = 'Obsidian';
-        dot.style.backgroundColor = '#0A0A0B';
-      } else {
-        label.textContent = 'Daylight';
-        dot.style.backgroundColor = '#FFFFFF';
-      }
+    function toggleTheme() {
+      const next = THEME_ORDER[(THEME_ORDER.indexOf(getThemePref()) + 1) % THEME_ORDER.length];
+      try {
+        if (next === 'auto') localStorage.removeItem('beai-theme');
+        else localStorage.setItem('beai-theme', next);
+      } catch (e) {}
+      applyTheme();
+      showToast(next === 'auto' ? 'Theme follows your browser' : 'Theme: ' + (next === 'dark' ? 'Obsidian' : 'Daylight'));
+    }
+
+    // Follow the browser live when it switches between light and dark
+    if (systemDark) {
+      const onSystemChange = function() { if (getThemePref() === 'auto') applyTheme(); };
+      if (systemDark.addEventListener) systemDark.addEventListener('change', onSystemChange);
+      else if (systemDark.addListener) systemDark.addListener(onSystemChange);
     }
 
     // -----------------------------------------------------------------------
@@ -1036,9 +972,11 @@
               '<div class="flex flex-wrap gap-1.5 pt-1">' + tagsHtml + '</div>' +
             '</div>' +
             '<div class="pt-5 mt-6 border-t border-hairline flex items-center justify-between">' +
-              (p.repo
-                ? '<a href="' + GH_URL + '/' + encodeURIComponent(p.repo) + '" target="_blank" rel="noopener" class="font-mono text-xs text-secondary hover:text-primary">GitHub ↗</a>'
-                : '<span class="font-mono text-xs text-tertiary">Source not yet public</span>') +
+              (p.site
+                ? '<a href="' + p.site + '" target="_blank" rel="noopener" class="font-mono text-xs text-primary hover:underline">BE-Aero site ↗</a>'
+                : p.repo
+                  ? '<a href="' + GH_URL + '/' + encodeURIComponent(p.repo) + '" target="_blank" rel="noopener" class="font-mono text-xs text-secondary hover:text-primary">GitHub ↗</a>'
+                  : '<span class="font-mono text-xs text-tertiary">Source not yet public</span>') +
               '<button onclick="openProjectDrawer(\'' + p.id + '\')" class="inline-flex items-center gap-1.5 font-mono text-xs font-medium text-primary hover:underline">' +
                 '<span>Inspect Architecture</span>' +
                 '<span>→</span>' +
@@ -1068,6 +1006,16 @@
       const repoLink = document.getElementById('pd-repo-link');
       repoLink.classList.toggle('hidden', !p.repo);
       if (p.repo) repoLink.href = repoUrl;
+      const siteLink = document.getElementById('pd-site-link');
+      siteLink.classList.toggle('hidden', !p.site);
+      if (p.site) {
+        siteLink.href = p.site;
+        repoLink.classList.remove('btn-primary');
+        repoLink.classList.add('btn-secondary');
+      } else {
+        repoLink.classList.remove('btn-secondary');
+        repoLink.classList.add('btn-primary');
+      }
 
       document.getElementById('project-drawer').classList.remove('hidden');
     }
@@ -1166,12 +1114,21 @@
     // -----------------------------------------------------------------------
     // 7. GITHUB REPOSITORIES VIEW (live from the GitHub API, saved list as fallback)
     // -----------------------------------------------------------------------
+    // Repositories that belong to the BE-Aero ecosystem link to its site
+    function siteForRepo(name) {
+      return /^be-aero(-|$)/i.test(name) ? BE_AERO_SITE : '';
+    }
+
     function loadRepos() {
       if (!window.fetch) { renderRepoTable(); return; }
       fetch('https://api.github.com/users/' + GH_ORG + '/repos?per_page=100&sort=pushed', { headers: { 'Accept': 'application/vnd.github+json' } })
         .then(function(r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
         .then(function(list) {
-          repoData = list.filter(function(r) { return !r.private && !r.archived; }).map(function(r) {
+          const latest = {};
+          REPO_FALLBACK.forEach(function(f) { latest[f.name] = f.latest; });
+          repoData = list.filter(function(r) {
+            return !r.private && !r.archived && RELEASED_REPOS.indexOf(r.name) !== -1;
+          }).map(function(r) {
             return {
               name: r.name,
               description: r.description || '',
@@ -1179,7 +1136,8 @@
               pushed: (r.pushed_at || '').slice(0, 10),
               stars: r.stargazers_count || 0,
               fork: !!r.fork,
-              homepage: r.homepage || ''
+              homepage: r.homepage || '',
+              latest: latest[r.name] || ''
             };
           });
           repoLive = true;
@@ -1199,7 +1157,7 @@
           (r.language || '').toLowerCase().includes(q);
       });
 
-      status.textContent = (repoLive ? 'Live from GitHub · ' : 'Saved list · ') + repoData.length + ' public repositories' +
+      status.textContent = (repoLive ? 'Live from GitHub · ' : 'Saved list · ') + repoData.length + ' released repositories' +
         (q ? ' · ' + filtered.length + ' shown' : '');
 
       if (filtered.length === 0) {
@@ -1210,20 +1168,24 @@
       tbody.innerHTML = filtered.map(function(r) {
         const url = GH_URL + '/' + encodeURIComponent(r.name);
         const clone = 'git clone ' + GH_URL + '/' + r.name + '.git';
+        const site = siteForRepo(r.name);
         return (
           '<tr class="hover:bg-card/60 transition-colors">' +
             '<td class="py-3.5 px-4">' +
               '<a href="' + url + '" target="_blank" rel="noopener" class="font-mono text-xs font-medium text-primary hover:underline">' + escapeHtml(r.name) + '</a>' +
+              (r.latest ? ' <span class="font-mono text-[10px] px-1.5 py-0.5 rounded bg-card border border-hairline text-primary">' + escapeHtml(r.latest) + '</span>' : '') +
               (r.fork ? ' <span class="font-mono text-[10px] px-1.5 py-0.5 rounded bg-card border border-hairline text-tertiary">fork</span>' : '') +
               (r.description ? '<div class="text-xs text-secondary mt-0.5 max-w-xl">' + escapeHtml(r.description) + '</div>' : '') +
+              (siteForRepo(r.name) ? '<div class="font-mono text-[10px] text-tertiary mt-1">Part of the BE-Aero Ecosystem</div>' : '') +
             '</td>' +
             '<td class="py-3.5 px-4 font-mono text-xs text-secondary">' + escapeHtml(r.language || '–') + '</td>' +
             '<td class="py-3.5 px-4 font-mono text-xs text-secondary whitespace-nowrap">' + escapeHtml(r.pushed || '–') + '</td>' +
             '<td class="py-3.5 px-4">' +
-              '<div class="flex flex-wrap items-center justify-end gap-1.5">' +
+              '<div class="flex flex-nowrap items-center justify-end gap-1.5 whitespace-nowrap">' +
                 '<button data-clone="' + escapeHtml(clone) + '" onclick="copyToClipboard(this.getAttribute(\'data-clone\'), \'Clone command copied\')" class="px-2 py-1 rounded bg-card border border-hairline hover:border-strong font-mono text-[11px] text-secondary hover:text-primary">Copy git clone</button>' +
                 '<a href="' + url + '/releases" target="_blank" rel="noopener" class="px-2 py-1 rounded bg-card border border-hairline hover:border-strong font-mono text-[11px] text-secondary hover:text-primary">Releases</a>' +
-                '<a href="' + url + '" target="_blank" rel="noopener" class="btn-primary px-3 py-1 rounded-lg font-mono text-[11px] transition-colors">Open ↗</a>' +
+                (site ? '<a href="' + site + '" target="_blank" rel="noopener" class="btn-primary px-3 py-1 rounded-lg font-mono text-[11px] transition-colors">BE-Aero site ↗</a>' : '') +
+                '<a href="' + url + '" target="_blank" rel="noopener" class="' + (site ? 'btn-secondary' : 'btn-primary') + ' px-3 py-1 rounded-lg font-mono text-[11px] transition-colors">Open ↗</a>' +
               '</div>' +
             '</td>' +
           '</tr>'
@@ -1256,7 +1218,7 @@
         { tag: 'PAGE', title: 'Overview', sub: 'Lab mission & the BE-Aero Ecosystem', run: function() { closeCommandModal(); navigateTo('overview'); } },
         { tag: 'PAGE', title: 'Projects Index', sub: 'Explore open-source systems', run: function() { closeCommandModal(); navigateTo('projects'); } },
         { tag: 'PAGE', title: 'News & Dispatches', sub: 'Architecture papers & release logs', run: function() { closeCommandModal(); navigateTo('dispatches'); } },
-        { tag: 'PAGE', title: 'GitHub Repositories', sub: 'Every public BE AI Research repository', run: function() { closeCommandModal(); navigateTo('repo'); } },
+        { tag: 'PAGE', title: 'GitHub Repositories', sub: 'Released BE AI Research repositories', run: function() { closeCommandModal(); navigateTo('repo'); } },
         { tag: 'NEW', title: 'BE-Aero Ecosystem', sub: 'Desktop, Android suite, Relay Server and Link', run: function() { closeCommandModal(); window.open('https://be-ai-research.github.io/be-aero/', '_blank', 'noopener'); } }
       ].concat(PROJECTS.map(function(p) {
         return {
@@ -1346,6 +1308,7 @@
 
     // Initial Boot
     window.addEventListener('DOMContentLoaded', function() {
+      applyTheme();
       renderProjects();
       renderDispatches();
       renderRepoTable();
